@@ -26,25 +26,25 @@ local function RegisterKeyEvent(classified)
 	local parent = classified._parent
 	if parent.HUD == nil then return end -- if it's not a client, stop here.
 	local modname = KnownModIndex:GetModActualName("[DST]Sendi")
-
-	local RapierKey = GetModConfigData("skill_1", modname) or "KEY_V"
-	TheInput:AddKeyDownHandler(_G[RapierKey], function()
-		if KeyCheckCommon(parent) then
-			if TheInput:IsKeyDown(KEY_SHIFT) then
-				SendModRPCToServer(MOD_RPC["sendi"]["rapier"]) 
-			else
-				SendModRPCToServer(MOD_RPC["sendi"]["igniarun"]) 
+	if parent:HasTag("sendi") then
+		local RapierKey = GetModConfigData("skill_1", modname) or "KEY_V"
+		TheInput:AddKeyDownHandler(_G[RapierKey], function()
+			if KeyCheckCommon(parent) then
+				if TheInput:IsKeyDown(KEY_SHIFT) then
+					SendModRPCToServer(MOD_RPC["sendi"]["rapier"]) 
+				else
+					SendModRPCToServer(MOD_RPC["sendi"]["igniarun"]) 
+				end
 			end
-		end
-	end) 
+		end) 
 
-	local SkinKey = GetModConfigData("skin", modname) or "KEY_P"
-	TheInput:AddKeyDownHandler(_G[SkinKey], function()
-		if KeyCheckCommon(parent) then
-			SendModRPCToServer(MOD_RPC["sendi"]["skin"]) 
-		end
-	end) 
-
+		local SkinKey = GetModConfigData("skin", modname) or "KEY_P"
+		TheInput:AddKeyDownHandler(_G[SkinKey], function()
+			if KeyCheckCommon(parent) then
+				SendModRPCToServer(MOD_RPC["sendi"]["skin"]) 
+			end
+		end) 
+	end
 	local StatusKey = GetModConfigData("statuskey", modname) or "KEY_K"
 	TheInput:AddKeyDownHandler(_G[StatusKey], function()
 		if KeyCheckCommon(parent) then
