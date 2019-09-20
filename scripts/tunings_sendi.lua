@@ -1,24 +1,10 @@
-TUNING.SENDI = {
-	INTERNAL_TYPE_ZERO = 0, -- ??? lol
-
-	DEFAULT_HEALTH = 70, --체력
-	DEFAULT_HUNGER = 80, --허기
-	DEFAULT_SANITY = 90, --정신력
-	DEFAULT_DAMAGEMULTIPLIER = 0.6, --데미지 배수
-	
+TUNING.AOS_GENERAL = {
 	MANA_MAX_DEFAULT = 50,		-- 마나 최대치 기본값
 	MANA_CURRENT_DEFAULT = 50,	-- 마나 수치 기본값
 	MANA_CURRENT_ONRESPAWN = 0, -- 부활했을 때 마나 수치
 
 	MANA_RESTORE_FULL = 999999, -- 마나를 모두 채워줄 때의 수치
-
 	MANA_RESTORE_FROM_FOOD_MULTIPLIER = 0.5, -- 음식 먹을 때 오르는 정신력으로부터 마나가 회복되는 비율
-
-	SKILL_RAPIER_DAMAGE_1 = 20, -- 돌진할 때 데미지
-	SKILL_RAPIER_DAMAGE_2 = 55, -- 터질 때 데미지
-	SKILL_RAPIER_MANACOST = 15, -- 이그니아 런 배고픔 코스트
-
-	SKILL_IGNIARUN_MANACOST = 2, -- 이그니아 점프 배고픔 코스트
 
 	ARMOR1_CONDITION = 1000, -- 센디 아머1 내구도 
 	ARMOR1_EFFICIENCY = 0.50, -- 방어율
@@ -28,23 +14,56 @@ TUNING.SENDI = {
 	
 	ARMOR3_CONDITION = 3000, -- 센디 아머1 내구도 
 	ARMOR3_EFFICIENCY = 0.80, -- 방어율
+
+	INTERNAL_TYPE_ZERO = 0, -- ??? lol
 }
 
+TUNING.SENDI = {
+	DEFAULT_HEALTH = 70, --체력
+	DEFAULT_HUNGER = 80, --허기
+	DEFAULT_SANITY = 90, --정신력
+	DEFAULT_MANA = 50, -- 마나
+	DEFAULT_DAMAGEMULTIPLIER = 0.6, --데미지 배수
+
+	HEALTH_MODIFIER = 5.5, -- 레벨당 올라가는 체력 계수
+	HUNGER_MODIFIER = 3, -- 배고픔 계수
+	SANITY_MODIFIER = 4,
+	MANA_MODIFIER = 5,
+	DAMAGE_MODIFIER = 0.08, -- 공격력 계수
+
+	SKILL_RAPIER_DAMAGE_1 = 20, -- 돌진할 때 데미지	
+	SKILL_RAPIER_DAMAGE_2 = 55, -- 터질 때 데미지
+	SKILL_RAPIER_MANACOST = 15, -- 이그니아 런 배고픔 코스트
+
+	SKILL_IGNIARUN_MANACOST = 2, -- 이그니아 점프 배고픔 코스트
+}
 
 TUNING.ANAN = {--아난
-	INTERNAL_TYPE_ZERO = 0, -- ??? lol
-	
 	DEFAULT_HEALTH = 100, --체력
 	DEFAULT_HUNGER = 90, --허기
 	DEFAULT_SANITY = 90, --정신력
-	DEFAULT_DAMAGEMULTIPLIER = 1
+	DEFAULT_MANA = 50, -- 마나
+
+	DEFAULT_DAMAGEMULTIPLIER = 1,
+
+	HEALTH_MODIFIER = 5.5, -- 레벨당 올라가는 체력 계수
+	HUNGER_MODIFIER = 3, -- 배고픔 계수
+	SANITY_MODIFIER = 4,
+	MANA_MODIFIER = 5,
+	DAMAGE_MODIFIER = 0.08, -- 공격력 계수
 }
 
 TUNING.TEES = {--티스
-	INTERNAL_TYPE_ZERO = 0, -- ??? lol
-	
 	DEFAULT_HEALTH = 60, --체력
 	DEFAULT_HUNGER = 100, --허기
 	DEFAULT_SANITY = 110, --정신력
-	DEFAULT_DAMAGEMULTIPLIER = 0.7
+	DEFAULT_MANA = 50, -- 마나
+
+	DEFAULT_DAMAGEMULTIPLIER = 0.7,
+
+	HEALTH_MODIFIER = 5.5, -- 레벨당 올라가는 체력 계수
+	HUNGER_MODIFIER = 3, -- 배고픔 계수
+	SANITY_MODIFIER = 4,
+	MANA_MODIFIER = 5,
+	DAMAGE_MODIFIER = 0.08, -- 공격력 계수
 }

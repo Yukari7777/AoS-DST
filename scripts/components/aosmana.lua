@@ -1,18 +1,18 @@
-local CONST = TUNING.SENDI
+local CONST = TUNING.AOS_GENERAL
 
 local function onmax(self, max)
-    self.inst.replica.sendimana:SetMaxSendiMana(max)
+    self.inst.replica.aosmana:SetMaxAosMana(max)
 end
 
 local function oncurrent(self, current)
-    self.inst.replica.sendimana:SetCurrent(current)
+    self.inst.replica.aosmana:SetCurrent(current)
 end
 
 local function onratescale(self, ratescale)
-    self.inst.replica.sendimana:SetRateScale(ratescale)
+    self.inst.replica.aosmana:SetRateScale(ratescale)
 end
 
-local SendiMana = Class(function(self, inst)
+local AosMana = Class(function(self, inst)
     self.inst = inst
     self.max = CONST.MANA_MAX_DEFAULT
     self.current = CONST.MANA_CURRENT_DEFAULT
@@ -29,7 +29,7 @@ end, nil, {
     ratescale = onratescale,
 })
 
-function SendiMana:SetModifier(key, value)
+function AosMana:SetModifier(key, value)
     if value == nil or value == 0 then
         return self:RemoveModifier(key)
     elseif self._modifiers == nil then
@@ -45,7 +45,7 @@ function SendiMana:SetModifier(key, value)
     self.rate = self.rate + value - (m or 0)
 end
 
-function SendiMana:RemoveModifier(key)
+function AosMana:RemoveModifier(key)
     if self._modifiers == nil then
         return 
     end
@@ -62,34 +62,34 @@ function SendiMana:RemoveModifier(key)
     end
 end
 
-function SendiMana:OnRespawn()
+function AosMana:OnRespawn()
 	self.current = CONST.MANA_CURRENT_ONRESPAWN
 end
 
-function SendiMana:OnSave()
-	return {sendimana = self.current}
+function AosMana:OnSave()
+	return {aosmana = self.current}
 end
 
-function SendiMana:OnLoad(data)
-    if data.sendimana then
-        self.current = data.sendimana
+function AosMana:OnLoad(data)
+    if data.aosmana then
+        self.current = data.aosmana
         self:DoDelta(0)
     end
 end
 
-function SendiMana:LongUpdate(dt)
+function AosMana:LongUpdate(dt)
 	self:DoDec(dt, true)
 end
 
-function SendiMana:GetDebugString()
+function AosMana:GetDebugString()
     return string.format("%2.2f / %2.2f", self.current, self.max, self.ratescale)
 end
 
-function SendiMana:SetMax(amount)
+function AosMana:SetMax(amount)
     self.max = amount
 end
 
-function SendiMana:DoDelta(delta, overtime)
+function AosMana:DoDelta(delta, overtime)
     local old = self.current
 	self.current = self.current + delta
     if self.current < 0 then 
@@ -98,28 +98,28 @@ function SendiMana:DoDelta(delta, overtime)
         self.current = self.max
     end
 	
-    self.inst:PushEvent("sendimanadelta", {oldpercent = old/self.max, newpercent = self.current/self.max, overtime = overtime})
+    self.inst:PushEvent("aosmanadelta", {oldpercent = old/self.max, newpercent = self.current/self.max, overtime = overtime})
 end
 
-function SendiMana:GetPercent()
+function AosMana:GetPercent()
     return self.current / self.max
 end
 
-function SendiMana:GetCurrent()
+function AosMana:GetCurrent()
 	return self.current
 end
 
-function SendiMana:SetPercent(p)
+function AosMana:SetPercent(p)
     local old = self.current
     self.current = p * self.max
-    self.inst:PushEvent("sendimanadelta", {oldpercent = old/self.max, newpercent = p})
+    self.inst:PushEvent("aosmanadelta", {oldpercent = old/self.max, newpercent = p})
 end
 
-function SendiMana:GetRateScale()
+function AosMana:GetRateScale()
 	return self.ratescale
 end
 
-function SendiMana:RecalcRateScale()
+function AosMana:RecalcRateScale()
 	self.ratescale =
 		(self.rate <= -2 and RATE_SCALE.DECREASE_HIGH) or
         (self.rate <= -1 and RATE_SCALE.DECREASE_MED) or
@@ -131,11 +131,11 @@ function SendiMana:RecalcRateScale()
         RATE_SCALE.NEUTRAL
 end
 
-function SendiMana:OnUpdate(dt)
+function AosMana:OnUpdate(dt)
 	self:RecalcRateScale()
 	self:DoDelta(self.rate * dt, true)
 end
 
-SendiMana.LongUpdate = SendiMana.OnUpdate
+AosMana.LongUpdate = AosMana.OnUpdate
 
-return SendiMana
+return AosMana

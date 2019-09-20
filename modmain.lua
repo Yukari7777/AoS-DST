@@ -2,7 +2,7 @@
 
 PrefabFiles = {
 ---[[센디 전용 아이템등을 추가
-	"sendi_classified",
+	"aos_classified",
 	"sendi",
 	"sendi_none",
 	--------캐릭터요소---------
@@ -133,7 +133,10 @@ Assets = {
 	Asset( "IMAGE", "images/inventoryimages/sendiobject_warehouse.tex"), 
 	Asset( "ATLAS", "images/inventoryimages/sendiobject_warehouse.xml"),
 	--------센디의 창고
-	Asset("ANIM", "anim/csmana.zip"),
+	--Asset("ANIM", "anim/csmana.zip"),
+	Asset("ANIM", "anim/mana_sendi.zip"),
+	Asset("ANIM", "anim/mana_anan.zip"),
+	Asset("ANIM", "anim/mana_tees.zip"),
 	Asset("ANIM", "anim/sendi_ui_chest_4x4.zip"),
 	--------------------- ui
 	Asset( "IMAGE", "images/inventoryimages/aos_seed.tex"), 
@@ -408,8 +411,6 @@ modimport("scripts/strings_sendi.lua") -- string 파일 로드
 STRINGS.CHARACTERS.ANAN = require "speech_anan"
 STRINGS.CHARACTERS.TEES = require "speech_tees"
 
-
-
 local Cookable = require "components/cookable"  -- sendi_oven 관련
 function Cookable:GetProduct()
     local prefab = nil 
@@ -422,7 +423,19 @@ function Cookable:GetProduct()
     return prefab
 end 
 
----[[ 미트무시 , 옮기지 말아주세요.
+--아난 무시
+local Combat = require "components/combat"
+local _TryRetarget = Combat.TryRetarget
+function Combat.TryRetarget(self) 
+	if self.targetfn ~= nil then
+		local newtarget = self.targetfn(self.inst)
+		if newtarget ~= nil and not (self.inst:HasTag("shadowcreature") or self.inst:HasTag("shadow")) and newtarget:HasTag("sneakysnake") then return end
+	end
+
+	return _TryRetarget(self)
+end
+
+-- 미트무시 , 옮기지 말아주세요.
 local function is_meat(item)
 	return item.components.edible ~= nil  and item.components.edible.foodtype == GLOBAL.FOODTYPE.MEAT 
 end
@@ -477,7 +490,6 @@ local function RegisterModNetListeners(inst)
 	inst:ListenForEvent("sendibuilderupdatedirty", ForceRecipeUpdate) -- Patch both client and server, because it should be synced.
 end
 
-
 AddPrefabPostInit("player_classified", function(inst)
 	inst.forcerecipeupdate = GLOBAL.net_bool(inst.GUID, "sendibuilderupdate", "sendibuilderupdatedirty")
 	inst.forcerecipeupdate:set(false)
@@ -487,25 +499,11 @@ end)
 
 
 local function SayInfo(inst)--센디레벨업
-	local str = STRINGS.LEVEL.." : "..(inst.components.sendilevel.level + 1).."\n"..STRINGS.EXP.." : "..inst.components.sendilevel.exp.." / "..inst.components.sendilevel:GetMaxExp()
+	local str = STRINGS.LEVEL.." : "..(inst.components.aoslevel.level + 1).."\n"..STRINGS.EXP.." : "..inst.components.aoslevel.exp.." / "..inst.components.aoslevel:GetMaxExp()
 	
 	inst.components.talker:Say(str)
 end
 AddModRPCHandler("sendi", "status", SayInfo)
-
-local function SayInfo(inst)--아난레벨업
-	local str = STRINGS.LEVEL.." : "..(inst.components.sendilevel.level + 1).."\n"..STRINGS.EXP.." : "..inst.components.sendilevel.exp.." / "..inst.components.sendilevel:GetMaxExp()
-	
-	inst.components.talker:Say(str)
-end
-AddModRPCHandler("anan", "status", SayInfo)
-
-local function SayInfo(inst)--티스 레벨업
-	local str = STRINGS.LEVEL.." : "..(inst.components.teeslevel.level + 1).."\n"..STRINGS.EXP.." : "..inst.components.teeslevel.exp.." / "..inst.components.teeslevel:GetMaxExp()
-	
-	inst.components.talker:Say(str)
-end
-AddModRPCHandler("tees", "status", SayInfo)
 
 --드롭 exp
 function TESTFUNCAAA(inst)
@@ -794,7 +792,7 @@ AddModRPCHandler("sendi", "skin", ChangeSkin)
 STRINGS.NAMES.SENDI = "sendi"
 STRINGS.NAMES.ANAN = "anan"
 STRINGS.NAMES.TEES = "tees"
-modimport "scripts/sendimana_init.lua"
+modimport "scripts/aosmana_init.lua"
 modimport "scripts/skills_sendi.lua"
 modimport "scripts/recipes_sendi.lua"
 

@@ -87,8 +87,8 @@ local function AddSkill(skillname, SgS, SgC, manacost)
 
    AddAction(upperskillname, skillname, nullfn)
    AddModRPCHandler("sendi", skillname, function(inst)   
-      if manacost ~= nil and inst.components.sendimana ~= nil and inst.components.sendimana.current >= manacost or manacost == nil then
-         inst:PushEvent("on"..skillname) -- See sendi_classified how to excute actions via PushEvent.
+      if manacost ~= nil and inst.components.aosmana ~= nil and inst.components.aosmana.current >= manacost or manacost == nil then
+         inst:PushEvent("on"..skillname) -- See aos_classified how to excute actions via PushEvent.
       else
          inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
       end

@@ -9,8 +9,8 @@ local function OnEntityReplicated(inst)
     if inst._parent == nil then
         print("Unable to initialize classified data for player Sendi")
     else
-		inst._parent:AttachSendiClassified(inst)
-		for i, v in ipairs({ "sendimana" }) do
+		inst._parent:AttachAoSClassified(inst)
+		for i, v in ipairs({ "aosmana" }) do
             if inst._parent.replica[v] ~= nil then
                 inst._parent.replica[v]:AttachClassified(inst)
             end
@@ -86,9 +86,9 @@ local function fn()
     inst.entity:Hide()
     inst:AddTag("CLASSIFIED")
 
-	inst.maxsendimana = net_ushortint(inst.GUID, "maxsendimana")
-	inst.currentsendimana = net_ushortint(inst.GUID, "currentsendimana")
-	inst.sendimanaratescale = net_ushortint(inst.GUID, "sendimanaratescale")
+	inst.maxaosmana = net_ushortint(inst.GUID, "maxaosmana")
+	inst.currentaosmana = net_ushortint(inst.GUID, "currentaosmana")
+	inst.aosmanaratescale = net_ushortint(inst.GUID, "aosmanaratescale")
 
 	inst.rapier = net_event(inst.GUID, "onrapier")
 	inst.igniarun = net_event(inst.GUID, "onigniarun")
@@ -110,4 +110,4 @@ local function fn()
 end
 
 
-return Prefab("sendi_classified", fn)
+return Prefab("aos_classified", fn)

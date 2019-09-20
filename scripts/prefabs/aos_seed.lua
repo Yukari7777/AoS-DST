@@ -199,29 +199,29 @@ local function MakeSeed(data)
                 if eater:HasTag("sendi") then --만약 센디라면
 				
                     if data.exp ~= nil then --경험치를 올리세요.
-                        eater.components.sendilevel:AddExp(data.exp)
+                        eater.components.aoslevel:AddExp(data.exp)
 				
 					elseif inst:HasTag("bigseed") then --만약 빅시드라면
-                        eater.components.sendilevel:LevelUp() --센디를 레벨업하세요	
+                        eater.components.aoslevel:LevelUp() --센디를 레벨업하세요	
 				end
 					
 				elseif eater:HasTag("anan") then --만약 아난이라면
 					
 					if data.exp ~= nil then --경험치를 올리세요.
-                        eater.components.ananlevel:AddExp(data.exp)
+                        eater.components.aoslevel:AddExp(data.exp)
 					
 					elseif inst:HasTag("bigseed") then --만약 빅시드라면
-                        eater.components.ananlevel:LevelUp() --아난을 레벨업하세요	
+                        eater.components.aoslevel:LevelUp() --아난을 레벨업하세요	
 						
 				end
 				
 				elseif eater:HasTag("tees") then --만약 티스라면
 					
 					if data.exp ~= nil then --경험치를 올리세요.
-                        eater.components.teeslevel:AddExp(data.exp)
+                        eater.components.aoslevel:AddExp(data.exp)
 						
                     elseif inst:HasTag("bigseed") then --만약 빅시드라면
-                        eater.components.teeslevel:LevelUp() --티스를 레벨업하세요
+                        eater.components.aoslevel:LevelUp() --티스를 레벨업하세요
 				end
 			end
                 
@@ -244,7 +244,7 @@ local function MakeSeed(data)
         
         inst:AddComponent("stackable")
         inst.components.stackable.maxsize = data.stacksize or TUNING.STACK_SIZE_SMALLITEM
-        inst.sendimana = data.mana
+        inst.aosmana = data.mana
 		
         MakeHauntableLaunch(inst)
     

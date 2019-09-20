@@ -1,4 +1,4 @@
-local CONST = TUNING.SENDI --이것이붙어야 방어값과 내구도를 불러온다
+local CONST = TUNING.AOS_GENERAL --이것이붙어야 방어값과 내구도를 불러온다
 
 local assets={  
     Asset("ANIM", "anim/sendi_hat_crown.zip"),

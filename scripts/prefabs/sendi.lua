@@ -29,18 +29,18 @@ local start_inv = {
 
 local function SendiOnSetOwner(inst)
 	if TheWorld.ismastersim then
-        inst.sendi_classified.Network:SetClassifiedTarget(inst)
+        inst.aos_classified.Network:SetClassifiedTarget(inst)
     end
 end
 
 local function AttachClassified(inst, classified)
-	inst.sendi_classified = classified
+	inst.aos_classified = classified
     inst.ondetachsendiclassified = function() inst:DetachSendiClassified() end
     inst:ListenForEvent("onremove", inst.ondetachsendiclassified, classified)
 end
 
 local function DetachClassified(inst)
-	inst.sendi_classified = nil
+	inst.aos_classified = nil
     inst.ondetachsendiclassified = nil
 end
 
@@ -51,12 +51,12 @@ local function OverrideOnRemoveEntity(inst)
 			inst.jointask:Cancel()
 		end
 
-		if inst.sendi_classified ~= nil then
+		if inst.aos_classified ~= nil then
 			if TheWorld.ismastersim then
-				inst.sendi_classified:Remove()
-				inst.sendi_classified = nil
+				inst.aos_classified:Remove()
+				inst.aos_classified = nil
 			else
-				inst:RemoveEventCallback("onremove", inst.ondetachsendiclassified, inst.sendi_classified)
+				inst:RemoveEventCallback("onremove", inst.ondetachsendiclassified, inst.aos_classified)
 				inst:DetachSendiClassified()
 			end
 		end
@@ -165,8 +165,8 @@ end
 local function eatunfinishedfoodfn(inst, data)
 	
 	
-	local mana_amount = data.food.sendimana or data.food.components.edible.sanityvalue ~= nil and data.food.components.edible.sanityvalue > 0 and data.food.components.edible.sanityvalue * CONST.MANA_RESTORE_FROM_FOOD_MULTIPLIER or CONST.INTERNAL_TYPE_ZERO -- 음식 먹을 때 오르는 정신력으로부터 마나가 회복
-	inst.components.sendimana:DoDelta(mana_amount)
+	local mana_amount = data.food.aosmana or data.food.components.edible.sanityvalue ~= nil and data.food.components.edible.sanityvalue > 0 and data.food.components.edible.sanityvalue * CONST.MANA_RESTORE_FROM_FOOD_MULTIPLIER or 0 -- 음식 먹을 때 오르는 정신력으로부터 마나가 회복
+	inst.components.aosmana:DoDelta(mana_amount)
 	
 	
 	if data.food:HasTag("sendistaple") then
@@ -203,20 +203,20 @@ local common_postinit = function(inst)
 	inst.MiniMapEntity:SetIcon( "sendi.tex" )
 	
 	inst:AddTag("sendi")-- 센디 제작 태그를 추가합니다
+	inst:AddTag("aosplayer")
 	inst:AddTag("bookbuilder")-- 위커바컴의 책을 제조합니다.
 	inst:AddTag("reader")
 	
 	inst:ListenForEvent("setowner", SendiOnSetOwner)
   
 	OverrideOnRemoveEntity(inst)
-	inst.AttachSendiClassified = AttachClassified
+	inst.AttachAoSClassified = AttachClassified
 	inst.DetachSendiClassified = DetachClassified
 end
 
-
 local master_postinit = function(inst)
-	inst.sendi_classified = SpawnPrefab("sendi_classified")
-	inst:AddChild(inst.sendi_classified)
+	inst.aos_classified = SpawnPrefab("aos_classified")
+	inst:AddChild(inst.aos_classified)
 	inst.skinindex = 1
 
 	inst.soundsname = "willow"
@@ -224,9 +224,9 @@ local master_postinit = function(inst)
 	inst.starting_inventory = start_inv
 
 	inst:AddComponent("reader")
-	inst:AddComponent("sendimana")
+	inst:AddComponent("aosmana")
 	inst:AddComponent("sendiskill")
-	inst:AddComponent("sendilevel")--레벨업
+	inst:AddComponent("aoslevel")--레벨업
 	
 	inst:ListenForEvent("oneat", eatunfinishedfoodfn) -- 먹었을 때
 	NoEatCookPotFood(inst)

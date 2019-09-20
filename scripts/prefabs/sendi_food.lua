@@ -551,14 +551,14 @@ function MakeFood(data)
 		local function OnEaten(inst, eater) 
             local uppername = eater.prefab == "wilson" and "GENERIC" or string.upper(eater.prefab)
 			
-            if data.exp ~= nil and eater.components.sendilevel ~= nil then --만약 센디의 경험치가..
-                eater.components.sendilevel:AddExp(data.exp) -- 올린다 
+            if data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 센디의 경험치가..
+                eater.components.aoslevel:AddExp(data.exp) -- 올린다 
 				
-            elseif data.exp ~= nil and eater.components.ananlevel ~= nil then --만약 아난의 경험치가..
-                eater.components.ananlevel:AddExp(data.exp) --올린다 
+            elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 아난의 경험치가..
+                eater.components.aoslevel:AddExp(data.exp) --올린다 
 
-            elseif data.exp ~= nil and eater.components.teeslevel ~= nil then --만약 티스의 경험치가.. 
-                eater.components.teeslevel:AddExp(data.exp) --올린다
+            elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 티스의 경험치가.. 
+                eater.components.aoslevel:AddExp(data.exp) --올린다
 				
             end
 
@@ -571,7 +571,7 @@ function MakeFood(data)
         end
 		
         inst.components.edible:SetOnEatenFn(OnEaten)
-        inst.sendimana = data.mana
+        inst.aosmana = data.mana
          
         inst.components.edible.cooktime = data.cooktime
 

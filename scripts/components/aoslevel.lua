@@ -1,20 +1,15 @@
-local CONST = TUNING.SENDI
-
-local SendiLevel = Class(function(self, inst)
+local AoSLevel = Class(function(self, inst)
     self.inst = inst
 
-    self.level = CONST.INTERNAL_TYPE_ZERO
-    self.exp = CONST.INTERNAL_TYPE_ZERO
+    self.level = 0
+    self.exp = 0
 end)
 
-function SendiLevel:GetMaxExp() 
-    --
+function AoSLevel:GetMaxExp() 
 	return 10 + self.level * 47 + math.ceil(1.375 ^ self.level) --레벨 당 경험치통 공식
-	
-	
 end
 
-function SendiLevel:AddExp(amount)
+function AoSLevel:AddExp(amount)
 	if self.level < 30 then
         if amount >= self:GetMaxExp() then
         --amount[얻은경험치]가 맥스 경험치보다 같거나 크다면 
@@ -39,14 +34,18 @@ function SendiLevel:AddExp(amount)
    end
 end
 
-function SendiLevel:LevelUp()
+function AoSLevel:LevelUp()
     self.exp = 0
     self.level = self.level + 1
     self.inst.components.talker:Say(GetString(self.inst, "DESCRIBE_LEVELUP"))
     self:ApplyStatus()
 end
 
-function SendiLevel:ApplyStatus()
+function AoSLevel:GetValue(key)
+    return TUNING[string.upper(self.inst.prefab)][key] -- 케릭터 고유 값 불러오기
+end
+
+function AoSLevel:ApplyStatus()
     local inst = self.inst
 	local hunger_percent = inst.components.hunger:GetPercent()
 	local health_percent = inst.components.health:GetPercent()
@@ -54,14 +53,11 @@ function SendiLevel:ApplyStatus()
 	local ignoresanity = inst.components.sanity.ignore
     inst.components.sanity.ignore = false
 	
-	--inst.components.health.maxhealth = CONST.DEFAULT_HEALTH + self.level * (5/6) + 1.2 ^ self.level - 1
-
-	inst.components.health.maxhealth = CONST.DEFAULT_HEALTH + self.level * 5.5
-	inst.components.hunger.max = CONST.DEFAULT_HUNGER + self.level * 3
-	inst.components.sanity.max = CONST.DEFAULT_SANITY + self.level * 4
-	inst.components.sendimana.max = CONST.MANA_MAX_DEFAULT + self.level * 5
-	inst.components.combat.damagemultiplier = CONST.DEFAULT_DAMAGEMULTIPLIER + self.level * 0.08
-
+	inst.components.health.maxhealth = self:GetValue("DEFAULT_HEALTH") + self.level * self:GetValue("HEALTH_MODIFIER")
+	inst.components.hunger.max = self:GetValue("DEFAULT_HUNGER") + self.level * self:GetValue("HUNGER_MODIFIER")
+	inst.components.sanity.max = self:GetValue("DEFAULT_SANITY") + self.level * self:GetValue("SANITY_MODIFIER")
+	inst.components.aosmana.max = self:GetValue("DEFAULT_MANA") + self.level * self:GetValue("MANA_MODIFIER")
+	inst.components.combat.damagemultiplier = self:GetValue("DEFAULT_DAMAGEMULTIPLIER") + self.level * self:GetValue("DAMAGE_MODIFIER")
 	
     inst.components.health:SetPercent(health_percent)
 	inst.components.hunger:SetPercent(hunger_percent)
@@ -70,14 +66,14 @@ function SendiLevel:ApplyStatus()
 	
 end
 
-function SendiLevel:OnSave()
+function AoSLevel:OnSave()
     return {
 		level = self.level,
         exp = self.exp,
 	}
 end
 
-function SendiLevel:OnLoad(data)
+function AoSLevel:OnLoad(data)
 	if data ~= nil then
 		self.level = data.level or 0
 		self.exp = data.exp or 0
@@ -85,4 +81,4 @@ function SendiLevel:OnLoad(data)
 	end
 end
 
-return SendiLevel
+return AoSLevel

@@ -4,7 +4,7 @@ local Text = require "widgets/text"
 local Image = require "widgets/image"
 local NUMBERFONT = GLOBAL.NUMBERFONT
 
-AddReplicableComponent("sendimana")
+AddReplicableComponent("aosmana")
 
 local function GetModName(modname) -- modinfo's modname and internal modname is different.
 	for _, knownmodname in ipairs(KnownModIndex:GetModsToLoad()) do
@@ -24,8 +24,8 @@ local function GetModOptionValue(knownmodname, known_option_name)
 end
 
 local function StatusDisplaysInit(self)
-	if self.owner:HasTag("sendi") then
-		local ManaBadge = require "widgets/sendimanabadge"
+	if self.owner:HasTag("aosplayer") then
+		local ManaBadge = require "widgets/aosmanabadge"
 
 		self.combinedmod = GetModName("Combined Status")
 
@@ -62,7 +62,7 @@ local function StatusDisplaysInit(self)
 			self.stomach:SetPosition(-40,17,0)
 		end
 		
-		self.inst:ListenForEvent("sendimanadelta", function(inst, data) self.csmana:SetPercent(data.newpercent, self.owner.replica.sendimana:Max()) end, self.owner)
+		self.inst:ListenForEvent("aosmanadelta", function(inst, data) self.csmana:SetPercent(data.newpercent, self.owner.replica.aosmana:Max()) end, self.owner)
 
 		local _SetGhostMode = self.SetGhostMode
 		function self:SetGhostMode(ghostmode)

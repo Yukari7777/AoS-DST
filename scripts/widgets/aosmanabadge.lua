@@ -1,10 +1,10 @@
 local Badge = require "widgets/badge"
 local UIAnim = require "widgets/uianim"
 
-local SendiManaBadge = Class(Badge, function(self, owner)
+local AosManaBadge = Class(Badge, function(self, owner)
 	Badge._ctor(self, "health", owner)
-	self.anim:GetAnimState():SetBuild("csmana")
 	self.owner = owner
+	self.anim:GetAnimState():SetBuild("mana_"..self.owner.prefab)
 
 	self.manaarrow = self.underNumber:AddChild(UIAnim())
 	self.manaarrow:SetPosition(0, -1, 0)
@@ -16,7 +16,7 @@ local SendiManaBadge = Class(Badge, function(self, owner)
 	self:StartUpdating()
 end)
 
-function SendiManaBadge:OnGainFocus()
+function AosManaBadge:OnGainFocus()
 	Badge._base:OnGainFocus(self)
 	if self.combinedmod then
 		self.maxnum:Show()
@@ -25,7 +25,7 @@ function SendiManaBadge:OnGainFocus()
 	end
 end
 	
-function SendiManaBadge:OnLoseFocus()
+function AosManaBadge:OnLoseFocus()
 	Badge._base:OnLoseFocus(self)
 	if self.combinedmod then
 		self.maxnum:Hide()
@@ -44,8 +44,8 @@ local RATE_SCALE_ANIM = {
     [RATE_SCALE.DECREASE_LOW] = "arrow_loop_decrease",
 }
 
-function SendiManaBadge:OnUpdate(dt)
-	local ratescale = self.owner.replica.sendimana:GetRateScale()
+function AosManaBadge:OnUpdate(dt)
+	local ratescale = self.owner.replica.aosmana:GetRateScale()
 	local anim = RATE_SCALE_ANIM[ratescale] or "neutral"
 
 	if self.arrowdir ~= anim then	
@@ -53,16 +53,16 @@ function SendiManaBadge:OnUpdate(dt)
         self.manaarrow:GetAnimState():PlayAnimation(anim, true)
 	end
 	
-	if self.owner ~= nil and self.owner.sendi_classified ~= nil and self.owner.replica.sendimana ~= nil then
-		self.num:SetString(tostring(math.floor(self.owner.replica.sendimana:GetCurrent())))
+	if self.owner ~= nil and self.owner.aos_classified ~= nil and self.owner.replica.aosmana ~= nil then
+		self.num:SetString(tostring(math.floor(self.owner.replica.aosmana:GetCurrent())))
 		if self.combinedmod then
 			local maxtxt = self.showmaxonnumbers and "Max:\n" or ""
 
-			self.maxnum:SetString(maxtxt..tostring(math.floor( self.owner.replica.sendimana:Max() )))
+			self.maxnum:SetString(maxtxt..tostring(math.floor( self.owner.replica.aosmana:Max() )))
 		end
-		self:SetPercent(self.owner.replica.sendimana:GetPercent(), self.owner.replica.sendimana:Max())
+		self:SetPercent(self.owner.replica.aosmana:GetPercent(), self.owner.replica.aosmana:Max())
 	end
 
 end
 
-return SendiManaBadge
+return AosManaBadge

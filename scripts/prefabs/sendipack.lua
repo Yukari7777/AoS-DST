@@ -64,7 +64,7 @@ local function onclose(inst)
    inst.SoundEmitter:PlaySound("dontstarve/wendy/backpack_close", "open")
 end
 
-local function fn(Sim)
+local function fn(Sim) -- TODO : 센디말고 못끼게
    local inst = CreateEntity()
     
     inst.entity:AddTransform()
@@ -128,14 +128,8 @@ local function fn(Sim)
     inst.components.equippable:SetOnEquip(onequip)
     inst.components.equippable:SetOnUnequip(onunequip)
     inst.components.equippable.walkspeedmult = 1.0
-
-	inst:AddComponent("sendispecific")
-	inst.components.sendispecific:SetOwner("sendi")
-	inst.components.sendispecific:SetStorable(true)
-	inst.components.sendispecific:SetComment("센디의 가방이야") 
    
 	MakeHauntableLaunchAndDropFirstItem(inst)
-		inst.components.inventoryitem.keepondeath = true --죽어도 떨어뜨리지 않음.
     
     return inst
 end
