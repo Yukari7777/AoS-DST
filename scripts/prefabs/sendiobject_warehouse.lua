@@ -18,7 +18,6 @@ for y = 2.5, -0.5, -1 do
         table.insert(slotpos, Vector3(75 * x - 93 * 2 + 75, 75 * y - 75 * 2 + 75, 0))
     end
 end
-print("#slotpos", #slotpos)
 
 local sendiobject_warehouse = {
     widget = {
@@ -49,6 +48,7 @@ end
 local function onopen(inst) 
 	if not inst:HasTag("burnt") then
 		inst.AnimState:PlayAnimation("open")
+		--inst.AnimState:PlayAnimation("close")
 		inst.SoundEmitter:PlaySound("dontstarve/wilson/chest_open")
 	end
 	for i = 0 , 16 do
@@ -140,7 +140,7 @@ local function fn()
 	inst.AnimState:SetBuild("sendiobject_warehouse")
 	inst.AnimState:PlayAnimation("closed")
 	
-	inst:AddTag("fridge")
+	--inst:AddTag("fridge")--냉장고기능
 	inst:AddTag("chest")
 	inst:AddTag("structure")
 
@@ -161,9 +161,11 @@ local function fn()
 	inst:AddComponent("lootdropper")
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
-	inst.components.workable:SetWorkLeft(5)
+	inst.components.workable:SetWorkLeft(15)
 	inst.components.workable:SetOnFinishCallback(onhammered)
 	inst.components.workable:SetOnWorkCallback(onhit)
+   
+    inst:AddTag("wood")
 
 	AddHauntableDropItemOrWork(inst)
 
@@ -173,9 +175,12 @@ local function fn()
 
 	inst.OnSave = onsave 
 	inst.OnLoad = onload
-
+	
+	inst:ListenForEvent("burntup", onhammered) --태워버린다.
+	MakeMediumBurnable(inst, nil, nil, true)--태워버린다.
+	
 	return inst
 end
 
 return Prefab("common/sendiobject_warehouse", fn, assets, prefabs),
-MakePlacer("common/wharang_onggi_placer", "sendiobject_warehouse", "sendiobject_warehouse", "closed")
+MakePlacer("common/sendiobject_warehouse_placer", "sendiobject_warehouse", "sendiobject_warehouse", "closed")

@@ -1,4 +1,5 @@
 require "prefabutil"
+local TechTree = require("techtree") --레시피 더미
 
 local assets =
 {
@@ -55,27 +56,136 @@ local function cooked(inst)
 			local item = container:GetItemInSlot(i)
 			if item then 
 				local replacement = nil 
-				if item.components.cookable or item.prefab == "log" then 
+				
+				if item.components.cookable or
+				item.prefab == "spoiled_food" or
+				item.prefab == "sendi_food_cocoa_cup" or 
+				item.prefab == "sendi_food_wolfsteak" or
+				--음식
+				item.prefab == "sendi_food_pie_light_berry" or
+				item.prefab == "sendi_food_cake_banana" or
+				item.prefab == "sendi_food_rice_eel" or
+				--2차음식
+				item.prefab == "sendi_food_bread_muffin" or
+				item.prefab == "sendi_food_rice_tuna_cooked" or
+				item.prefab == "sendi_food_bread_but" or
+				--3차음식 
+				item.prefab == "sendi_food_chicken" or
+				item.prefab == "sendi_food_pie_berry" or
+				item.prefab == "sendi_food_dumpling" or
+				--5차 
+				
+				item.prefab == "log" then  --붕괴 애니메이션
 					inst.SoundEmitter:PlaySound("dontstarve/common/fireAddFuel") 
 					local fx = SpawnPrefab("collapse_small")
 					local pos = Vector3(inst.Transform:GetWorldPosition())
 					fx.Transform:SetScale(0.5, 0.5, 0.5)
 					fx.Transform:SetPosition(pos:Get())
 	
-					local fx2 = SpawnPrefab("small_puff")
+					local fx2 = SpawnPrefab("emote_fx")
 					fx2.entity:SetParent(inst.entity)
 					fx2.Transform:SetPosition(0, 3, 0)
 				end
 				
+				------------------------------------------------------------------------------------------------
 				if item.components.cookable then 
-					replacement = item.components.cookable:GetProduct()
-				elseif item.prefab == "log" then 
-					replacement = "charcoal"
+				replacement = item.components.cookable:GetProduct()
+				
+				
+				elseif item.prefab == "log" then  --나무를 넣으면
+					replacement = "charcoal" --숯이나옴
+				--1차추가음식
+				elseif item.prefab == "sendi_food_cocoa_cup" then -- 컵을 넣으면
+					replacement = "sendi_food_cocoa" 
+				elseif item.prefab == "sendi_food_wolfsteak" then -- 스테이크를 넣으면
+					replacement = "sendi_food_wolfsteak_cooked" 
+				-- 2차 추가 음식들	
 					
-				elseif item.components.burnable and not item.prefab == "log" then 
-					replacement = "ash"				
-				end  
+				elseif item.prefab == "sendi_food_pie_light_berry" then -- 푸른파이반죽
+					replacement = "sendi_food_pie_light_berry_cooked" --					
+				elseif item.prefab == "sendi_food_cake_banana" then -- 바나나반죽
+					replacement = "sendi_food_cake_banana_cooked" --
+				elseif item.prefab == "sendi_food_rice_eel" then --장어와 밥
+					replacement = "sendi_food_rice_eel_cooked" --	
+				
+				--3차 추가 음식들
+				
+				elseif item.prefab == "sendi_food_bread_muffin" then --머핀
+					replacement = "sendi_food_bread_muffin_cooked" --
+				elseif item.prefab == "sendi_food_rice_tuna" then --참치비빔밥 
+					replacement = "sendi_food_rice_tuna_cooked" --
+				elseif item.prefab == "sendi_food_bread_but" then --식빵
+					replacement = "sendi_food_bread_but_cooked" --
+					
+					--5차 추가음식들
+				elseif item.prefab == "sendi_food_chicken" then --머핀
+					replacement = "sendi_food_chicken_cooked" --
+				elseif item.prefab == "sendi_food_pie_berry" then --참치비빔밥 
+					replacement = "sendi_food_pie_berry_cooked" --
+				elseif item.prefab == "sendi_food_dumpling" then --식빵
+					replacement = "sendi_food_dumpling_cooked" --	
+				
 
+				--------------------------------------------------------------------------------------------------
+				
+
+				
+				elseif item.components.burnable and not item.prefab == "log" then  ---불이 꺼졌는데 나무를 넣는다면
+					replacement = "ash"	--변화가 일어나지않음.
+					
+				elseif item.components.burnable and not item.prefab == "spoiled_food" then 
+					replacement = "ash"	
+					
+				elseif item.components.burnable and not item.prefab == "sendi_food_cocoa_cup" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_wolfsteak" then 
+					replacement = "ash"							
+
+	
+					
+				
+				-- 2차 추가 음식들
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_pie_light_berry" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_cake_banana" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_rice_eel" then 
+					replacement = "ash"							
+					
+					
+				-- 3차 추가 음식들
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_bread_muffin" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_rice_tuna" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_bread_but" then 
+					replacement = "ash"		
+				--5차추가음식들
+				
+				elseif item.components.burnable and not item.prefab == "sendi_food_chicken" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_pie_berry" then 
+					replacement = "ash"		
+
+				elseif item.components.burnable and not item.prefab == "sendi_food_dumpling" then 
+					replacement = "ash"	
+				
+				end  
+				
+				
+				
+				
+				--------------------------------------------------------------------------------------------------
+				
+				
 				if replacement then 
 					local stacksize = 1 
 					if item.components.stackable then 
@@ -95,12 +205,16 @@ local function cooked(inst)
 		return false 
 	end 
 
-	if inst.on_cold then
+	if inst.on_cold then ------------------찬불일떄
 		for i = 1, container:GetNumSlots() do
 			local item = container:GetItemInSlot(i)
 			if item then 
-				local replacement = nil 
-				if item.prefab == "watermelon" or item.prefab == "butter" or item.prefab == "cave_banana" then 
+				local replacement = nil  --애니메이션
+				if item.prefab == "watermelon" or 
+				item.prefab == "butter" or 
+				item.prefab == "cave_banana" or
+				item.prefab == "sendi_food_cocoa" or
+				item.prefab == "sendi_food_pudding_light_berrybanana" then 
 					inst.SoundEmitter:PlaySound("dontstarve/common/gem_shatter") 
 					local fx = SpawnPrefab("collapse_small")
 					local pos = Vector3(inst.Transform:GetWorldPosition())
@@ -112,8 +226,15 @@ local function cooked(inst)
 					replacement = "watermelonicle"
 				elseif item.prefab == "butter" then 
 					replacement = "icecream"
-				elseif item.prefab == "cave_banana" then 
+				elseif item.prefab == "cave_banana" then  --
 					replacement = "bananapop"	
+				--음식
+				elseif item.prefab == "sendi_food_cocoa" then --코코아를넣으면
+					replacement = "sendi_food_cocoa_cold"--아이스코코아~
+				elseif item.prefab == "sendi_food_pudding_light_berrybanana" then --푸른 바나나 푸딩을 넣으면
+					replacement = "sendi_food_pudding_light_berrybanana_cooked"	-- 베리나 푸딩
+				--시드변환				
+					
 				end  
 
 				if replacement then 
@@ -232,6 +353,14 @@ local function onextinguish(inst)
     end
 end
 
+--태그제거
+
+local SENDICHEFTAGSETTER = function(inst, inrng, outrng)
+  
+end
+
+
+
 local function fn(Sim)
 
    local inst = CreateEntity()
@@ -241,14 +370,15 @@ local function fn(Sim)
     inst.entity:AddSoundEmitter()
     inst.entity:AddMiniMapEntity()
     inst.entity:AddNetwork()
-
+	
     MakeObstaclePhysics(inst, .3)
 
     inst:AddTag("campfire")
     inst:AddTag("structure")
 	inst:AddTag("wildfireprotected")
-   
-    inst.AnimState:SetBank("chiminea")
+	inst:AddTag("prototyper")
+	
+    inst.AnimState:SetBank("sendi_oven")
     inst.AnimState:SetBuild("sendi_oven")
     inst.AnimState:PlayAnimation("idle", false)    
     inst.MiniMapEntity:SetIcon( "sendi_oven.tex" )
@@ -348,8 +478,26 @@ local function fn(Sim)
             local t = {"EMBERS","LOW","NORMAL","HIGH"}
             return t[sec]
         end
-    end
-    
+	end
+
+	inst:DoPeriodicTask(0, function()
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local inrange = TheSim:FindEntities(x, y, z, 5, { "character" } )
+		local outrange = TheSim:FindEntities(x, y, z, 6, { "character" } )
+		for k, v in pairs(outrange) do
+			v:RemoveTag("sendichef")
+		end
+		for k, v in pairs(inrange) do
+			v:AddTag("sendichef")
+			
+		end
+		for k, v in pairs(outrange) do
+			if v.player_classified ~= nil then
+				v.player_classified.forcerecipeupdate:set(v:HasTag("sendichef"))
+			end
+		end
+	end)
+	
     inst:ListenForEvent("onbuilt",function()
         inst.AnimState:PlayAnimation("place")
         inst.AnimState:PushAnimation("idle",false)

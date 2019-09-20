@@ -1,7 +1,7 @@
-name = "[DST]Sendi"
+name = "[DST]Aos Seed"
 author = "doftksxk@naver.com"
-version = "1.7.2" 
-description = "[DST] Sendi :)~~~\n\nPress [V] to cast [Ignia jump].\n\nPress [Shift + V] to cast [Ignia Run].\n\nSkin Change [P] \n---------------------------------------------\n I have a fix for the (Monarch Crown) option! \n Please refer to the web page for update information! \n---------------------------------------------\n (군주의 왕관)에 추가옵션을 추가했어요! \n 업데이트 정보가 궁금하시다면, 스팀페이지 참고!\n---------------------------------------------\n Version : "..version.." "
+version = "1.0.0" 
+description = "[DST] 셋이 함깨라면 더이상 두렵지 않죠!\n\n 뿔뿔이 흩어졌던 Seed의 맴버가 한자리에 모였습니다.\n 센디, 티스, 아난과 함깨 DST 월드를 탐험하세요! \n---------------------------------------------\n센디의 레벨업 시스템이 아난, 티스에게도 도입!\n몬스터를 토벌해 시드를 수집하고,\n전용 오븐음식을 먹고 더욱 강해지세요! \n---------------------------------------------\n아난- 사냥꾼의 육포 레시피와, 강력한 데미지!\n티스- 강력한 독 데미지와, 저렴한 다트 레시피!\n센디- 강력한 불마법과,  기동기! [V / Sh+V]\n---------------------------------------------\n Version : "..version.." "
 forumthread = ""
 api_version = 10
 
@@ -69,5 +69,12 @@ configuration_options = {
 			{ description = "Only Sendi Items Skin", data = 3 },
 		},
 		default = 1,
+	},
+	{
+		name = "statuskey",
+		label = "Show Status Key",
+		hover = "무슨 키로 스탯을 보여줄지 설정합니다.",
+		options = KeyOptions,
+		default = "KEY_K",
 	},
 }

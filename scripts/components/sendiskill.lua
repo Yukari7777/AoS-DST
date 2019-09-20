@@ -45,8 +45,8 @@ local function DoRapierCharge(inst)
 			if v.components.health ~= nil and _G.IsPreemptiveEnemy(inst, v) then
 				local targetpos = v:GetPosition()
 				v.Transform:SetPosition(targetpos.x + (math.sin(angle) * VELOCITY) , 0, targetpos.z + (math.cos(angle) * VELOCITY))
-				if not v:HasTag("damagetaken") then --µ•πÃ¡ˆ2
-					v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_1)
+				if not v:HasTag("damagetaken") then
+					v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_1) -- Îç∞ÎØ∏ÏßÄ1
 					v:AddTag("damagetaken")
 					v:DoTaskInTime(15 * FRAMES, function()
 						v:RemoveTag("damagetaken")
@@ -64,15 +64,15 @@ end
 function sendiskill:OnStartRapier(inst, angle)
 	if inst.SkillTask == nil then 
 		self.angle = angle
-		inst.SkillTask = inst:DoPeriodicTask(0, DoRapierCharge) -- 0√ ∏∂¥Ÿ π›∫π = 1«¡∑π¿”(0.033√ )∏∂¥Ÿ π›∫π
+		inst.SkillTask = inst:DoPeriodicTask(0, DoRapierCharge)  -- 0Ï¥àÎßàÎã§ Î∞òÎ≥µ = 1ÌîÑÎ†àÏûÑ(0.033Ï¥à)ÎßàÎã§ Î∞òÎ≥µ
 		inst.components.talker:Say(GetString(inst.prefab, "SKILL_RAPIER"))
 	end
 end
 
 function sendiskill:Explode(inst)
 	self.shouldcharge = true
-	if inst.components.hunger ~= nil then
-		inst.components.hunger:DoDelta(- STUNING.SKILL_RAPIER_HUNGERCOST)
+	if inst.components.sendimana ~= nil then
+		inst.components.sendimana:DoDelta(- STUNING.SKILL_RAPIER_MANACOST )
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
@@ -84,7 +84,7 @@ function sendiskill:Explode(inst)
 	local ents = TheSim:FindEntities(x, y, z, 5, { "_combat" })
 	for k,v in pairs(ents) do 
 		if v.components.health ~= nil and _G.IsPreemptiveEnemy(inst, v) then
-			v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_2) -- µ•πÃ¡ˆ2
+			v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_2) -- Îç∞ÎØ∏ÏßÄ2
 		end
 	end
 end
@@ -119,8 +119,8 @@ function sendiskill:OnStartIgniaRun(inst)
 		inst.components.talker:Say(GetString(inst.prefab, "SKILL_IGNIARUN"))
 		inst.components.health:SetInvincible(true)
 
-		if inst.components.hunger ~= nil then
-			inst.components.hunger:DoDelta(-STUNING.SKILL_IGNIARUN_HUNGERCOST, nil, true)
+		if inst.components.sendimana ~= nil then
+			inst.components.sendimana:DoDelta( -STUNING.SKILL_IGNIARUN_MANACOST )
 		end
 
 		SpawnPrefab("explode_small").Transform:SetPosition(inst.Transform:GetWorldPosition())

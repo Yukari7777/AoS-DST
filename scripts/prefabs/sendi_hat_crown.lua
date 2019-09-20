@@ -1,3 +1,5 @@
+local CONST = TUNING.SENDI --이것이붙어야 방어값과 내구도를 불러온다
+
 local assets={  
     Asset("ANIM", "anim/sendi_hat_crown.zip"),
     Asset("ANIM", "anim/sendi_hat_crown_swap.zip"), 
@@ -66,6 +68,27 @@ local function OnUnequip(inst, owner)
 	inst.isDropped = false
 end
 
+local function ontakefuel(inst)--수리 
+    local armor = inst.components.armor
+    local afterrepair = armor.condition + 200
+
+    armor:SetCondition(afterrepair >= CONST.ARMOR1_CONDITION and CONST.ARMOR1_CONDITION or afterrepair)
+    armor.absorb_percent = CONST.ARMOR1_EFFICIENCY -- 수리 하면 방어율 복원
+
+    inst:PushEvent("percentusedchange", { percent = armor:GetPercent() })
+end
+
+
+local function SetConditionTweak(self, amount)--수리
+    self.condition = math.min(amount, self.maxcondition)
+    if self.condition <= 0 then
+        self.condition = 0
+        self.absorb_percent = 0
+    end
+
+    self.inst:PushEvent("percentusedchange", { percent = self:GetPercent() })
+end
+
 
 local function fn()
 
@@ -95,15 +118,25 @@ local function fn()
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
     inst.components.equippable:SetOnEquip(OnEquip)
     inst.components.equippable:SetOnUnequip(OnUnequip)
+	
+	inst:AddComponent("fueled") --연료가 있는.
+    inst.components.fueled.fueltype = "BURNABLE"
+    inst.components.fueled:InitializeFuelLevel(10)
+    inst.components.fueled.accepting = true
+    inst.components.fueled:SetTakeFuelFn(ontakefuel)
+    inst.components.fueled:StopConsuming()
+    
 
-	inst:AddComponent("armor") --내구도, 방어도 설정
-	inst.components.armor:InitCondition(3000, 0.7)
+    inst:AddComponent("armor")--- 내구도 값
+    inst.components.armor.SetCondition = SetConditionTweak
+    inst.components.armor:InitCondition(CONST.ARMOR1_CONDITION, CONST.ARMOR1_EFFICIENCY)-- * 튜닝샌디 루아에서 가져오는값이다.
+
 	
 	inst:AddComponent("insulator")--보온율
 	inst.components.insulator:SetInsulation(240)
 	
 	----주요 옵션
-	inst.components.equippable.dapperness = 0.2 --정신력 오라
+	--inst.components.equippable.dapperness = 0.1 --정신력 오라
 	inst.components.equippable.walkspeedmult = 1.1 --이동속도 : 케인
 	
 	inst:AddComponent("waterproofer") --방수

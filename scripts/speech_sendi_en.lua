@@ -2419,7 +2419,20 @@ return {
         TALLBIRDEGG_CRACKED = "Ugh. Crunchy.",
     },
 
-	RAPIER = {
+	DESCRIBE_LEVELUP = {
+		"I feel closer to you, Ignia.",
+		"There's nothing to be afraid of now!",
+		"I've grown a little bit longer!",
+		"There's nothing to be afraid of now!",
+		"I feel closer to you, Ignia.",
+		"I feel closer to you, Ignia.",
+		"There's nothing to be afraid of now!",
+		"There's nothing to be afraid of now!",
+		"I've grown a little bit longer!",
+		"I've grown a little bit longer!",
+	},
+	
+	SKILL_RAPIER = {
 		"Heiya!",
 		"Seiya!",
 		"Heiya!",
@@ -2435,7 +2448,7 @@ return {
 		"Too high.!",
 		"jump!",
 		"",
-		"����!",
+		"",
 		"",
 		"I fly like a bee ~",
 		"",
@@ -2455,4 +2468,118 @@ return {
 	DESCRIBE_LOW_HUNGER = {
 		"I'm hungry and I can not even get a fever."
 	},
+	
+	UNFINISHED = {
+	"You actually have to cook it in the oven.",
+	"Do you have any pain in your stomachache?",
+	"It's still cold. Where's the oven?",
+	"You actually have to cook it in the oven.",
+	"Do you have any pain in your stomachache?",
+	"It's still cold. Where's the oven?",
+	"You actually have to cook it in the oven.",
+	"Do you have any pain in your stomachache?",
+	"It's still cold. Where's the oven?",
+	"You actually have to cook it in the oven.",
+	"Do you have any pain in your stomachache?",
+	"It's still cold. Where's the oven?",
+	
+	},
+	
+	SENDIFOOD = {--조리푸드 
+	"You're delicious!",
+	"There's a happy harmonie in my mouth.!",
+	"It feels like I'm getting healthier!",
+	"I melted it in my mouth.\n I want to eat more!",
+	"Wow, this is... I can eat as much as I want!",
+	"You're delicious!",
+	"There's a happy harmonie in my mouth!",
+	"It feels like I'm getting healthier!",
+	"I melted it in my mouth. \n I want to eat more!",
+	"Wow, this is... I can eat as much as I want!",
+	},
+
+	SENDISTAPLE = {--주식
+	"Puw, sometimes I want to eat something else.",
+	"Yum, yum, yum!",
+	"Now you can work hard!",
+	"Is there anything sweet??",
+	"Puw, sometimes I want to eat something else.",
+	"Now you can work hard!",
+	"Uh, I'm a little tired.",
+	"I made up my mind! Let's get rid of the hive!",
+	
+	},	
+	
+	SENDIMEAT = {--육류 
+	"The more I eat, the happier it tastes!",
+	"Bye, yam, yum! \n You're the one who writes the!", 
+	"Well, this meat used the magic condiment of the far world.",
+	"It tastes fantastic like a dream!",
+	"The more you chew, the more fantastic it tastes!",
+	"What a perfect food like this... I am so beautiful.",
+	"Yum, yum, yum, yum, yum\n This, as much as... I can eat as much as I want!",
+	"The more you eat, the more energetic you are!",
+	"The more I eat, the happier it tastes!",
+	"Bye, yam, yum! \n You're the one who writes the!", 
+	"Well, this meat used the magic condiment of the far world.",
+	"It tastes fantastic like a dream!",
+	"The more you chew, the more fantastic it tastes!",
+	"What a perfect food like this... I am so beautiful.",
+	"Yum, yum, yum, yum, yum\n This, as much as... I can eat as much as I want!",
+	"The more you eat, the more energetic you are!",
+		
+	},	
+	
+		DESCRIBE_NOMANA = { -- an ambassador for lack of mana
+		
+		"I don't have enough horsepower!",
+		"Ugh, my head hurts.",
+		"We need to make up for the lack of mana!",
+		
+	},
+	
+	ONEATSENDIFOOD = { --a line when eating food (Write it down like a gourmet!)
+	TEST = "너무 너무 맛있어요!!.", -- XXX
+	
+	
+	COCOAPOWDER = "으응.. 목 안에 가루들이 달라붙고있어요",
+	RICEWHEAT = "켓, 켁! 날카로운 가시가 제 목을 콕 찔렀어요!",
+	MILK_STRONG = "퍄아-. 이제 살거같아요!",
+	COCOA_CUP = "윽, 얼음이 생으로 씹히는구만.",
+	COCOA = "너무너무 달콤하고 맛있어요!..",		
+	COCOA_COLD = "퍄아-, 시원한 코코아도 좋아해요!",
+	WOLFSTEAK = "엪 퉤, 배가 살살 아파오는것 같아요..",
+	WOLFSTEAK_COOKED = "풍부한 육즙이 향긋한 허브와 어우러져\n 농후한 맛을 잡아내고있어요!..",
+		  
+	--2차음식 
+	BREAD = "퓨우, 가끔은 다른것도 먹고싶어요..",
+	SALAD_BANANA = "풀과, 과일을 곁들여 먹는건 좋은 생각이에요!",
+	JUICE_LIGHT_BERRY = "시원하고 달콤하고, 맛있어요!",
+	PIE_LIGHT_BERRY = "엪, 퉤..! 아직 하나도 익지 않았어요!",
+	PIE_LIGHT_BERRY_COOKED = "달콤하고 향긋한 베리가, 입 안에서 부서지고있어요!",
+	CAKE_BANANA = "엪, 퉤! 아직 하나도 구워지지 않았잖아요!",
+	CAKE_BANANA_COOKED = "부드러운 빵과, 새콤한 베리가 \n 입안에서 어우러지고있어요!",
+	PUDDING_LIGHT_BERRYBANANA = "으읏.. 배가 좀 아린거 같은데요?",
+	PUDDING_LIGHT_BERRYBANANA_COOKED = "시원하고 맛있어요!",
+	RICE_EEL = "끄응.. 아직 하나도 익지 않았어요! \n 비려!",
+	RICE_EEL_COOKED = "부드럽게 씹히는 장어의 육질..",
+
+	--3차음식
+	BREAD_SAUSAGE = "빵과 빵 사이에 있는 이 소세지는 아주 맛있어요!",
+	BREAD_MUFFIN = "아직 조금도 구워지지 않았어요!",
+	BREAD_MUFFIN_COOKED = "분명 맛있지만, 오래씹으면 나비의 맛이 느껴져요.",
+	BREAD_BUT = "아직 하나도 구워지지 않았어요..!",
+	BREAD_BUT_COOKED = "빵 안에 콕 콕 박혀있는 견과류는, 아주 맛있어요!",
+	--5차음식
+	RICE_TUNA = "으이이익..! 아직 하나도 익지 않았잖아요!",
+	RICE_TUNA_COOKED = "한그릇 뚝딱! 아, 이제 없는거에요?",
+	CHICKEN = "우으윽..! 아직 하나도 구워지지 않았잖아요!!",
+	CHICKEN_COOKED = "속은 촉촉하고, 겉은 바삭해.\n 너무너무 훌륭한 맛이에요!",
+	PIE_BERRY = "아직 하나도 구워지지 않았잖아요!",
+	PIE_BERRY_COOKED = "너무너무 부드럽고, 새콤해요!.. 생과일 케이크같아~",
+	DUMPLING = "으에에엑, 하나도 익지 않았잖아요!",
+	DUMPLING_COOKED = "등심, 안심.. 들어있는 속마다 새로운 맛이 나요!!\n 맛있어어어..!!",
+
+	},
+		
 }
