@@ -396,7 +396,7 @@ if Language == "AUTO" then
 		local modname = KnownModIndex:GetModInfo(moddir).name
 		if modname == "한글 모드 서버 버전" or modname == "한글 모드 클라이언트 버전" then 
 			GLOBAL.SENDI_LANGUAGE_SUFFIX = "" -- 한국어
---		elseif modname == "Chinese Language Pack" or modname == "Chinese Plus" then
+--		elseif modname == "Chinese Language Pack" or modname == "Chinese Plus" or modname == "[DST]雪儿的外置汉化模组" or language == "中文语言包"then
 --			GLOBAL.SENDI_LANGUAGE_SUFFIX = "_ch"
 --		elseif modname == "Russian Language Pack" or modname == "Russification Pack for DST" or modname == "Russian For Mods (Client)" then
 --			GLOBAL.SENDI_LANGUAGE_SUFFIX = "_ru"
