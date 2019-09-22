@@ -435,12 +435,12 @@ function Combat.TryRetarget(self)
 	return _TryRetarget(self)
 end
 
--- 미트무시 , 옮기지 말아주세요.
+-- 미트무시
 local function is_meat(item)
 	return item.components.edible ~= nil  and item.components.edible.foodtype == GLOBAL.FOODTYPE.MEAT 
 end
 
-local function myBunnymanRetargetFn(inst)
+local function IgnoreMeatFn(inst)
 	return GLOBAL.FindEntity(inst, TUNING.PIG_TARGET_DIST,  
 		function(guy)
 			return inst.components.combat:CanTarget(guy)
@@ -458,7 +458,7 @@ local function myBunnymanRetargetFn(inst)
 		{ "monster", "player" })
 end
 
-local function myBunnyBattlecry(combatcmp, target)
+local function IgnoreMeat(combatcmp, target)
 	local strtbl =
 		target ~= nil and
 		not target:HasTag("ignoreMeat") and --- 고기라벨을 무시하고 공격이 없는지를 결정하는 조건을 추가합니다.
@@ -471,8 +471,8 @@ end
 
 AddPrefabPostInit("bunnyman", function(inst)    -- api를 통해 토끼의 인식 적 기능을 다시 작성하십시오.
 	if GLOBAL.TheWorld.ismastersim then
-		inst.components.combat:SetRetargetFunction(3, myBunnymanRetargetFn)
-		inst.components.combat.GetBattleCryString = myBunnyBattlecry
+		inst.components.combat:SetRetargetFunction(3, IgnoreMeatFn)
+		inst.components.combat.GetBattleCryString = IgnoreMeat
 	end
 end)
 -- 고기 무시 ]]
@@ -529,112 +529,120 @@ local function AddChanceLoot(inst, loots)
    end
 end
 
+local ExcludeList = {}
+local function AddPrefabPostInitAndExclude(prefab, fn)
+	AddPrefabPostInit(prefab, fn)
+	table.insert(ExcludeList, prefab)
+end
+
 --보스 시드 드랍
-AddPrefabPostInit("deerclops",  --[[대상 몬스터 스폰명]] function(inst)
-   AddChanceLoot(inst, {"aos_seed_boss_white", 0.5, "aos_seed_boss_sky", 1}) -- (아이템 스폰명), (수량) 순으로 적으면 됨
+AddPrefabPostInitAndExclude("deerclops",  --[[대상 몬스터 스폰명]] function(inst)
+   AddChanceLoot(inst, {"aos_seed_boss_white", 0.5, "aos_seed_boss_sky", 1}) -- (아이템 스폰명), (확률) 순으로 적으면 됨
 end)
-AddPrefabPostInit("dragonfly", function(inst)--드래곤파리
+AddPrefabPostInitAndExclude("dragonfly", function(inst)--드래곤파리
    AddChanceLoot(inst, {"aos_seed_boss_red", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("bearger", function(inst)--베어거
+AddPrefabPostInitAndExclude("bearger", function(inst)--베어거
    AddChanceLoot(inst, {"aos_seed_boss_autumn", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("moose", function(inst)--무스구스
+AddPrefabPostInitAndExclude("moose", function(inst)--무스구스
    AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("moose", function(inst)--무스구스
+AddPrefabPostInitAndExclude("moose", function(inst)--무스구스
    AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("antlion", function(inst)--개미사자
+AddPrefabPostInitAndExclude("antlion", function(inst)--개미사자
    AddChanceLoot(inst, {"aos_seed_boss_orange", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("beequeen", function(inst)--비-퀸
+AddPrefabPostInitAndExclude("beequeen", function(inst)--비-퀸
    AddChanceLoot(inst, {"aos_seed_boss_yellow", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("stalker_atrium", function(inst)--퓨얼위버
+AddPrefabPostInitAndExclude("stalker_atrium", function(inst)--퓨얼위버
    AddChanceLoot(inst, {"aos_seed_boss_black", 2, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("toadstool", function(inst)--토드스툴 
+AddPrefabPostInitAndExclude("toadstool", function(inst)--토드스툴 
    AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("toadstool_dark", function(inst)--비참한 토드스툴  
+AddPrefabPostInitAndExclude("toadstool_dark", function(inst)--비참한 토드스툴  
    AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("klaus", function(inst)--비참한 토드스툴  
+AddPrefabPostInitAndExclude("klaus", function(inst)--비참한 토드스툴  
    AddChanceLoot(inst, {"aos_seed_boss_white", 1, "aos_seed_boss_white", 0.5})
 end)
-AddPrefabPostInit("klaus", function(inst)--클라우스
+AddPrefabPostInitAndExclude("klaus", function(inst)--클라우스
    AddChanceLoot(inst, {"aos_seed_boss_white", 1, "aos_seed_boss_white", 0.5})
 end)
 --중보스 시드 드랍 
-AddPrefabPostInit("minotaur", function(inst)--미노타우르스
+AddPrefabPostInitAndExclude("minotaur", function(inst)--미노타우르스
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
-AddPrefabPostInit("spiderqueen", function(inst)--거미여왕
+AddPrefabPostInitAndExclude("spiderqueen", function(inst)--거미여왕
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
-AddPrefabPostInit("leif", function(inst)--트리가드
+AddPrefabPostInitAndExclude("leif", function(inst)--트리가드
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
-AddPrefabPostInit("deer_red", function(inst)--사슴보석
+AddPrefabPostInitAndExclude("deer_red", function(inst)--사슴보석
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
-AddPrefabPostInit("deer_blue", function(inst)--사슴보석2
+AddPrefabPostInitAndExclude("deer_blue", function(inst)--사슴보석2
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
-AddPrefabPostInit("mossling", function(inst)--모슬링
+AddPrefabPostInitAndExclude("mossling", function(inst)--모슬링
    AddChanceLoot(inst, {"aos_seed_middle", 1})
 end)
-AddPrefabPostInit("lavae", function(inst)--용암이
+AddPrefabPostInitAndExclude("lavae", function(inst)--용암이
    AddChanceLoot(inst, {"aos_seed_middle", 0.2})
 end)
 --오염된 시드 드랍
-AddPrefabPostInit("batcave", function(inst)--박쥐집
+AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("ghost", function(inst)--귀신
+AddPrefabPostInitAndExclude("ghost", function(inst)--귀신
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("spiderden", function(inst)--거미집
+AddPrefabPostInitAndExclude("spiderden", function(inst)--거미집
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("spiderden_2", function(inst)--거미집2
+AddPrefabPostInitAndExclude("spiderden_2", function(inst)--거미집2
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("pigguard", function(inst)--미친 피그맨 
+AddPrefabPostInitAndExclude("pigguard", function(inst)--미친 피그맨 
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("tentacle", function(inst)--텐타클
+AddPrefabPostInitAndExclude("tentacle", function(inst)--텐타클
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("worm", function(inst)--동굴지렁이
+AddPrefabPostInitAndExclude("worm", function(inst)--동굴지렁이
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("firehound", function(inst)--레드하운드 
+AddPrefabPostInitAndExclude("firehound", function(inst)--레드하운드 
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInit("icehound", function(inst)--블루하운드 
+AddPrefabPostInitAndExclude("icehound", function(inst)--블루하운드 
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
 --매우 오염된 시드 드랍
-AddPrefabPostInit("batcave", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
 end)
-AddPrefabPostInit("houndmound", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("houndmound", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
 end)
-AddPrefabPostInit("slurtlehole", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("slurtlehole", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
 end)
-AddPrefabPostInit("spiderden_3", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("spiderden_3", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
 end)
-AddPrefabPostInit("terrorbeak", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("terrorbeak", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
 end)
-AddPrefabPostInit("warg", function(inst)--박쥐집 
+AddPrefabPostInitAndExclude("warg", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1, "aos_seed_black", 1, "aos_seed_black", 1, "aos_seed_black", 1})
 end)
+
+
 
 AddPrefabPostInitAny(function(inst)
    if inst.components.health and inst.components.lootdropper and inst.components.health.maxhealth <= 900000 then
