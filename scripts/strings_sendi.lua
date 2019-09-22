@@ -5,18 +5,18 @@ local STRINGS = GLOBAL.STRINGS
 
 STRINGS.CHARACTER_TITLES.sendi = "센디(인간)"
 STRINGS.CHARACTER_NAMES.sendi = "센디"
-STRINGS.CHARACTER_DESCRIPTIONS.sendi = "*평범한 체력\n*허기를 소모하여 작은 광원효과.\n*전용 회피기와 전용 돌진기[V/V+Sh]\n*불마법과 다양한 전용장비"
-STRINGS.CHARACTER_QUOTES.sendi = "\"원래 세계로 돌아갈 때까지\n저의 여행은 멈추지 않을 거예요!\""
+STRINGS.CHARACTER_DESCRIPTIONS.sendi = "*평범한 체력과 데미지\n*화룡과의 친화 :: 마력을이용한 모닥불 제조\n*허기를 소모한 작은 광원효과.\n\n*전용 회피기와 전용 돌진기[V/V+Sh]\n*까다로운 식성과 수많은 전용장비"
+STRINGS.CHARACTER_QUOTES.sendi = "\"어서 다른분들을 찾으러 가야해요!\""
 
 STRINGS.CHARACTER_TITLES.anan = "아난(늑대)"
 STRINGS.CHARACTER_NAMES.anan = "Anan"
-STRINGS.CHARACTER_DESCRIPTIONS.anan = "*튼튼한 체력\n*허기 수치에 따른 높은 공격력과 스피드\n*사냥꾼 :: 저렴한 덫 레시피와 육포제조\n\n*하운드가 공격하지 않습니다.\n정신력 수치에따라 태그가 몬스터로 변합니다."
-STRINGS.CHARACTER_QUOTES.anan = "\"살기 위해서라면, 어쩔수없는 일이죠.\""
+STRINGS.CHARACTER_DESCRIPTIONS.anan = "*허기에 따른 공격&스피드 증가, 공복 가속\n*사냥꾼 :: 저렴한 덫 레시피와 육포제조\n*악몽연료를 이용해 보석전환\n\n*하운드가 공격하지 않습니다.\n*미칠경우 비선공 동물들이 그를 노립니다."
+STRINGS.CHARACTER_QUOTES.anan = "\"킁,킁.. 낯선 냄세야..\n어서 동료들을 찾아야겠어.\""
 
 STRINGS.CHARACTER_TITLES.tees = "티스(독잇뱀)"
 STRINGS.CHARACTER_NAMES.tees = "Tees"
-STRINGS.CHARACTER_DESCRIPTIONS.tees = "* 연약한 체력\n* 시간차 강력한 독데미지\n* 독잇뱀 :: 저렴한 다트 레시피\n\n*거의 모든 적이 그를 무시합니다\n*타인에게 정신력 오라"
-STRINGS.CHARACTER_QUOTES.tees = "\"우웅.. 여긴 어디야?\""
+STRINGS.CHARACTER_DESCRIPTIONS.tees = "* 연약한 체력과 데미지\n* 시간차 강력한 독데미지\n* 독잇뱀 :: 저렴한 다트 레시피\n\n*보스와 그림자를 제외한 모든 적이 그를 무시합니다\n*타인에게 정신력 오라"
+STRINGS.CHARACTER_QUOTES.tees = "\"우웅.. 다들 어디있는거야?\""
 
 
 STRINGS.NAMES.SENDISEDMASK = "센디의 눈물 마스크"
@@ -95,8 +95,8 @@ STRINGS.RECIPE_DESC.ANAN_DAGGER_WOLF = "이걸 여기서도 만들다니!."
 
 STRINGS.RECIPE_DESC.MEAT_DRIED = "피를 뺐더니.. 양이 줄어버렷네?"
 STRINGS.RECIPE_DESC.SMALLMEAT_DRIED = "양에 기별도 가지 않지만.."
-STRINGS.RECIPE_DESC.SMALLMEAT = "뼈에붙은 고기를 모아봤어."
-STRINGS.RECIPE_DESC.MEAT = "털에붙은 고기를 모아봤어."
+STRINGS.RECIPE_DESC.SMALLMEAT = "털에붙은 고기를 모아봤어."
+STRINGS.RECIPE_DESC.MEAT = "뼈에붙은 고기를 모아봤어."
 STRINGS.RECIPE_DESC.REDGEM = "작은 마술. 굉장하지?" --nightmarefuel
 STRINGS.RECIPE_DESC.BLUEGEM = "작은 마술. 굉장하지?"
 STRINGS.RECIPE_DESC.GREENGEM = "작은 마술. 굉장하지?"

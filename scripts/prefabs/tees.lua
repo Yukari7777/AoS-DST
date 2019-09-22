@@ -105,6 +105,7 @@ end
 local function common_postinit (inst) --정신
 	inst:AddTag("sneakysnake") -- 그림자 몹을 제외한 모든 몹에게서 선공당하지 않음
 	inst:AddTag("aosplayer")
+	inst:AddTag("tees")
 	
 	inst.MiniMapEntity:SetIcon( "tees.tex" )--발견한 자신의 미니맵 이름 
 
@@ -121,6 +122,7 @@ local master_postinit = function(inst)
 	inst:AddTag("bookbuilder")-- 위커바컴의 책을 제조합니다.
 	inst:ListenForEvent("onattackother", onattackother) --독뎀 태그
 	inst:AddTag("poisonous") --독 속성태그 추가
+	
     inst.components.combat.poisonous = true--독 속성태그 추가 진실값
 	
 	inst:AddComponent("aoslevel")--레벨업

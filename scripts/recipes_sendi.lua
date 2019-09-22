@@ -367,19 +367,19 @@ AddRecipe("anan_dagger_wolf",
 { Ingredient("anan_dagger_hard", 1, "images/inventoryimages/anan_dagger_hard.xml"), Ingredient("deerclops_eyeball", 2), Ingredient("bluegem", 10) }, 
 ANANTAB, TECH.SCIENCE_TWO, nil, nil, nil, nil, "anancraft", "images/inventoryimages/anan_dagger_wolf.xml", "anan_dagger_wolf.tex")	
 AddRecipe("anan_meat_dried", 
-{ Ingredient("meat", 1), Ingredient("monstermeat", 1) }, 
+{ Ingredient("meat", 1), Ingredient("monstermeat", 1) }, --큰육포
 ANANTAB, TECH.NONE, nil, nil, nil, nil, "anancraft", nil, nil, nil, "meat_dried")	
-AddRecipe("anan_smallmeat_dried",
+AddRecipe("anan_smallmeat_dried",--작은육포
 { Ingredient("smallmeat", 2) },
 ANANTAB, TECH.NONE, nil, nil, nil, nil, "anancraft", nil, nil, nil, "smallmeat_dried")	
-AddRecipe("anan_smallmeat", 
-{ Ingredient("horn", 1) },
-ANANTAB, TECH.NONE, nil, nil, nil, nil, "anancraft", nil, nil, nil, "smallmeat")	
-AddRecipe("anan_meat", 
-{ Ingredient("beefalowool", 4) }, 
-ANANTAB, TECH.NONE, nil, nil, nil, nil, "anancraft", nil, nil, nil, "meat")	
+AddRecipe("anan_smallmeat", --작은고기
+{ Ingredient("beefalowool", 4) },
+ANANTAB, TECH.NONE, nil, nil, nil, 2, "anancraft", nil, nil, nil, "smallmeat")	
+AddRecipe("anan_meat", --큰고기
+{ Ingredient("horn", 1) }, 
+ANANTAB, TECH.NONE, nil, nil, nil, 2, "anancraft", nil, nil, nil, "meat")	
 AddRecipe("anan_redgem", 
-{ Ingredient("bluegem", 1), Ingredient("nightmarefuel", 5) }, 
+{ Ingredient("bluegem", 1), Ingredient("nightmarefuel", 5) }, --레드젬
 ANANTAB, TECH.NONE, nil, nil, nil, nil, "anancraft", nil, nil, nil, "redgem")	
 AddRecipe("anan_bluegem", 
 { Ingredient("redgem", 1), Ingredient("nightmarefuel", 5) }, 

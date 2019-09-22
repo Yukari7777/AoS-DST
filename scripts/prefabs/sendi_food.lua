@@ -1,4 +1,4 @@
-local CONST = TUNING.SENDI
+local CONST = TUNING.AOS_GENERAL
 local food = {
     test = { -- 템 이름
         foodtype = FOODTYPE.MEAT, -- FOODTYPE.MEAT 고기 | FOODTYPE.VEGGIE 야채 | FOODTYPE.GOODIES 물건
