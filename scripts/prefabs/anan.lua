@@ -8,19 +8,19 @@ local prefabs = {}
 
 local start_inv = {--시작 인벤토리
 
-	"anan_dagger",
-	"meat_dried",
-	"meat_dried",
-	"meat_dried",
-	"meat_dried",
-	"meat_dried",
-	"healingsalve",
-	"healingsalve",
-	
-	"aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
-	"aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
-	"aos_seed","aos_seed","aos_seed","aos_seed","aos_seed"
-	
+    "anan_dagger",
+    "meat_dried",
+    "meat_dried",
+    "meat_dried",
+    "meat_dried",
+    "meat_dried",
+    "healingsalve",
+    "healingsalve",
+    
+    "aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
+    "aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
+    "aos_seed","aos_seed","aos_seed","aos_seed","aos_seed"
+    
 }
 
 local function AnanOnSetOwner(inst)
@@ -61,7 +61,7 @@ local function OverrideOnRemoveEntity(inst)
 end
 
 local function onbecamehuman(inst)
-   inst.components.locomotor:SetExternalSpeedMultiplier(inst, "anan_speed_mod", 1.1) --죽었다 살아날때의 스피드. [스폰 시점인지는 알수없음.]
+   inst.components.locomotor:SetExternalSpeedMultiplier(inst, "anan_speed_mod", 1) --죽었다 살아날때의 스피드. [스폰 시점인지는 알수없음.]
 end
 
 local function onbecameghost(inst)
@@ -131,76 +131,74 @@ local function anan_OnSanitychange(inst) --정신력이 30 이하이면 몬스�
 end
 
 local function anan_Onhungrypuppy(inst) --배고픈강아지 허기수치가 30 미만이면 허기수치가 1로 바뀐다. 
-
-	if inst.components.hunger.current < 50 then
-		inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 1)
-	else
-	if inst.components.hunger.current > 50 then
-		inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
-	end
-		inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
-	end
+    if inst.components.hunger.current < 50 then
+        inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 1)
+    else
+        if inst.components.hunger.current > 50 then
+            inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
+        end
+        inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
+    end
 end
             
 local function common_postinit (inst) --정신
-	--inst:AddTag("valkyrie")--위그장비 제작 가능
-	inst:AddTag("anan")--자신의 태그 
-	inst:AddTag("anancraft")--전용탭추가
-	inst:AddTag("aosplayer")
-	inst.MiniMapEntity:SetIcon( "anan.tex" )--발견한 자신의 미니맵 이름 
+    --inst:AddTag("valkyrie")--위그장비 제작 가능
+    inst:AddTag("anan")--자신의 태그 
+    inst:AddTag("anancraft")--전용탭추가
+    inst:AddTag("aosplayer")
+    inst.MiniMapEntity:SetIcon( "anan.tex" )--발견한 자신의 미니맵 이름 
 
-	inst:AddTag("masterchef")--왈리 
-	inst:AddTag("professionalchef")--왈리
-	inst:AddTag("expertchef")--왈리
-
-	OverrideOnRemoveEntity(inst)
-	inst.AttachAoSClassified = AttachClassified
-	inst.DetachAnanClassified = DetachClassified
+    --inst:AddTag("masterchef")--왈리 
+    --inst:AddTag("professionalchef")--왈리
+    inst:AddTag("expertchef")--왈리
+    
+    OverrideOnRemoveEntity(inst)
+    inst.AttachAoSClassified = AttachClassified
+    inst.DetachAnanClassified = DetachClassified
 end
 
 local master_postinit = function(inst)
-	inst.aos_classified = SpawnPrefab("aos_classified")
-	inst:AddChild(inst.aos_classified)
-	inst.soundsname = "wilson"
+    inst.aos_classified = SpawnPrefab("aos_classified")
+    inst:AddChild(inst.aos_classified)
+    inst.soundsname = "wortox"
 
-	inst:AddComponent("aoslevel")--레벨업
-	inst:AddComponent("aosmana")
+    inst:AddComponent("aoslevel")--레벨업
+    inst:AddComponent("aosbuff")
+    inst:AddComponent("aosmana")
 
-	inst:AddComponent("sanityaura")
-	inst.components.sanityaura.aurafn = CalcSanityAura
-	
-	--inst.components.hunger:SetPercent(0.5)--시작 허기를 50%로 지정함
+    inst:AddComponent("sanityaura")
+    inst.components.sanityaura.aurafn = CalcSanityAura
+    
+    --inst.components.hunger:SetPercent(0.5)--시작 허기를 50%로 지정함
    
-	-- Stats   
-	inst.components.health:SetMaxHealth(CONST.DEFAULT_HEALTH) -- 피
-	inst.components.hunger:SetMax(CONST.DEFAULT_HUNGER) -- 배고팡
-	inst.components.sanity:SetMax(CONST.DEFAULT_SANITY) -- 정신
+    -- Stats   
+    inst.components.health:SetMaxHealth(CONST.DEFAULT_HEALTH) -- 피
+    inst.components.hunger:SetMax(CONST.DEFAULT_HUNGER) -- 배고팡
+    inst.components.sanity:SetMax(CONST.DEFAULT_SANITY) -- 정신
 
-	-- Hunger rate (optional)
-	inst.components.combat.min_attack_period = 0.15--공격속도
-	inst.components.health.fire_damage_scale = 1.5 --불 데미지 배수 
-	inst.components.combat.damagemultiplier = CONST.DEFAULT_DAMAGEMULTIPLIER   --데미지 배수 
-	---[[ 데미지변환[aos 레벨업에서 추가변화있음] 
-	inst.damagemult = CONST.DEFAULT_DAMAGEMULTIPLIER --데미지를 지정 [M]
-	--]]
-	inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE)--허기수치
+    -- Hunger rate (optional)
+    inst.components.combat.min_attack_period = 0.15--공격속도
+    inst.components.health.fire_damage_scale = 1.5 --불 데미지 배수 
+    inst.components.combat.damagemultiplier = CONST.DEFAULT_DAMAGEMULTIPLIER   --데미지 배수 
+    ---[[ 데미지변환[aos 레벨업에서 추가변화있음] 
+    inst.damagemult = CONST.DEFAULT_DAMAGEMULTIPLIER --데미지를 지정 [M]
+    --]]
+    inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE)--허기수치
 
-	inst.OnLoad = onload
-	inst.OnNewSpawn = onload
+    inst.OnLoad = onload
+    inst.OnNewSpawn = onload
 
-	--잠금해제
-	inst:DoTaskInTime(0, function(inst)
-	  inst.components.builder:AddRecipe("birdtrap")--트랩들
-	  inst:PushEvent("unlockrecipe", { recipe = "birdtrap" })
-	end)
-	inst:DoTaskInTime(0, function(inst)
-	  inst.components.builder:AddRecipe("trap_teeth")--트랩들
-	  inst:PushEvent("unlockrecipe", { recipe = "trap_teeth" })
-	end)
-
-	inst:ListenForEvent("hungerdelta", anan_OnHungerDelta)-- 허기에따른 변화 마침코드/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
-	inst:ListenForEvent("sanitydelta", anan_OnSanitychange)--정신에따른 캐릭터 속성 및 능력 테그/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
-	inst:ListenForEvent("hungerdelta", anan_Onhungrypuppy)--30배고픔이하이면 배고픔수치 감소/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
+    --잠금해제
+    inst:DoTaskInTime(0, function(inst)
+     inst.components.builder:AddRecipe("birdtrap")
+     inst.components.builder:AddRecipe("trap_teeth")
+      inst:PushEvent("unlockrecipe", { recipe = "birdtrap" })
+      inst:PushEvent("unlockrecipe", { recipe = "trap_teeth" })
+    end)
+    
+    inst:ListenForEvent("hungerdelta", anan_OnHungerDelta)-- 허기에따른 변화 마침코드/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
+    inst:ListenForEvent("sanitydelta", anan_OnSanitychange)--정신에따른 캐릭터 속성 및 능력 테그/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
+    inst:ListenForEvent("hungerdelta", anan_Onhungrypuppy)--30배고픔이하이면 배고픔수치 감소/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
 
 end
 

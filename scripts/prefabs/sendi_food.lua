@@ -46,7 +46,7 @@ local food = {
       exp = 1,
       
     }, --벼리밀
-	
+    
     milk_strong = {
         foodtype = FOODTYPE.VEGGIE,
         health = 5,
@@ -66,11 +66,11 @@ local food = {
         sanity = 0,
         perishtime = 480,
         tags = {"caffeine", "unfinished", "fuel"},
-		rotten = "sendi_food_cocoa",
+        rotten = "sendi_food_cocoa",
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
         temperatureduration = TUNING.FOOD_TEMP_BRIEF,
-		exp = 2,
+        exp = 2,
       
     }, --코코아 얼음컵
 
@@ -111,7 +111,7 @@ local food = {
         tags = {"preparedfood", "monstermeat", "unfinished", "fuel"},
         rotten = "sendi_food_wolfsteak_cooked",
         floater = {"small", nil, nil},
-		exp = 2,
+        exp = 2,
     },
 
     wolfsteak_cooked = { --조리된 울프스테이크
@@ -247,7 +247,7 @@ local food = {
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-		exp = 2,
+        exp = 2,
       
     }, -- 베리 바나나 푸딩
    
@@ -261,7 +261,7 @@ local food = {
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP * 2,
    
-		exp = 4,
+        exp = 4,
     }, -- 바나나 푸딩
    
    rice_eel = {
@@ -297,14 +297,14 @@ local food = {
         health = 10,
         hunger = 50,
         sanity = 0,
-		temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
         perishtime = 5320,
         tags = {"caffeine", "monstermeat", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
       exp = 4,
     }, -- 소세지빵
-	
-	bread_muffin = { 
+    
+    bread_muffin = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 5,
         hunger = 40,
@@ -316,21 +316,21 @@ local food = {
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
       exp = 3,
     },-- 버터-풀 머핀 반죽  
-	
-	
-	bread_muffin_cooked = {
+    
+    
+    bread_muffin_cooked = {
         foodtype = FOODTYPE.MEAT,
         health = 20,
         hunger = 50,
         sanity = 5,
-		temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
         perishtime = 3360,
         tags = {"caffeine", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
       exp = 5,
     }, -- 버터-풀 머핀
-	
-	bread_but = { 
+    
+    bread_but = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
         hunger = 52,
@@ -340,36 +340,36 @@ local food = {
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-		exp = 4,
+        exp = 4,
 
-		
+        
     },-- 호토리식빵 반죽 
-	
-	bread_but_cooked = {
+    
+    bread_but_cooked = {
         foodtype = FOODTYPE.MEAT,
         health = 5,
         hunger = 62,
         sanity = 5,
-		temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
         perishtime = 6720,
         tags = {"caffeine", "monstermeat", "sendistaple", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
-		exp = 5,
+        exp = 5,
     }, -- 호토리 식빵
 
-	rice_tuna = {
+    rice_tuna = {
         foodtype = FOODTYPE.MEAT,
         health = 5,
         hunger = 45,
         sanity = 0,
-		temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
         perishtime = 3360,
         tags = {"caffeine", "unfinished", "fuel"},
         floater = {"small", nil, nil},
-		exp = 4,
+        exp = 4,
     }, -- 참치와 밥 
-	
-	rice_tuna_cooked = {
+    
+    rice_tuna_cooked = {
         foodtype = FOODTYPE.MEAT,
         health = 20,
         hunger = 55,
@@ -380,9 +380,9 @@ local food = {
         floater = {"small", nil, nil},
       exp = 8,
     }, -- 참치 비빔밥
-	-- 5차 추가음식
-	
-	chicken = { 
+    -- 5차 추가음식
+    
+    chicken = { 
         foodtype = FOODTYPE.VEGGIE,
         health = -10,
         hunger = 60,
@@ -395,7 +395,7 @@ local food = {
       exp = 3,
     },-- 치킨
 
-	chicken_cooked = { 
+    chicken_cooked = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 20,
         hunger = 70,
@@ -408,7 +408,7 @@ local food = {
       exp = 6,
     },-- 치킨완성 
 
-	pie_berry = { 
+    pie_berry = { 
         foodtype = FOODTYPE.VEGGIE,
         health = -5,
         hunger = 50,
@@ -421,7 +421,7 @@ local food = {
       exp = 2,
     },-- 베리 파이 
 
-	pie_berry_cooked = { 
+    pie_berry_cooked = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 5,
         hunger = 60,
@@ -434,7 +434,7 @@ local food = {
       exp = 5,
     },-- 베리파이 완성
 
-	dumpling = { 
+    dumpling = { 
         foodtype = FOODTYPE.VEGGIE,
         health = -10,
         hunger = 54,
@@ -447,7 +447,7 @@ local food = {
       exp = 3,
     },-- 만두 
 
-	dumpling_cooked = { 
+    dumpling_cooked = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
         hunger = 64,
@@ -460,11 +460,11 @@ local food = {
       exp = 6,
     },-- 만두 완성 
 
-	
-	
+    
+    
 
-	
-	
+    
+    
    
    
 }
@@ -547,29 +547,29 @@ function MakeFood(data)
         inst.components.edible.temperaturedelta = data.temperature or 0
         inst.components.edible.temperatureduration = data.temperatureduration or 0
         
-		
-		local function OnEaten(inst, eater) 
+        
+        local function OnEaten(inst, eater) 
             local uppername = eater.prefab == "wilson" and "GENERIC" or string.upper(eater.prefab)
-			
+            
             if data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 센디의 경험치가..
                 eater.components.aoslevel:AddExp(data.exp) -- 올린다 
-				
+                
             elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 아난의 경험치가..
                 eater.components.aoslevel:AddExp(data.exp) --올린다 
 
             elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 티스의 경험치가.. 
                 eater.components.aoslevel:AddExp(data.exp) --올린다
-				
+                
             end
 
-			
-			
-			
+            
+            
+            
             if data.oneatenfn ~= nil then
                 data.oneatenfn(inst, eater)
             end
         end
-		
+        
         inst.components.edible:SetOnEatenFn(OnEaten)
         inst.aosmana = data.mana
          
