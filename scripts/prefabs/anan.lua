@@ -15,7 +15,10 @@ local start_inv = {--시작 인벤토리
 	"meat_dried",
 	"meat_dried",
 	"healingsalve",
-	"healingsalve",
+    "healingsalve",
+    "aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
+	"aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed","aos_seed",
+	"aos_seed","aos_seed","aos_seed","aos_seed","aos_seed"
 }
 
 local function AnanOnSetOwner(inst)
