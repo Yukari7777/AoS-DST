@@ -8,7 +8,7 @@ local prefabs = {
 }
 
 local start_inv = {--시작 인벤토리
-    "spear",
+    "tees_pickaxe",
     "taffy",
     "taffy",
     "taffy",
@@ -125,18 +125,24 @@ local master_postinit = function(inst)
     
     inst.components.combat.poisonous = true--독 속성태그 추가 진실값
     
-	inst:AddComponent("aoslevel")--레벨업]
+	inst:AddComponent("aoslevel")--레벨업
 	inst:AddComponent("aosbuff")
-    inst:AddComponent("aosmana")
-
+    --inst:AddComponent("aosmana")
+	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
+	
     inst:AddComponent("sanityaura")
     inst.components.sanityaura.aurafn = CalcSanityAura
+	
+	inst.components.temperature.maxtemp = 70 --체온이 이 이상 올라가지않음.
+	inst.components.temperature:SetOverheatHurtRate(0.0000000000001)--체온이 71도이상일때 입는 대미지
+	inst.components.temperature:SetFreezingHurtRate(2)--내손얼일때 입는 데미지
+	
     -- Stats    
     inst.components.health:SetMaxHealth(CONST.DEFAULT_HEALTH) -- 피
     inst.components.hunger:SetMax(CONST.DEFAULT_HUNGER) -- 배고팡
     inst.components.sanity:SetMax(CONST.DEFAULT_SANITY) -- 정신
     
-    inst.components.health.fire_damage_scale = 0.1 --불 데미지 배수 
+    inst.components.health.fire_damage_scale = 1.3 --불 데미지 배수 
     inst.components.combat.damagemultiplier = CONST.DEFAULT_DAMAGEMULTIPLIER    --데미지 배수 
     
     inst.components.hunger.hungerrate = 1.2 * TUNING.WILSON_HUNGER_RATE --허기수치

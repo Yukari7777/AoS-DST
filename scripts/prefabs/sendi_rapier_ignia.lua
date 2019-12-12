@@ -123,7 +123,9 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
     inst.entity:AddNetwork()
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_rapier_ignia.tex")	 
+	
     MakeInventoryPhysics(inst)
 
     inst.entity:AddLight()

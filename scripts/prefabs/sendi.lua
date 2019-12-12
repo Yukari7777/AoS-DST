@@ -225,13 +225,18 @@ local master_postinit = function(inst)
 
     inst:AddComponent("reader")
     inst:AddComponent("aosmana")
-    inst:AddComponent("sendiskill")
+    inst:AddComponent("sendiskill")--센디스킬
     inst:AddComponent("aosbuff")
-    inst:AddComponent("aoslevel")--레벨업
+    inst:AddComponent("aoslevel")--레벨업 컴포넌트
+	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
     
     inst:ListenForEvent("oneat", eatunfinishedfoodfn) -- 먹었을 때
     NoEatCookPotFood(inst)
     
+	inst.components.temperature.maxtemp = 71 --체온이 이 이상 올라가지않음.
+	inst.components.temperature:SetOverheatHurtRate(0.3)--체온이 71도이상일때 입는 대미지
+	inst.components.temperature:SetFreezingHurtRate(1.5)--내손얼일때 입는 데미지
+	
     --------------------------- 허기 불꽃 시스템의 마침점 ------------------------------------
     inst:WatchWorldState("phase", sendi_light)
     inst:ListenForEvent("hungerdelta", sendi_light)

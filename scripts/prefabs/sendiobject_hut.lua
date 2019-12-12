@@ -36,6 +36,7 @@ local function ontakefuel(inst)
     inst.components.talker:Say((math.floor(inst.components.fueled.currentfuel/100)).."/"..(math.floor(inst.components.fueled.maxfuel/100)))
 	local pos = Vector3(inst.Transform:GetWorldPosition())--[[;pos.y = pos.y + 2--]]
 	SpawnPrefab("poopcloud").Transform:SetPosition(pos:Get())
+	
 end
 
 local function onhammered(inst, worker)
@@ -184,7 +185,16 @@ end
 
 local function fn()
 	local inst = CreateEntity()
-
+	
+	if inst.Light == nil then --발광
+		local light = inst.entity:AddLight()
+		light:SetIntensity(0.8) --클수록 밝음
+		light:SetRadius(2) --빛의 반경, 클수록 퍼짐
+		light:SetFalloff(0.3) --빛의 퍼짐 정도, 작을수록 퍼짐
+		light:SetColour(121/255,188/255,255/255) --빛의 색상
+		light:Enable(true)
+	end	
+	
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddSoundEmitter()
@@ -243,13 +253,33 @@ local function fn()
     inst.components.sleepingbag.onsleep = onsleep
     inst.components.sleepingbag.onwake = onwake
     inst.components.sleepingbag.dryingrate = math.max(0, -TUNING.SLEEP_WETNESS_PER_TICK / TUNING.SLEEP_TICK_PERIOD)
+	---[[태크 
+	inst:DoPeriodicTask(0, function()
+		local x, y, z = inst.Transform:GetWorldPosition()
+		local inrange = TheSim:FindEntities(x, y, z, 5, { "aosplayer" } )
+		local outrange = TheSim:FindEntities(x, y, z, 6, { "aosplayer" } )
+		for k, v in pairs(outrange) do
+			v:RemoveTag("aosproducer")
 
+		end
+		for k, v in pairs(inrange) do
+			v:AddTag("aosproducer")
+			
+		end
+		for k, v in pairs(outrange) do
+			if v.player_classified ~= nil then
+				v.player_classified.forcerecipeupdate:set(v:HasTag("aosproducer"))
+			end
+		end
+	end)
+	--]]
 	inst:ListenForEvent("onbuilt", onbuilt)
 	
 	MakeHauntableWork(inst)
 	
 	inst:ListenForEvent("burntup", onhammered) --태워버린다.
 	MakeMediumBurnable(inst, nil, nil, true)--태워버린다.
+	
     return inst
 end
 

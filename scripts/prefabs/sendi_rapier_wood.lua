@@ -64,7 +64,9 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
 	inst.entity:AddNetwork()
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_rapier_wood.tex")	 
+	
     MakeInventoryPhysics(inst)
 
     inst.AnimState:SetBank("sendi_rapier_wood")

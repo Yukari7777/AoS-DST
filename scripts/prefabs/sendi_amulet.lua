@@ -102,7 +102,9 @@ local function fn()
 	local trans = inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_amulet.tex")	 
+	
 	MakeInventoryPhysics(inst)
 
     inst.AnimState:SetBank("amulets")

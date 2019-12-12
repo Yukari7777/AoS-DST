@@ -28,7 +28,7 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = -1,
         hunger = 5,
-        sanity = 5,
+        sanity = 5, mana = 5,
         perishtime = TUNING.PERISH_SLOW,
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"}, -- caffeine 태그 : 플레이어가 아닌 엔티티가 먹으면 디버프가 걸리는 이스터 에그
         floater = {"small", nil, nil},
@@ -50,8 +50,9 @@ local food = {
     milk_strong = {
         foodtype = FOODTYPE.VEGGIE,
         health = 5,
-        hunger = 7,
-        sanity = 0,
+        hunger = 5,
+        sanity = 0, mana = 10,
+		
         perishtime = TUNING.PERISH_SLOW,
         tags = {"cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
@@ -78,27 +79,27 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = 20,
         hunger = 35,
-        sanity = 15,
+        sanity = 15, mana = 15,
         perishtime = 2700,
         tags = {"caffeine", "cattoy", "preparedfood", "sendistaple", "fuel"}, -- preparedfood 태그 : 오븐(쿡팟)에 조리된 음식
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
         temperatureduration = TUNING.FOOD_TEMP_BRIEF,
-      exp = 4,
+      exp = 2,
     },-- 오븐에 구운 코코아 컵
 
     cocoa_cold = { 
         foodtype = FOODTYPE.VEGGIE,
         health = 7,
         hunger = 35,
-        sanity = 30,
+        sanity = 30, mana = 30,
         perishtime = 2700,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "ovencold", "preparedfood", "sendifood" ,"fuel"}, -- ovencold 태그 : 오븐에 의해 차가워진 음식
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
         temperatureduration = TUNING.FOOD_TEMP_AVERAGE,
-      exp = 4,
+      exp = 2,
         asset = "cocoa", -- 기본 코코아(sendi_food_cocoa) 이미지를 사용
     },-- 냉오븐에 들어간 코코아
 
@@ -118,12 +119,12 @@ local food = {
         foodtype = FOODTYPE.MEAT,
         health = 10,
         hunger = 65,
-        sanity = 10,
+        sanity = 10, mana = 10,
         perishtime = 3360,
         cooktime = 2,
         tags = {"preparedfood", "monstermeat", "sendimeat", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
-      exp = 4,
+      exp = 3,
     },--울프스테이크
    
    --2차 추가 음식들
@@ -131,15 +132,240 @@ local food = {
    bread = {
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
-        hunger = 20,
-        sanity = 5,
+        hunger = 30,
+        sanity = 5, mana = 5,
         perishtime = 3360,
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
-      exp = 2,
+      exp = 1,
       
     }, --빵
+  
+   pudding_light_berrybanana = {
+        foodtype = FOODTYPE.VEGGIE,
+        health = -5,
+        hunger = 15,
+        sanity = -10,
+        perishtime = 1440,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+        exp = 2,
+      
+    }, -- 베리 바나나 푸딩
    
+   pudding_light_berrybanana_cooked = {
+        foodtype = FOODTYPE.VEGGIE,
+        health = 15,
+        hunger = 35,
+        sanity = 30,
+        perishtime = 3360,
+        tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "ovencold", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP * 2,
+   
+        exp = 3,
+    }, -- 바나나 푸딩
+   
+   rice_eel = {
+        foodtype = FOODTYPE.MEAT,
+        health = 5,
+        hunger = 45,
+        sanity = -5,
+        perishtime = 2660,   
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP, 
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+      exp = 1,
+    }, -- 장어와 밥
+   
+   rice_eel_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 30,
+        hunger = 55,
+        sanity = 10, mana = 10,
+      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        perishtime = 5320,
+        tags = {"caffeine", "monstermeat", "sendifood", "sendimeat", "fuel"}, 
+        floater = {"small", nil, nil},
+      exp = 6,
+    }, -- 장어 덮밥
+   
+   
+   ---------3차 음식
+ 
+ 
+   bread_sausage = {
+        foodtype = FOODTYPE.MEAT,
+        health = 10,
+        hunger = 50,
+        sanity = 0,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        perishtime = 5320,
+        tags = {"caffeine", "monstermeat", "sendistaple", "fuel"},
+        floater = {"small", nil, nil},
+      exp = 3,
+    }, -- 소세지빵
+    
+    bread_muffin = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = 5,
+        hunger = 40,
+        sanity = -5,
+        perishtime = 1440,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"}, -- ovencold 태그 : 오븐에 의해 차가워진 음식
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 1,
+    },-- 버터-풀 머핀 반죽  
+    
+    
+    bread_muffin_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 20,
+        hunger = 50,
+        sanity = 5, mana = 5,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        perishtime = 3360,
+        tags = {"caffeine", "sendifood", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+      exp = 3,
+    }, -- 버터-풀 머핀
+    
+    bread_but = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = 0,
+        hunger = 52,
+        sanity = -5,
+        perishtime = 2400,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+        exp = 2,
+
+        
+    },-- 호토리식빵 반죽 
+    
+    bread_but_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 5,
+        hunger = 62,
+        sanity = 5, mana = 5,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+        perishtime = 6720,
+        tags = {"caffeine", "monstermeat", "sendistaple", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+        exp = 4,
+    }, -- 호토리 식빵
+
+    rice_tuna = {
+        foodtype = FOODTYPE.MEAT,
+        health = 5,
+        hunger = 45,
+        sanity = 0,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+        perishtime = 3360,
+        tags = {"caffeine", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        exp = 2,
+    }, -- 참치와 밥 
+    
+    rice_tuna_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 20,
+        hunger = 55,
+        sanity = 5, mana = 5,
+      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        perishtime = 6720,
+        tags = {"caffeine", "sendimeat", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+      exp = 6,
+    }, -- 참치 비빔밥
+    -- 5차 추가음식
+    
+    chicken = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = -10,
+        hunger = 60,
+        sanity = -0,
+        perishtime = 3360,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 1,
+    },-- 치킨
+
+    chicken_cooked = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = 20,
+        hunger = 70,
+        sanity = 0,
+        perishtime = 6720,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 3,
+    },-- 치킨완성 
+
+    pie_berry = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = -5,
+        hunger = 50,
+        sanity = -5,
+        perishtime = 2660,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 1,
+    },-- 베리 파이 
+
+    pie_berry_cooked = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = 5,
+        hunger = 60,
+        sanity = 20, mana = 20,
+        perishtime = 5320,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "preparedfood", "sendifood", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 3,
+    },-- 베리파이 완성
+
+    dumpling = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = -10,
+        hunger = 54,
+        sanity = -5,
+        perishtime = 2400,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 2,
+    },-- 만두 
+
+    dumpling_cooked = { 
+        foodtype = FOODTYPE.VEGGIE,
+        health = 0,
+        hunger = 64,
+        sanity = 0,
+        perishtime = 5600,
+        cooktime = .5,
+        tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+      exp = 6,
+    },-- 만두 완성 
+
+    --지하음식
+	
+	
    salad_banana = {
         foodtype = FOODTYPE.VEGGIE,
         health = 15,
@@ -149,14 +375,14 @@ local food = {
       temperature = TUNING.COLD_FOOD_BONUS_TEMP, -- 시원한 음식에는 TUNING.COLD_FOOD_BONUS_TEMP
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
-      exp = 4,
+      exp = 2,
     }, --이끼 바나나 샐러드,
    
    juice_light_berry = {
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
         hunger = 15,
-        sanity = 15,
+        sanity = 15, mana = 15,
         perishtime = 1900,
       temperature = TUNING.COLD_FOOD_BONUS_TEMP,
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"},
@@ -175,7 +401,7 @@ local food = {
                 light.components.spell:StartSpell()
             end
         end,
-      exp = 4,
+      exp = 2,
       
     }, -- 빛나는 베리 주스
    
@@ -187,14 +413,14 @@ local food = {
         perishtime = 2660,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
-      exp = 6,
+      exp = 2,
     }, -- 조리전의 빛나는 베리 파이
    
    pie_light_berry_cooked = {
         foodtype = FOODTYPE.VEGGIE,
         health = 10,
         hunger = 65,
-        sanity = 30,
+        sanity = 30, mana = 30,
         perishtime = 5320,
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
@@ -212,7 +438,7 @@ local food = {
                 light.components.spell:StartSpell()
             end
         end,
-      exp = 9,
+      exp = 5,
     }, -- 빛나는 베리 파이
    
    cake_banana = {
@@ -223,250 +449,58 @@ local food = {
         perishtime = 2660,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
-      exp = 4,
+      exp = 2,
     }, -- 바나나 반죽
       
    cake_banana_cooked = {
         foodtype = FOODTYPE.VEGGIE,
         health = 10,
         hunger = 42,
-        sanity = 20,
+        sanity = 20, mana = 20,
         perishtime = 5320,
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
-      exp = 8,
-  }, -- 바나나 롤 케익
-
-   pudding_light_berrybanana = {
-        foodtype = FOODTYPE.VEGGIE,
-        health = -5,
-        hunger = 32,
-        sanity = -10,
-        perishtime = 1440,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-        exp = 2,
-      
-    }, -- 베리 바나나 푸딩
-   
-   pudding_light_berrybanana_cooked = {
-        foodtype = FOODTYPE.VEGGIE,
-        health = 15,
-        hunger = 42,
-        sanity = 30,
-        perishtime = 3360,
-        tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "ovencold", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP * 2,
-   
-        exp = 4,
-    }, -- 바나나 푸딩
-   
-   rice_eel = {
-        foodtype = FOODTYPE.MEAT,
-        health = 5,
-        hunger = 45,
-        sanity = -5,
-        perishtime = 2660,   
-        temperature = TUNING.HOT_FOOD_BONUS_TEMP, 
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-      exp = 6,
-    }, -- 장어와 밥
-   
-   rice_eel_cooked = {
-        foodtype = FOODTYPE.MEAT,
-        health = 30,
-        hunger = 55,
-        sanity = 10,
-      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
-        perishtime = 5320,
-        tags = {"caffeine", "monstermeat", "sendifood", "sendimeat", "fuel"}, 
-        floater = {"small", nil, nil},
-      exp = 12,
-    }, -- 장어 덮밥
-   
-   
-   ---------3차 음식
- 
- 
-   bread_sausage = {
-        foodtype = FOODTYPE.MEAT,
-        health = 10,
-        hunger = 50,
-        sanity = 0,
-        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
-        perishtime = 5320,
-        tags = {"caffeine", "monstermeat", "sendistaple", "fuel"},
-        floater = {"small", nil, nil},
       exp = 4,
-    }, -- 소세지빵
+  }, -- 바나나 롤 케익
     
-    bread_muffin = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = 5,
-        hunger = 40,
-        sanity = -5,
-        perishtime = 1440,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"}, -- ovencold 태그 : 오븐에 의해 차가워진 음식
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 3,
-    },-- 버터-풀 머핀 반죽  
-    
-    
-    bread_muffin_cooked = {
-        foodtype = FOODTYPE.MEAT,
-        health = 20,
-        hunger = 50,
-        sanity = 5,
-        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
-        perishtime = 3360,
-        tags = {"caffeine", "sendifood", "preparedfood", "fuel"},
-        floater = {"small", nil, nil},
-      exp = 5,
-    }, -- 버터-풀 머핀
-    
-    bread_but = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = 0,
-        hunger = 52,
-        sanity = -5,
-        perishtime = 2400,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-        exp = 4,
+---6차 음식
 
-        
-    },-- 호토리식빵 반죽 
-    
-    bread_but_cooked = {
-        foodtype = FOODTYPE.MEAT,
-        health = 5,
-        hunger = 62,
-        sanity = 5,
-        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
-        perishtime = 6720,
-        tags = {"caffeine", "monstermeat", "sendistaple", "preparedfood", "fuel"},
-        floater = {"small", nil, nil},
-        exp = 5,
-    }, -- 호토리 식빵
-
-    rice_tuna = {
-        foodtype = FOODTYPE.MEAT,
-        health = 5,
-        hunger = 45,
-        sanity = 0,
-        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
-        perishtime = 3360,
-        tags = {"caffeine", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-        exp = 4,
-    }, -- 참치와 밥 
-    
-    rice_tuna_cooked = {
-        foodtype = FOODTYPE.MEAT,
-        health = 20,
-        hunger = 55,
-        sanity = 5,
-      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
-        perishtime = 6720,
-        tags = {"caffeine", "sendimeat", "preparedfood", "fuel"},
-        floater = {"small", nil, nil},
-      exp = 8,
-    }, -- 참치 비빔밥
-    -- 5차 추가음식
-    
-    chicken = { 
+       tanghuru_berry = {
         foodtype = FOODTYPE.VEGGIE,
-        health = -10,
-        hunger = 60,
-        sanity = -0,
-        perishtime = 3360,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 3,
-    },-- 치킨
-
-    chicken_cooked = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = 20,
-        hunger = 70,
-        sanity = 0,
-        perishtime = 6720,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 6,
-    },-- 치킨완성 
-
-    pie_berry = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = -5,
-        hunger = 50,
-        sanity = -5,
-        perishtime = 2660,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 2,
-    },-- 베리 파이 
-
-    pie_berry_cooked = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = 5,
-        hunger = 60,
-        sanity = 20,
+        health = -2,
+        hunger = 15,
+        sanity = 15, mana = 15,
         perishtime = 5320,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "preparedfood", "sendifood", "fuel"},
+        tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 5,
-    },-- 베리파이 완성
-
-    dumpling = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = -10,
-        hunger = 54,
-        sanity = -5,
-        perishtime = 2400,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 1,
+  }, -- 베리 탕후루
+    
+       stew_beep = {
+        foodtype = FOODTYPE.MEAT,
+        health = -5,
+        hunger = 30,
+        sanity = 5, mana = 5,
+        perishtime = 5320,
+        tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 3,
-    },-- 만두 
-
-    dumpling_cooked = { 
-        foodtype = FOODTYPE.VEGGIE,
-        health = 0,
-        hunger = 64,
-        sanity = 0,
-        perishtime = 5600,
-        cooktime = .5,
-        tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
-        floater = {"small", nil, nil},
-        temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-      exp = 6,
-    },-- 만두 완성 
-
-    
-    
-
-    
-    
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 1,
+  }, -- 차가운 스튜 
    
-   
+       stew_beep_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 20,
+        hunger = 65,
+        sanity = 5, mana = 5,
+        perishtime = 5320,
+         tags = {"caffeine", "preparedfood", "meat", "sendimeat", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 2,
+  }, -- 비프 스튜 
 }
 
 for k, v in pairs(food) do 

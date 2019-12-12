@@ -2,7 +2,7 @@
 
 PrefabFiles = {
 ---[[센디 전용 아이템등을 추가
-    "aos_classified",
+	"aos_classified",
     "sendi",
     "sendi_none",
     --------캐릭터요소---------
@@ -26,6 +26,8 @@ PrefabFiles = {
     "sendi_ovenfire_fx", -- 센디 오븐의 불꽃이펙트
     "sendiobject_hut", -- 센디 오두막
     "sendiobject_warehouse", -- 센디 창고
+	"sendiobject_icebox",--식량고
+	"sendiobject_saltbox",--식량고	
     -------오브젝트[오븐]-------
     "aos_seed",
     -------시드---------------
@@ -45,6 +47,10 @@ PrefabFiles = {
 ---[[ 티스
     "tees",
     "tees_none",
+	---
+	"tees_pickaxe",
+	"tees_pickaxe2",
+	"tees_pickaxe3",
 --]]
 }
 
@@ -126,13 +132,25 @@ Assets = {
     Asset("ANIM", "anim/sendi_oven_fire.zip"),
     Asset("ANIM", "anim/sendi_oven_fire_cold.zip"),
     Asset("ATLAS", "images/inventoryimages/sendi_oven.xml"),
+	
+	---[[오브젝트
+	
     --------센디오븐
     Asset( "IMAGE", "images/inventoryimages/sendiobject_hut.tex"), 
     Asset( "ATLAS", "images/inventoryimages/sendiobject_hut.xml"),
     --------센디의 오두막
     Asset( "IMAGE", "images/inventoryimages/sendiobject_warehouse.tex"), 
     Asset( "ATLAS", "images/inventoryimages/sendiobject_warehouse.xml"),
-    --------센디의 창고
+    --------식량고
+    Asset( "IMAGE", "images/inventoryimages/sendiobject_icebox.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendiobject_icebox.xml"),	
+    Asset("ANIM", "anim/sendiobject_icebox.zip"),	
+	--
+    Asset( "IMAGE", "images/inventoryimages/sendiobject_saltbox.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendiobject_saltbox.xml"),	
+    Asset("ANIM", "anim/sendiobject_saltbox.zip"),	
+	--]]
+	
     --Asset("ANIM", "anim/csmana.zip"),
     Asset("ANIM", "anim/mana_sendi.zip"),
     Asset("ANIM", "anim/mana_anan.zip"),
@@ -148,6 +166,7 @@ Assets = {
     Asset( "IMAGE", "images/inventoryimages/aos_seed_black.tex"), 
     Asset( "ATLAS", "images/inventoryimages/aos_seed_black.xml"),
     --------------------- 제작시드
+
     Asset( "IMAGE", "images/inventoryimages/aos_seed_boss_black.tex"), 
     Asset( "ATLAS", "images/inventoryimages/aos_seed_boss_black.xml"),
     
@@ -273,6 +292,16 @@ Assets = {
     Asset( "IMAGE", "images/inventoryimages/sendi_food_dumpling_cooked.tex"), --만두완성
     Asset( "ATLAS", "images/inventoryimages/sendi_food_dumpling_cooked.xml"),    
     
+	--6차 전용음식
+
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_tanghuru_berry.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_tanghuru_berry.xml"),   --탕후루베리
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_stew_beep.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_stew_beep.xml"),    
+	--스튜
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_stew_beep_cooked.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_stew_beep_cooked.xml"),    --비프스튜
+	
     --------------------- 전용 음식    
     
     
@@ -360,13 +389,59 @@ Assets = {
     
     Asset( "IMAGE", "bigportraits/tees_none.tex" ),
     Asset( "ATLAS", "bigportraits/tees_none.xml" ),
-    
-    
+	
+	Asset( "IMAGE", "images/inventoryimages/teestab.tex"),
+    Asset( "ATLAS", "images/inventoryimages/teestab.xml"),
+	--독잇뱀 탭
+	Asset( "IMAGE", "images/inventoryimages/tees_pickaxe.tex"),
+    Asset( "ATLAS", "images/inventoryimages/tees_pickaxe.xml"),
+    --독잇뱀의 낫 tees_pickaxe
+	Asset( "IMAGE", "images/inventoryimages/tees_pickaxe2.tex"),
+    Asset( "ATLAS", "images/inventoryimages/tees_pickaxe2.xml"),
+    --독잇뱀의 낫2 tees_pickaxe
+	Asset( "IMAGE", "images/inventoryimages/tees_pickaxe3.tex"),
+    Asset( "ATLAS", "images/inventoryimages/tees_pickaxe3.xml"),
+    --독잇뱀의 낫3 tees_pickaxe    
     ---장비추가
-
+	
+	Asset( "IMAGE", "images/inventoryimages/aostab.tex"),
+    Asset( "ATLAS", "images/inventoryimages/aostab.xml"),
+	
+	Asset( "IMAGE", "images/inventoryimages/oventab.tex"),
+    Asset( "ATLAS", "images/inventoryimages/oventab.xml"),
+		
+	--AOS탭
 
 --]]
 }
+
+---[[아이콘 만들기. 장비 추가할때마다 추가할것
+AddMinimapAtlas("images/inventoryimages/sendiobject_icebox.xml")
+AddMinimapAtlas("images/inventoryimages/sendiobject_hut.xml")
+AddMinimapAtlas("images/inventoryimages/sendiobject_warehouse.xml")
+AddMinimapAtlas("images/inventoryimages/sendiobject_saltbox.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_oven.xml")
+
+AddMinimapAtlas("images/inventoryimages/sendipack.xml")
+AddMinimapAtlas("images/inventoryimages/sendisedmask.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_hat_crown.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_hat_goggles.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_hat_spider.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_armor_01.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_armor_02.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_rapier_wood.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_rapier.xml")
+AddMinimapAtlas("images/inventoryimages/sendi_rapier_ignia.xml")
+
+AddMinimapAtlas("images/inventoryimages/anan_dagger.xml")
+AddMinimapAtlas("images/inventoryimages/anan_dagger_hard.xml")
+AddMinimapAtlas("images/inventoryimages/anan_dagger_wolf.xml")
+
+AddMinimapAtlas("images/inventoryimages/tees_pickaxe.xml")
+AddMinimapAtlas("images/inventoryimages/tees_pickaxe2.xml")
+AddMinimapAtlas("images/inventoryimages/tees_pickaxe3.xml")
+
+--]]
 AddMinimapAtlas("images/map_icons/sendi.xml")
 AddMinimapAtlas("images/map_icons/anan.xml")
 AddMinimapAtlas("images/map_icons/tees.xml")
@@ -513,7 +588,7 @@ function TESTFUNCAAA(inst)
    print (inst.name)
 end
 
-local mammalia = {"pigman", "bunnyman", "deerclops", "bearger", "klaus", "krampus", "minotaur", "deer_red", "deer_blue", "hound", "firehound", "icehound", "wage", "koalefant_winter", "koalefant_summer", "walrus", "beefalo", "monkey", "lightninggoat", "spat", "rabbit", "catcoon", "bat", "deer"} -- 포유류인 경우 리스트
+local mammalia = {"pigman", "bunnyman", "deerclops", "bearger", "klaus", "krampus", "minotaur", "deer_red", "deer_blue", "hound", "firehound", "icehound", "wage", "koalefant_winter", "koalefant_summer", "walrus", "beefalo", "monkey", "lightninggoat", "spat", "rabbit", "catcoon", "deer", "mole"} -- 포유류인 경우 리스트
 
 local function AddChanceLoot(inst, loots)
     if inst.components.health ~= nil and inst.components.lootdropper ~= nil then
@@ -525,7 +600,7 @@ local function AddChanceLoot(inst, loots)
             for i = 0, 2 do
                 if inst.components.health.maxhealth >= 1000 * i then
                     inst.components.lootdropper:AddChanceLoot("sendi_food_milk_strong", 1)
-                    inst.components.lootdropper:AddChanceLoot("bat", 0.3) --박쥐를 스폰시킨다.
+                    inst.components.lootdropper:AddChanceLoot("sendi_food_milk_strong", 0.3) --박쥐를 스폰시킨다.
                 end
             end
         end
@@ -543,19 +618,16 @@ end
 
 --보스 시드 드랍
 AddPrefabPostInitAndExclude("deerclops",  --[[대상 몬스터 스폰명]] function(inst)
-   AddChanceLoot(inst, {"aos_seed_boss_white", 0.5, "aos_seed_boss_sky", 1}) -- (아이템 스폰명), (확률) 순으로 적으면 됨
+   AddChanceLoot(inst, {"aos_seed_boss_white", 0.3, "aos_seed_boss_sky", 1}) -- (아이템 스폰명), (확률) 순으로 적으면 됨
 end)
 AddPrefabPostInitAndExclude("dragonfly", function(inst)--드래곤파리
    AddChanceLoot(inst, {"aos_seed_boss_red", 1, "aos_seed_boss_white", 0.5})
 end)
 AddPrefabPostInitAndExclude("bearger", function(inst)--베어거
-   AddChanceLoot(inst, {"aos_seed_boss_autumn", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_autumn", 1, "aos_seed_boss_white", 0.2})
 end)
 AddPrefabPostInitAndExclude("moose", function(inst)--무스구스
-   AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.5})
-end)
-AddPrefabPostInitAndExclude("moose", function(inst)--무스구스
-   AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.2})
 end)
 AddPrefabPostInitAndExclude("antlion", function(inst)--개미사자
    AddChanceLoot(inst, {"aos_seed_boss_orange", 1, "aos_seed_boss_white", 0.5})
@@ -580,7 +652,7 @@ AddPrefabPostInitAndExclude("klaus", function(inst)--클라우스
 end)
 --중보스 시드 드랍 
 AddPrefabPostInitAndExclude("minotaur", function(inst)--미노타우르스
-   AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
+   AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.4})
 end)
 AddPrefabPostInitAndExclude("spiderqueen", function(inst)--거미여왕
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
@@ -602,35 +674,42 @@ AddPrefabPostInitAndExclude("lavae", function(inst)--용암이
 end)
 --오염된 시드 드랍
 AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
+   AddChanceLoot(inst, {"aos_seed_purple", 1,
+	"sendi_food_milk_strong", 0.3})
 end)
 AddPrefabPostInitAndExclude("ghost", function(inst)--귀신
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
 AddPrefabPostInitAndExclude("spiderden", function(inst)--거미집
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
+   AddChanceLoot(inst, {"aos_seed_purple", 1,
+	"spider", 1, "spider", 1})
 end)
 AddPrefabPostInitAndExclude("spiderden_2", function(inst)--거미집2
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
+   AddChanceLoot(inst, {"aos_seed_purple", 1,
+	"spider", 1, "spider", 1, "spider", 1})
 end)
 AddPrefabPostInitAndExclude("pigguard", function(inst)--미친 피그맨 
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
+   AddChanceLoot(inst, {"aos_seed_purple", 1, "sendi_food_milk_strong", 1,
+	"sendi_food_milk_strong", 0.3})
 end)
 AddPrefabPostInitAndExclude("tentacle", function(inst)--텐타클
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
+   AddChanceLoot(inst, {"aos_seed_purple", 1,
+	"sendi_food_milk_strong", 0.3})
 end)
 AddPrefabPostInitAndExclude("worm", function(inst)--동굴지렁이
+   AddChanceLoot(inst, {"aos_seed_purple", 1,
+	"sendi_food_milk_strong", 0.3})
+end)
+AddPrefabPostInitAndExclude("firehound", function(inst)--레드하운드 우유
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
-AddPrefabPostInitAndExclude("firehound", function(inst)--레드하운드 
-   AddChanceLoot(inst, {"aos_seed_purple", 1})
-end)
-AddPrefabPostInitAndExclude("icehound", function(inst)--블루하운드 
+AddPrefabPostInitAndExclude("icehound", function(inst)--블루하운드 우유
    AddChanceLoot(inst, {"aos_seed_purple", 1})
 end)
 --매우 오염된 시드 드랍
 AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집 
-   AddChanceLoot(inst, {"aos_seed_black", 1})
+   AddChanceLoot(inst, {"aos_seed_black", 1,
+	"sendi_food_milk_strong", 0.3})
 end)
 AddPrefabPostInitAndExclude("houndmound", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
@@ -647,6 +726,7 @@ end)
 AddPrefabPostInitAndExclude("warg", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1, "aos_seed_black", 1, "aos_seed_black", 1, "aos_seed_black", 1})
 end)
+--우유
 AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, 
     "sendi_food_milk_strong", 1, "sendi_food_milk_strong", 1})
@@ -675,9 +755,17 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
  AddPrefabPostInitAndExclude("catcoon", function(inst)--캣쿤 
     AddChanceLoot(inst, {"aos_seed", 1})
  end)
+ ---[[
  AddPrefabPostInitAndExclude("bat", function(inst)--박쥐 
-    AddChanceLoot(inst, {"aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1,
+	"sendi_food_milk_strong", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
+  AddPrefabPostInitAndExclude("bunnyman", function(inst)--버니맨 
+    AddChanceLoot(inst, {"aos_seed", 1,
+	"sendi_food_milk_strong", 1})
+ end)
+ --]]
  AddPrefabPostInitAndExclude("deer", function(inst)--눈없는 사슴  
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1})
  end)
@@ -687,39 +775,50 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
  AddPrefabPostInitAndExclude("hound", function(inst)--하운드
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1,})
  end)
- 
- --우유있는애들
+--일반시드 
  AddPrefabPostInitAndExclude("perd", function(inst)--칠면조 
-    AddChanceLoot(inst, {"aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("bishiop", function(inst)--비숍 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("knight", function(inst)--나이트 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("rook", function(inst)--룩 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("spider_warrior", function(inst)--병정거미 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("crawlinghorror", function(inst)--크로킹호러 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("tallbird", function(inst)--톨버드 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("teenbird", function(inst)--톨버드 2
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("smallbird", function(inst)--톨버드 3
-    AddChanceLoot(inst, {"aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
  AddPrefabPostInitAndExclude("penguin", function(inst)--팽귄 
-    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1})
+    AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1,
+	"sendi_food_milk_strong", 0.3})
  end)
- 
+  AddPrefabPostInitAndExclude("spider", function(inst)--거미
+    AddChanceLoot(inst, {"aos_seed", 0.5})
+ end)
  AddPrefabPostInitAndExclude("killerbee", function(inst)--말벌 
     AddChanceLoot(inst, {"aos_seed", 0.3})
  end)
@@ -729,14 +828,13 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
  AddPrefabPostInitAndExclude("beeguard", function(inst)--빡친벌 
     AddChanceLoot(inst, {"aos_seed", 0.3})
  end)
- AddPrefabPostInitAndExclude("bunnyman", function(inst)
-    inst.components.combat:SetRetargetFunction(3, IgnoreMeatFn)
-    inst.components.combat.GetBattleCryString = IgnoreMeat
-end)
+  AddPrefabPostInitAndExclude("frog", function(inst)--개구리 
+    AddChanceLoot(inst, {"aos_seed", 0.3})
+ end)
 
 AddPrefabPostInitAny(function(inst)
    if inst.components.health and inst.components.lootdropper and not table.contains(ExcludeList, inst.prefab) then
-        AddChanceLoot(inst, {"aos_seed", 1, "bat", 0.3})
+        AddChanceLoot(inst, {"aos_seed", 1--[[, "sendi_food_milk_strong", 0.3]]})
     end
 end)
 --]]

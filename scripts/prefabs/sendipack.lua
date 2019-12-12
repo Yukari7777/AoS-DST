@@ -70,16 +70,16 @@ local function fn(Sim) -- TODO : 센디말고 못끼게
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
     inst.entity:AddSoundEmitter()
-    inst.entity:AddMiniMapEntity()
     inst.entity:AddNetwork()
-   
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendipack.tex")	 
+	
 	MakeInventoryPhysics(inst)
     
     inst.AnimState:SetBank("backpack1")
     inst.AnimState:SetBuild("swap_sendipack")
     inst.AnimState:PlayAnimation("anim")
 
-    inst.MiniMapEntity:SetIcon("backpack.png")
     inst:AddTag("backpack")
     inst:AddTag("sleevefix")
     inst:AddTag("sendis")

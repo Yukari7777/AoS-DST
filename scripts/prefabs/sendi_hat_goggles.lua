@@ -130,7 +130,9 @@ local function fn()
     inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()      
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_hat_goggles.tex")	
+	
 	MakeInventoryPhysics(inst)
     
     inst.AnimState:SetBank("sendi_hat_goggles")
@@ -139,6 +141,7 @@ local function fn()
 	
 	inst:AddTag("hat")
 	inst:AddTag("goggles")
+	inst:AddTag("regal")
 	
 	if not TheWorld.ismastersim then
         return inst

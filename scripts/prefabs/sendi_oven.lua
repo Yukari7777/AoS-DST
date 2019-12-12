@@ -58,7 +58,7 @@ local function cooked(inst)
 				local replacement = nil 
 				
 				if item.components.cookable or
-				item.prefab == "spoiled_food" or
+				item.prefab == "berries_cooked" or 				
 				item.prefab == "sendi_food_cocoa_cup" or 
 				item.prefab == "sendi_food_wolfsteak" or
 				--음식
@@ -74,7 +74,8 @@ local function cooked(inst)
 				item.prefab == "sendi_food_pie_berry" or
 				item.prefab == "sendi_food_dumpling" or
 				--5차 
-				
+				item.prefab == "sendi_food_stew_beep" or
+				--6차
 				item.prefab == "log" then  --붕괴 애니메이션
 					inst.SoundEmitter:PlaySound("dontstarve/common/fireAddFuel") 
 					local fx = SpawnPrefab("collapse_small")
@@ -93,7 +94,8 @@ local function cooked(inst)
 				
 				
 				elseif item.prefab == "log" then  --나무를 넣으면
-					replacement = "charcoal" --숯이나옴
+					replacement = "charcoal" --숯이나옴	
+				
 				--1차추가음식
 				elseif item.prefab == "sendi_food_cocoa_cup" then -- 컵을 넣으면
 					replacement = "sendi_food_cocoa" 
@@ -124,7 +126,12 @@ local function cooked(inst)
 					replacement = "sendi_food_pie_berry_cooked" --
 				elseif item.prefab == "sendi_food_dumpling" then --식빵
 					replacement = "sendi_food_dumpling_cooked" --	
+				--6차음식
+				elseif item.prefab == "sendi_food_stew_beep" then --스튜
+					replacement = "sendi_food_stew_beep_cooked" --
 				
+				elseif item.prefab == "berries_cooked" then --코코아파우더
+					replacement = "sendi_food_cocoapowder" --						
 
 				--------------------------------------------------------------------------------------------------
 				
@@ -133,8 +140,9 @@ local function cooked(inst)
 				elseif item.components.burnable and not item.prefab == "log" then  ---불이 꺼졌는데 나무를 넣는다면
 					replacement = "ash"	--변화가 일어나지않음.
 					
-				elseif item.components.burnable and not item.prefab == "spoiled_food" then 
-					replacement = "ash"	
+				elseif item.components.burnable and not item.prefab == "berries_cooked" then
+				
+					replacement = "ash"
 					
 				elseif item.components.burnable and not item.prefab == "sendi_food_cocoa_cup" then 
 					replacement = "ash"		
@@ -177,7 +185,10 @@ local function cooked(inst)
 
 				elseif item.components.burnable and not item.prefab == "sendi_food_dumpling" then 
 					replacement = "ash"	
-				
+				--6차
+				elseif item.components.burnable and not item.prefab == "sendi_food_stew_beep" then 
+					replacement = "ash"	
+					
 				end  
 				
 				
@@ -222,6 +233,8 @@ local function cooked(inst)
 					fx.Transform:SetPosition(pos:Get())
 				end
 				
+				
+				
 				if item.prefab == "watermelon" then 
 					replacement = "watermelonicle"
 				elseif item.prefab == "butter" then 
@@ -233,8 +246,207 @@ local function cooked(inst)
 					replacement = "sendi_food_cocoa_cold"--아이스코코아~
 				elseif item.prefab == "sendi_food_pudding_light_berrybanana" then --푸른 바나나 푸딩을 넣으면
 					replacement = "sendi_food_pudding_light_berrybanana_cooked"	-- 베리나 푸딩
-				--시드변환				
+				
+				
+				--시드변환	(농사용씨앗을변환함)
+				--(주석시 대괄호를 지우세요)[[
+
+				elseif item.prefab == "rottenegg" then  --썩은계란
+					replacement = "aos_seed"	
+					local fx = SpawnPrefab("sugarwood_leaf_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1, 1, 1)
+					fx.Transform:SetPosition(pos:Get())
 					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+			
+			-- elseif item.prefab == "spoiled_food" then  --썩은음식
+					-- replacement = "aos_seed"
+					-- local fx = SpawnPrefab("sugarwood_leaf_fx_chop")
+					-- local pos = Vector3(inst.Transform:GetWorldPosition())
+					-- fx.Transform:SetScale(1, 1, 1)
+					-- fx.Transform:SetPosition(pos:Get())
+					
+					-- local fx = SpawnPrefab("die_fx")
+					-- local pos = Vector3(inst.Transform:GetWorldPosition())
+					-- fx.Transform:SetScale(0.1, 0.1, 0.1)
+					-- fx.Transform:SetPosition(pos:Get())
+					
+				--벼리밀
+				elseif item.prefab == "carrot_seeds" then  --당근
+					replacement = "sendi_food_ricewheat"
+
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "corn_seeds" then  --옥수수
+					replacement = "sendi_food_ricewheat"
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "pumegranate_seeds" then  --토마토
+					replacement = "sendi_food_ricewheat"
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "eggplant_seeds" then  --가지
+					replacement = "sendi_food_ricewheat"
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "durian_seeds" then  --두리안
+					replacement = "sendi_food_ricewheat"--벼리밀
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "pumpkin_seeds" then  --호박
+					replacement = "sendi_food_ricewheat"
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "onion_seeds" then  --양파
+					replacement = "sendi_food_ricewheat"	
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "garlic_seeds" then  --마늘
+					replacement = "sendi_food_ricewheat"	
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "pepper_seeds" then  --고추
+					replacement = "sendi_food_ricewheat"
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "potato_seeds" then  --고추
+					replacement = "sendi_food_ricewheat"
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+					
+				--코코아파우더
+				elseif item.prefab == "pomegranate_seeds" then  --석류
+					replacement = "sendi_food_cocoapowder"		
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(1.5, 1.5, 1.5)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "watermelon" then  --수박
+					replacement = "sendi_food_cocoapowder"	
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(2, 2, 2)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+					
+				elseif item.prefab == "dragonfruit_seeds" then  --용과
+					replacement = "sendi_food_cocoapowder"				
+					
+					local fx = SpawnPrefab("tree_petal_fx_chop")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(2, 2, 2)
+					fx.Transform:SetPosition(pos:Get())
+					
+					local fx = SpawnPrefab("die_fx")
+					local pos = Vector3(inst.Transform:GetWorldPosition())
+					fx.Transform:SetScale(0.1, 0.1, 0.1)
+					fx.Transform:SetPosition(pos:Get())
+				--]]		
+				
 				end  
 
 				if replacement then 
@@ -508,4 +720,4 @@ local function fn(Sim)
 end
 
 return Prefab( "common/objects/sendi_oven", fn, assets, prefabs),
-		MakePlacer( "common/sendi_oven_placer", "chiminea", "sendi_oven", "preview" ) 
+		MakePlacer("common/sendi_oven_placer", "sendi_oven", "sendi_oven", "preview") 

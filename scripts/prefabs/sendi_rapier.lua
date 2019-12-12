@@ -55,7 +55,7 @@ local function ontakefuel(inst)
    end
 end
 
---수리
+--내구도 수리
 
 
 local function fn()
@@ -76,6 +76,8 @@ local function fn()
     inst.AnimState:SetBuild("sendi_rapier")
     inst.AnimState:PlayAnimation("idle")
    --떨군 이미지추가 
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_rapier.tex")	   
    
     inst:AddTag("sharp") 
     inst:AddTag("pointy") 
@@ -94,12 +96,12 @@ local function fn()
     --공격범위
     inst.OnLoad = OnLoad
 
+
+	
     inst:AddComponent("finiteuses") --내구도 부문 
     inst.components.finiteuses:SetMaxUses(200)--최대 내구도 설정
     inst.components.finiteuses:SetUses(200) -- 현재 내구도  설정
-    --inst.components.finiteuses:SetPercent(TUNING.FIRESTAFF_USES) -- 해당 아이템의 현재 내구도를 (최대 내구도 * n)으로 설정
     inst.components.finiteuses:SetOnFinished(inst.Remove)--내구도가 다하면 fn을 실행함.
-
     -- ---연료
     inst:AddComponent("fueled") --연료가 있는.
     inst.components.fueled.fueltype = "BURNABLE"

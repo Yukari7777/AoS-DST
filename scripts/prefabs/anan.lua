@@ -142,16 +142,17 @@ local function anan_Onhungrypuppy(inst) --배고픈강아지 허기수치가 30 
 end
             
 local function common_postinit (inst) --정신
-    --inst:AddTag("valkyrie")--위그장비 제작 가능
+    
     inst:AddTag("anan")--자신의 태그 
     inst:AddTag("anancraft")--전용탭추가
     inst:AddTag("aosplayer")
     inst.MiniMapEntity:SetIcon( "anan.tex" )--발견한 자신의 미니맵 이름 
-
+    inst:AddTag("expertchef")--왈리[빠른쿠킹]
+	
+	--inst:AddTag("valkyrie")--위그장비 제작 가능
     --inst:AddTag("masterchef")--왈리 
     --inst:AddTag("professionalchef")--왈리
-    inst:AddTag("expertchef")--왈리
-    
+	
     OverrideOnRemoveEntity(inst)
     inst.AttachAoSClassified = AttachClassified
     inst.DetachAnanClassified = DetachClassified
@@ -164,13 +165,22 @@ local master_postinit = function(inst)
 
     inst:AddComponent("aoslevel")--레벨업
     inst:AddComponent("aosbuff")
+	inst:AddComponent("sendiskill")
+	
     inst:AddComponent("aosmana")
-
-    inst:AddComponent("sanityaura")
+	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
+	
+    inst:AddComponent("sanityaura")--센티넬아우라 
     inst.components.sanityaura.aurafn = CalcSanityAura
-    
-    --inst.components.hunger:SetPercent(0.5)--시작 허기를 50%로 지정함
-   
+	
+    ---[[추위에 강하며 열에약함 
+
+	inst.components.temperature.mintemp = 0 --체온이 이 이상 내려가지않음.
+	inst.components.temperature:SetFreezingHurtRate(0.0000000000001)--체온이 71도이상일때 입는 대미지
+	inst.components.temperature:SetOverheatHurtRate(2)--너무더워 입는 데미지
+	--inst.components.`ㅊ:SetResistance(80) --더위저항
+	--]]
+	
     -- Stats   
     inst.components.health:SetMaxHealth(CONST.DEFAULT_HEALTH) -- 피
     inst.components.hunger:SetMax(CONST.DEFAULT_HUNGER) -- 배고팡
@@ -187,7 +197,7 @@ local master_postinit = function(inst)
 
     inst.OnLoad = onload
     inst.OnNewSpawn = onload
-
+	
     --잠금해제
     inst:DoTaskInTime(0, function(inst)
      inst.components.builder:AddRecipe("birdtrap")

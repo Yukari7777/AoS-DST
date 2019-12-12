@@ -73,7 +73,9 @@ local function fn(Sim)
     inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()      
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("sendi_hat_spider.tex")	
+	
 	MakeInventoryPhysics(inst)
     
     inst.AnimState:SetBank("sendi_hat_spider")

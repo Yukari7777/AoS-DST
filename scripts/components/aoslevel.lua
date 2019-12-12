@@ -10,7 +10,7 @@ function AoSLevel:GetMaxExp()
 end
 
 function AoSLevel:AddExp(amount)
-   if self.level < 30 then
+   if self.level < 24 then
         if amount >= self:GetMaxExp() then
         --amount[얻은경험치]가 맥스 경험치보다 같거나 크다면 
             local leftover = amount - (self:GetMaxExp() - self.exp)
@@ -35,10 +35,12 @@ function AoSLevel:AddExp(amount)
 end
 
 function AoSLevel:LevelUp()
-	self.exp = 0
-	self.level = self.level + 1
-	self.inst.components.talker:Say(GetString(self.inst, "DESCRIBE_LEVELUP"))
-	self:ApplyStatus()
+	if self.level < 34 then
+	   self.exp = 0
+	   self.level = self.level + 1
+	   self.inst.components.talker:Say(GetString(self.inst, "DESCRIBE_LEVELUP"))
+	   self:ApplyStatus()
+	end
 end
 
 function AoSLevel:GetValue(key)
@@ -81,6 +83,7 @@ end
 
 function AoSLevel:OnLoad(data)
    if data ~= nil then
+      --eater.level = data.level or 0 -- 빅시드 30제한에필요한코드 추가
       self.level = data.level or 0
       self.exp = data.exp or 0
         self:ApplyStatus()

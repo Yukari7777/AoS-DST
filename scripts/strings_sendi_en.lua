@@ -185,7 +185,14 @@ STRINGS.NAMES.SENDI_FOOD_DUMPLING = "Dumpling"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SENDI_FOOD_BREAD_BUT = "small simple dumplings\n Tasty, but still raw!"
 STRINGS.NAMES.SENDI_FOOD_DUMPLING_COOKED = "Plump Dumpling" 
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SENDI_FOOD_DUMPLING_COOKED = "plump and chewy~ The perfect dumplings!"
+--6차음식 ★★
+STRINGS.NAMES.SENDI_FOOD_TANGHURU_BERRY = "Berry Tanghuru" 
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SENDI_FOOD_TANGHURU_BERRY = "Crushed the fruit, then coated it with sugar!"
 
+STRINGS.NAMES.SENDI_FOOD_STEW_BEEP = "Beef Stew" 
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SENDI_FOOD_STEW_BEEP = "I put the ingredients in it.\nBe careful not to eat raw."
+STRINGS.NAMES.SENDI_FOOD_STEW_BEEP_COOKED = "Beef-Stew!" 
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.SENDI_FOOD_STEW_BEEP_COOKED = "Beef-stew, bee-f stew!\nI can't stand hunger!!"
 
 --wharang_shrine
 STRINGS.SENDITABNAME = "Sendi Tab"
@@ -230,6 +237,9 @@ STRINGS.RECIPE_DESC.SENDI_FOOD_RICE_TUNA = "A bowl of ingredients, just add heat
 STRINGS.RECIPE_DESC.SENDI_FOOD_CHICKEN = "Raw chicken, off to the oven! [EXP]"
 STRINGS.RECIPE_DESC.SENDI_FOOD_PIE_BERRY = "Just needs some time in the Oven. [EXP]"
 STRINGS.RECIPE_DESC.SENDI_FOOD_DUMPLING = "Wrapped and ready to cook! [EXP]"
+--6차음식★★
+STRINGS.RECIPE_DESC.SENDI_FOOD_TANGHURU_BERRY = "Dress with sugar![EXP]"
+STRINGS.RECIPE_DESC.SENDI_FOOD_STEW_BEEP = "Bring to a boil in the oven![EXP]"
 
 STRINGS.LEVEL = "Level"
 STRINGS.EXP = "Exp"

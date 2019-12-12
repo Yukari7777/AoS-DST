@@ -228,7 +228,9 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
     inst.entity:AddNetwork()
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("anan_dagger_hard.tex")	
+	
     MakeInventoryPhysics(inst)
 
 	inst.entity:AddLight()
@@ -261,7 +263,6 @@ local function fn()
     inst.components.weapon:SetDamage(55) 
 	-- 무기로 설정. 아래는 피해 설정
 	inst.components.weapon:SetRange(1.1) --공격범위
-	
 	inst:AddComponent("finiteuses") --내구도 부문 
     inst.components.finiteuses:SetMaxUses(200)--최대 내구도 설정
 	inst.components.finiteuses:SetUses(200) -- 현재 내구도  설정

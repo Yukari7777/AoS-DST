@@ -160,7 +160,9 @@ local function fn()
     inst.entity:AddTransform()
     inst.entity:AddAnimState()
     inst.entity:AddNetwork()
-
+	inst.entity:AddMiniMapEntity()
+    inst.MiniMapEntity:SetIcon("anan_dagger.tex")	
+	
     MakeInventoryPhysics(inst)
 
 	inst.entity:AddLight()
