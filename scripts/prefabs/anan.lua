@@ -6,7 +6,7 @@ local assets = {
 }
 local prefabs = {}
 
-local start_inv = {--시작 인벤토리
+local start_inv = {--시작 인벤토리--
 
     "anan_dagger",
     "meat_dried",
