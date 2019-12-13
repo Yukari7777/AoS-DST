@@ -56,6 +56,7 @@ function AOS_Milkable:Milk(worker)
         worker:PushEvent("kick")
     elseif worker ~= nil and worker.components.inventory ~= nil then
         local product = SpawnPrefab("sendi_food_milk_strong")
+        product.components.stackable:SetStackSize(math.random(CONST.MILK_MINAMOUNT, CONST.MILK_MAXAMOUNT)) -- 3개에서 5개 랜덤으로 줌
         worker:PushEvent("picksomething", { object = self.inst, loot = product })
         worker.components.inventory:GiveItem(product, nil, self.inst:GetPosition())
 

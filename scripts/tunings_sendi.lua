@@ -36,6 +36,8 @@ TUNING.AOS_GENERAL = {
 
     MILK_COOLTIME = 1200, -- 우유짜기 쿨타임
     MILK_KICKCHANCE = 0.02, -- 발차기 할 확률
+    MILK_MINAMOUNT = 3, -- 우유 주는 갯수
+    MILK_MAXAMOUNT = 5,
 }
 
 TUNING.SENDI = {
