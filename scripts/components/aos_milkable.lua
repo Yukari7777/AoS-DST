@@ -4,12 +4,22 @@ local function OnTaskTick(inst, self, period)
     self:DoDec(period)
 end
 
+local function InspectTweak(inst, self)
+    inst.components.inspectable.getspecialdescription = function(inst, viewer)
+        local timedescribe = self.timemilkleft > 0 and STRINGS.DESCRIBE_MILK_LEFT..self.timemilkleft or STRINGS.DESCRIBE_CANMILK
+        local text = string.format(GetDescription(viewer, inst).."\n"..timedescribe)
+        
+        return string.format(text)
+    end
+end
+
 local AOS_Milkable= Class(function(self, inst)
     self.inst = inst
     self.timemilkleft = 0
 
     local period = 1
     self.inst:DoPeriodicTask(period, OnTaskTick, nil, self, period)
+    self.inst:DoTaskInTime(0, InspectTweak, self)
 end)
 
 function AOS_Milkable:DoDec(dt)
@@ -42,7 +52,7 @@ function AOS_Milkable:OnLoad(data)
 end
 
 function AOS_Milkable:CanMilk()
-    return self.inst:HasTag("amilkable") and not self.inst:HasTag("sleeping")-- 추가 조건
+    return self.inst:HasTag("amilkable") -- 추가 조건
 end
 
 function AOS_Milkable:Milk(worker) 
@@ -50,7 +60,7 @@ function AOS_Milkable:Milk(worker)
         return false
     end
 
-    if math.random() < CONST.MILK_KICKCHANCE and worker.components.combat ~= nil then
+    if self.inst:HasTag("beefalo") and math.random() < CONST.MILK_KICKCHANCE and worker.components.combat ~= nil then
         worker.components.combat:GetAttacked(self.inst, TUNING.BEEFALO_KICK_DAMAGE)
         self.inst.sg:GoToState("attack")
         worker:PushEvent("kick")
@@ -60,7 +70,9 @@ function AOS_Milkable:Milk(worker)
         worker:PushEvent("picksomething", { object = self.inst, loot = product })
         worker.components.inventory:GiveItem(product, nil, self.inst:GetPosition())
 
-        self.inst.sg:GoToState("bellow")
+        if self.inst:HasTag("beefalo") then
+            self.inst.sg:GoToState("bellow")
+        end
     else 
         return false
     end

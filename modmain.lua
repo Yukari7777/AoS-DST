@@ -615,6 +615,14 @@ AddPrefabPostInit("beefalo", function(inst)
     inst:AddComponent("aos_milkable")
 end)
 
+AddPrefabPostInit("lightninggoat", function(inst)
+    if not GLOBAL.TheWorld.ismastersim then
+		return inst
+    end
+    
+    inst:AddComponent("aos_milkable")
+end)
+
 local ExcludeList = {}
 local function AddPrefabPostInitAndExclude(prefab, fn)
     AddPrefabPostInit(prefab, function(inst)

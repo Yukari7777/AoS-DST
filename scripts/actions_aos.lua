@@ -5,7 +5,7 @@ local ActionHandler = GLOBAL.ActionHandler
 
 ----------------------------------------------------------------------------------------------------
 local MILK = AddAction("AOSMILK", STRINGS.ACTIONS.AOSMILK, function(act)
-    if act.target ~= nil and act.target:HasTag("beefalo") then
+    if act.target ~= nil and act.invobject == nil then
         return act.target.components.aos_milkable:Milk(act.doer)
     end
 end)
@@ -15,7 +15,7 @@ AddStategraphActionHandler("wilson", ActionHandler(MILK, "dolongaction"))
 AddStategraphActionHandler("wilson_client", ActionHandler(MILK, "dolongaction"))
 
 local function milk_scene(inst, doer, actions)
-    if doer:HasTag("aosplayer") and inst:HasTag("amilkable") and not inst:HasTag("sleeping") then
+    if doer:HasTag("aosplayer") and inst:HasTag("amilkable") then
         table.insert(actions, ACTIONS.AOSMILK)
     end
 end
