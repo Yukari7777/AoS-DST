@@ -1,4 +1,3 @@
-local TheInput = GLOBAL.TheInput
 local Profile = GLOBAL.Profile
 local TimeEvent = GLOBAL.TimeEvent
 local ACTIONS = GLOBAL.ACTIONS

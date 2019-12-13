@@ -607,6 +607,14 @@ local function AddChanceLoot(inst, loots)
     end
 end
 
+AddPrefabPostInit("beefalo", function(inst)
+    if not GLOBAL.TheWorld.ismastersim then
+		return inst
+    end
+    
+    inst:AddComponent("aos_milkable")
+end)
+
 local ExcludeList = {}
 local function AddPrefabPostInitAndExclude(prefab, fn)
     AddPrefabPostInit(prefab, function(inst)
@@ -851,7 +859,8 @@ STRINGS.NAMES.SENDI = "sendi"
 STRINGS.NAMES.ANAN = "anan"
 STRINGS.NAMES.TEES = "tees"
 modimport "scripts/aosmana_init.lua"
-modimport "scripts/skills_sendi.lua"
+modimport "scripts/actions_aos.lua"
+modimport "scripts/skills_aos.lua"
 modimport "scripts/recipes_sendi.lua"
 
 AddModCharacter("sendi", "FEMALE") --캐릭터를 마지막에 추가한다.
