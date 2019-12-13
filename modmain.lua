@@ -599,8 +599,8 @@ local function AddChanceLoot(inst, loots)
         if table.contains(mammalia, inst.prefab) then
             for i = 0, 2 do
                 if inst.components.health.maxhealth >= 1000 * i then
-                    inst.components.lootdropper:AddChanceLoot("sendi_food_milk_strong", 1)
-                    inst.components.lootdropper:AddChanceLoot("sendi_food_milk_strong", 0.3) --박쥐를 스폰시킨다.
+                    inst.components.lootdropper:AddChanceLoot("sendi_food_milk_strong", 0.5)
+                     --박쥐를 스폰시킨다.
                 end
             end
         end
@@ -683,7 +683,7 @@ end)
 --오염된 시드 드랍
 AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집
    AddChanceLoot(inst, {"aos_seed_purple", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
 end)
 AddPrefabPostInitAndExclude("ghost", function(inst)--귀신
    AddChanceLoot(inst, {"aos_seed_purple", 1})
@@ -697,16 +697,16 @@ AddPrefabPostInitAndExclude("spiderden_2", function(inst)--거미집2
 	"spider", 1, "spider", 1, "spider", 1})
 end)
 AddPrefabPostInitAndExclude("pigguard", function(inst)--미친 피그맨 
-   AddChanceLoot(inst, {"aos_seed_purple", 1, "sendi_food_milk_strong", 1,
-	"sendi_food_milk_strong", 0.3})
+   AddChanceLoot(inst, {"aos_seed_purple", 1, "sendi_food_milk_strong", 0.5,
+	})
 end)
 AddPrefabPostInitAndExclude("tentacle", function(inst)--텐타클
    AddChanceLoot(inst, {"aos_seed_purple", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
 end)
 AddPrefabPostInitAndExclude("worm", function(inst)--동굴지렁이
    AddChanceLoot(inst, {"aos_seed_purple", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
 end)
 AddPrefabPostInitAndExclude("firehound", function(inst)--레드하운드 우유
    AddChanceLoot(inst, {"aos_seed_purple", 1})
@@ -717,7 +717,7 @@ end)
 --매우 오염된 시드 드랍
 AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
 end)
 AddPrefabPostInitAndExclude("houndmound", function(inst)--박쥐집 
    AddChanceLoot(inst, {"aos_seed_black", 1})
@@ -737,19 +737,19 @@ end)
 --우유
 AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, 
-    "sendi_food_milk_strong", 1, "sendi_food_milk_strong", 1})
+    "sendi_food_milk_strong", 0.5, "sendi_food_milk_strong", 0.5})
  end)
  AddPrefabPostInitAndExclude("koalefant_summer", function(inst)--코알라펀트 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, 
-    "sendi_food_milk_strong", 1, "sendi_food_milk_strong", 1})
+    "sendi_food_milk_strong", 0.5, "sendi_food_milk_strong", 0.5})
  end)
  AddPrefabPostInitAndExclude("walrus", function(inst)--맥터스크 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-    "sendi_food_milk_strong", 1})
+    "sendi_food_milk_strong", 0.5})
  end)
  AddPrefabPostInitAndExclude("beefalo", function(inst)--비팔로 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-    "sendi_food_milk_strong", 1})
+    "sendi_food_milk_strong", 0.5})
  end)
  AddPrefabPostInitAndExclude("monkey", function(inst)--원숭이 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1})
@@ -766,12 +766,12 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
  ---[[
  AddPrefabPostInitAndExclude("bat", function(inst)--박쥐 
     AddChanceLoot(inst, {"aos_seed", 1,
-	"sendi_food_milk_strong", 1,
-	"sendi_food_milk_strong", 0.3})
+	"sendi_food_milk_strong", 0.5,
+	})
  end)
   AddPrefabPostInitAndExclude("bunnyman", function(inst)--버니맨 
     AddChanceLoot(inst, {"aos_seed", 1,
-	"sendi_food_milk_strong", 1})
+	"sendi_food_milk_strong", 0.5})
  end)
  --]]
  AddPrefabPostInitAndExclude("deer", function(inst)--눈없는 사슴  
@@ -786,43 +786,43 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
 --일반시드 
  AddPrefabPostInitAndExclude("perd", function(inst)--칠면조 
     AddChanceLoot(inst, {"aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("bishiop", function(inst)--비숍 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("knight", function(inst)--나이트 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("rook", function(inst)--룩 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("spider_warrior", function(inst)--병정거미 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("crawlinghorror", function(inst)--크로킹호러 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("tallbird", function(inst)--톨버드 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("teenbird", function(inst)--톨버드 2
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("smallbird", function(inst)--톨버드 3
     AddChanceLoot(inst, {"aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
  AddPrefabPostInitAndExclude("penguin", function(inst)--팽귄 
     AddChanceLoot(inst, {"aos_seed", 1, "aos_seed", 1,
-	"sendi_food_milk_strong", 0.3})
+	})
  end)
   AddPrefabPostInitAndExclude("spider", function(inst)--거미
     AddChanceLoot(inst, {"aos_seed", 0.5})
@@ -842,7 +842,7 @@ AddPrefabPostInitAndExclude("koalefant_winter", function(inst)--코알라펀트
 
 AddPrefabPostInitAny(function(inst)
    if inst.components.health and inst.components.lootdropper and not table.contains(ExcludeList, inst.prefab) then
-        AddChanceLoot(inst, {"aos_seed", 1--[[, "sendi_food_milk_strong", 0.3]]})
+        AddChanceLoot(inst, {"aos_seed", 1})
     end
 end)
 --]]
