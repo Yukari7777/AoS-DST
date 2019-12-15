@@ -84,20 +84,15 @@ local function CalcSanityAura(inst, observer)--정신
     return 0
 end
 
-local function DoPoisonDamage(inst) --티스의 독데미지
-    inst.components.health:DoDelta(-5, true, "poison") -- 도트피해딜 수치
-
-    inst.AnimState:SetMultColour(1,0,1,1)
-    inst:DoTaskInTime(1, function(inst) inst.AnimState:SetMultColour(1,1,1,1) end)
-end
-
 local function onattackother(inst, data)-- 33초에 거쳐 딜을입힘.
     if data.target and data.target.components.health and not data.target.components.health:IsDead() then
-        if not data.target:HasTag("player") then --플레이어에게 딜이 들어가지않음.
-            if data.target.poisontask == nil then
-                data.target.poisontask = data.target:DoPeriodicTask(1/3, DoPoisonDamage) --1초에 3회의 데미지를 입힘.
-                data.target.poisonwearofftask = data.target:DoTaskInTime(5, function(inst) inst.poisontask:Cancel() inst.poisontask = nil end) --데미지 지속 시간
+        local target = data.target
+
+        if not target:HasTag("player") then --플레이어에게 딜이 들어가지않음.
+            if not target.components.aosbuff then
+                target:AddComponent("aosbuff")
             end
+            target.components.aosbuff:AddBuff("poison", 5)
         end
     end
 end

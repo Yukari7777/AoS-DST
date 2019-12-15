@@ -167,10 +167,7 @@ local function eatunfinishedfoodfn(inst, data)
     
     elseif data.food:HasTag("sendimeat") then
         data.feeder.components.talker:Say(GetString(data.feeder, "SENDIMEAT"))    
-        
-
-    
-   end
+    end
 end
 
 local function NoEatCookPotFood(inst)

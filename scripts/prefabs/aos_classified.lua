@@ -35,9 +35,16 @@ local function RegisterKeyEvent(classified)
             end
         end) 
 
-        if parent:HasTag("sendi") then -----센디키
-            local RapierKey = GetModConfigData("skill_1", modname) or "KEY_V"
-            TheInput:AddKeyDownHandler(_G[RapierKey], function()
+        local StatusKey = GetModConfigData("statuskey", modname) or "KEY_K"
+        TheInput:AddKeyDownHandler(_G[StatusKey], function()
+            if KeyCheckCommon(parent) then
+                SendModRPCToServer(MOD_RPC["sendi"]["status"]) 
+            end
+        end) 
+        
+        local Skill1_Key = GetModConfigData("skill_1", modname) or "KEY_V"
+        if parent:HasTag("sendi") then
+            TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
                 if KeyCheckCommon(parent) then
                     if TheInput:IsKeyDown(KEY_SHIFT) then
                         SendModRPCToServer(MOD_RPC["sendi"]["rapier"]) 
@@ -46,35 +53,32 @@ local function RegisterKeyEvent(classified)
                     end
                 end
             end)
+        elseif parent:HasTag("tees") then
+            TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
+                if KeyCheckCommon(parent) then
+                    if TheInput:IsKeyDown(KEY_SHIFT) then
+                        --SendModRPCToServer(MOD_RPC["tees"]["rapier"]) 
+                    else
+                        --SendModRPCToServer(MOD_RPC["tees"]["everguard"]) 
+                    end
+                end
+            end)
         end
     end
-    local StatusKey = GetModConfigData("statuskey", modname) or "KEY_K"
-    TheInput:AddKeyDownHandler(_G[StatusKey], function()
-        if KeyCheckCommon(parent) then
-            SendModRPCToServer(MOD_RPC["sendi"]["status"]) 
-        end
-    end) 
 end
 
-local SKILLS = { "rapier", "igniarun" }
-local SKILLFN = {}
-for k, v in pairs(SKILLS) do
-    table.insert(SKILLFN, function(parent)
-        if parent.components.hunger ~= nil and not parent.components.hunger:IsStarving() then
-            parent.components.playercontroller:DoAction(BufferedAction(parent, nil, ACTIONS[v:upper()]))
-        else
-            parent.components.talker:Say(GetString(parent.prefab, "DESCRIBE_LOW_HUNGER"))
-        end
-    end)
+local function AddSkillEventListener(inst, name)
+    inst:ListenForEvent("on"..name, function(parent)
+        parent.components.playercontroller:DoAction(BufferedAction(parent, nil, ACTIONS[name:upper()]))
+    end, inst._parent)
 end
 
 local function RegisterNetListeners(inst)
     if TheWorld.ismastersim then
         inst._parent = inst.entity:GetParent()
 
-        for i = 1, #SKILLS do
-            inst:ListenForEvent("on"..SKILLS[i], SKILLFN[i], inst._parent)
-        end
+        AddSkillEventListener(inst, "rapier")
+        AddSkillEventListener(inst, "igniarun")
     else
         
     end

@@ -47,7 +47,7 @@ configuration_options = {
  
     {
         name = "skill_1",
-        label = "Ignia Run Key",
+        label = "Ignia Run Key", -- 스킬 1번키로 변경
         hover = "어떤 키로 [이그니아 런]을 사용할지 설정합니다.\nSet [Ignia Run] Keybind",
         options = KeyOptions,
         default = "KEY_V",

@@ -35,7 +35,7 @@ local BUFF_TYPE = {
 
         fn = function(inst)
             if inst.components.health ~= nil then
-                inst.components.health:DoDelta(-CONST.DEBUFF_FLAME_DAMAGE)
+                inst.components.health:DoDelta(-CONST.DEBUFF_FLAME_DAMAGE, true, "flame")
             end
         end,
 
@@ -51,12 +51,16 @@ local BUFF_TYPE = {
         extendmult = CONST.DEBUFF_POISON_EXTEND_MULT,
 
         onstart = function(inst)
-            inst.AnimState:SetMultColour(0.8, 0.8, 0.5, 1)
+            inst.AnimState:SetMultColour(0.8, 0.3, 0.8, 1)
         end,
 
         fn = function(inst)
-            if inst.components.health ~= nil then
-                inst.components.health:DoDelta(-CONST.DEBUFF_POISON_DAMAGE)
+            if inst.components.health ~= nil and not inst.components.health:IsDead() then
+                local hp = inst.components.health.currenthealth
+                local delta = CONST.DEBUFF_POISON_DAMAGE
+                delta = delta >= hp and hp - 1 or delta
+
+                inst.components.health:DoDelta(-delta, nil)
             end
 
             if inst.components.aosbuff.buff.poison.arg[2] >= 10 then

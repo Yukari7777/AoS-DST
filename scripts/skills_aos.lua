@@ -78,14 +78,14 @@ local function nullfn()  -- AddAction's third argument type must be function. An
    return true 
 end
 
-local function AddSkill(skillname, SgS, SgC, manacost)
+local function AddSkill(skillname, character, SgS, SgC, manacost)
    -- This is a constructor to make key-press-to-action.
    -- Does Anyone want to use this function, feel free to use it
    -- and don't forget to rename ModRPCHandler's namespace and copy nullfn.
    local upperskillname = skillname:upper()
 
    AddAction(upperskillname, skillname, nullfn)
-   AddModRPCHandler("sendi", skillname, function(inst)   
+   AddModRPCHandler(character, skillname, function(inst)   
       if manacost ~= nil and inst.components.aosmana ~= nil and inst.components.aosmana.current >= manacost or manacost == nil then
          inst:PushEvent("on"..skillname) -- See aos_classified how to excute actions via PushEvent.
       else
@@ -173,7 +173,7 @@ local rapier_SgC = State {
    end,
 }
 
-AddSkill("rapier", rapier_SgS, rapier_SgC, CONST.SKILL_RAPIER_MANACOST)
+AddSkill("rapier", "sendi", rapier_SgS, rapier_SgC, CONST.SKILL_RAPIER_MANACOST)
 
 
 local igniarun_SgS = State { 
@@ -248,4 +248,4 @@ local igniarun_SgC = State {
    end,
 }
 
-AddSkill("igniarun", igniarun_SgS, igniarun_SgC, CONST.SKILL_IGNIARUN_MANACOST)
+AddSkill("igniarun", "sendi", igniarun_SgS, igniarun_SgC, CONST.SKILL_IGNIARUN_MANACOST)
