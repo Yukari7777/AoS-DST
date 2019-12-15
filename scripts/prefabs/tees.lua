@@ -102,6 +102,16 @@ local function onattackother(inst, data)-- 33초에 거쳐 딜을입힘.
     end
 end
 
+local function OnChangeSkin(inst) -- YUKARI 스킨관련
+    inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
+    SetSkinBuild(inst)
+    -- TODO : 감정표현 추가
+end
+
+local skins = {
+    "DEFAULT",
+}
+
 local function common_postinit (inst) --정신
     inst:AddTag("sneakysnake") -- 그림자 몹을 제외한 모든 몹에게서 선공당하지 않음
     inst:AddTag("aosplayer")
@@ -117,10 +127,10 @@ end
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
-
+    
+    inst.skinindex = 1
     inst.soundsname = "warly"
     inst:AddTag("bookbuilder")-- 위커바컴의 책을 제조합니다.
-    inst:ListenForEvent("onattackother", onattackother) --독뎀 태그
     inst:AddTag("poisonous") --독 속성태그 추가
     
     inst.components.combat.poisonous = true--독 속성태그 추가 진실값
@@ -151,24 +161,23 @@ local master_postinit = function(inst)
     
     inst.OnLoad = onload
     inst.OnNewSpawn = onload
+    inst.ChangeSkin = OnChangeSkin
+    inst.Skins = skins
     
     --잠금해제
     inst:DoTaskInTime(0, function(inst)
         inst.components.builder:AddRecipe("sleepbomb")--선잠주머니
-        inst:PushEvent("unlockrecipe", { recipe = "sleepbomb" })
-    end)    
-    inst:DoTaskInTime(0, function(inst)
         inst.components.builder:AddRecipe("blowdart_sleep")--수면다트
-        inst:PushEvent("unlockrecipe", { recipe = "blowdart_sleep" })
-    end)        
-    inst:DoTaskInTime(0, function(inst)
         inst.components.builder:AddRecipe("blowdart_fire")--화염다트
+        inst:PushEvent("unlockrecipe", { recipe = "sleepbomb" })
         inst:PushEvent("unlockrecipe", { recipe = "blowdart_fire" })
-    end)    
+        inst:PushEvent("unlockrecipe", { recipe = "blowdart_sleep" })
+    end)
 
+    inst:ListenForEvent("onattackother", onattackother) --독뎀 태그
     -- inst:ListenForEvent("hungerdelta", OnHungerDelta)-- 허기에따른 변화 마침코드
     -- inst:ListenForEvent("Hungeranimal", OnHungeranimal)-- 허기에따른 변화 마침코드2
-    --inst:ListenForEvent("tess_force_proc", OnHungeranimal)-- 허기에따른 변화 마침코드2
+    -- inst:ListenForEvent("tees_force_proc", OnHungeranimal)-- 허기에따른 변화 마침코드2
 end
 
 

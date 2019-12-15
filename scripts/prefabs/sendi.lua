@@ -134,29 +134,6 @@ local skins = { -- "sendi_skin_" [스킨] 뒤에 나오는 이름
     "DEFAULT", "longtail", "christmas", "christmas_b", "ignia", "ignias"
 }
 
-local function SetSkinBuild(inst) -- YUKARI 센디 스킨옵션 관련 
-    local index = inst.skinindex
-
-    if index == 1 then
-        inst.AnimState:SetBuild("sendi")
-    else
-        local OverrideSkin =_G.SendiForceOverrideSkin
-        inst.AnimState:SetBuild("sendi_skin_"..skins[index])
-
-        if OverrideSkin == 2 then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        elseif OverrideSkin == 3 and not inst.components.inventory:EquipHasTag("sendis") then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        end
-
-        if inst.components.inventory:EquipHasTag("sleevefix") then
-            inst.AnimState:OverrideSymbol("arm_upper", "sendi", "arm_upper")
-        else
-            inst.AnimState:ClearOverrideSymbol("arm_upper")
-        end
-    end
-end
-
 local function OnChangeSkin(inst) -- YUKARI 스킨관련
     inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
     SetSkinBuild(inst)
@@ -225,8 +202,8 @@ end
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
-    inst.skinindex = 1
 
+    inst.skinindex = 1
     inst.soundsname = "willow"
     -- 이 캐릭터의 사운드 윌로우로 설정함.
     inst.starting_inventory = start_inv
@@ -266,9 +243,12 @@ local master_postinit = function(inst)
     
     inst.components.combat.min_attack_period = 0.3--공격속도 
     --inst.components.health:StartRegen(0.3, 0.6)  --피 리젠
+
     inst.OnLoad = onload
     inst.OnNewSpawn = onload
     inst.ChangeSkin = OnChangeSkin
+    inst.Skins = skins
+
     inst:ListenForEvent("equip", OnEquip )
     inst:ListenForEvent("unequip", OnEquip )
 end

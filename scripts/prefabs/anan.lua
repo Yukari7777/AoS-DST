@@ -88,10 +88,10 @@ end
 
 --   캐릭터 능력 관련 펑션들
 local function CalcSanityAura(inst, observer)--정신
-   if observer:HasTag("aosplayer") then --발견한자의 이름 [오라를 받을사람]
-      return TUNING.SANITYAURA_SMALL
-   end   
-   return 0
+    if observer:HasTag("aosplayer") then --발견한자의 이름 [오라를 받을사람]
+        return TUNING.SANITYAURA_SMALL
+    end
+    return 0
 end
    
 local function anan_OnHungerDelta(inst, data)-- 허기에따른 스피드와 공격력 변화
@@ -151,31 +151,8 @@ end
 --스킨추가
 
 local skins = { -- "anan_skin_" [스킨] 뒤에 나오는 이름
-    "DEFAULT", "christmas"
+    "DEFAULT", "christmas",
 }
-
-local function SetSkinBuild(inst) -- YUKARI 센디 스킨옵션 관련 
-    local index = inst.skinindex
-
-    if index == 1 then
-        inst.AnimState:SetBuild("anan")
-    else
-        local OverrideSkin =_G.ananForceOverrideSkin
-        inst.AnimState:SetBuild("anan_skin_"..skins[index])
-
-        if OverrideSkin == 2 then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        elseif OverrideSkin == 3 and not inst.components.inventory:EquipHasTag("anans") then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        end
-
-        if inst.components.inventory:EquipHasTag("sleevefix") then
-            inst.AnimState:OverrideSymbol("arm_upper", "anan", "arm_upper")
-        else
-            inst.AnimState:ClearOverrideSymbol("arm_upper")
-        end
-    end
-end
 
 local function OnChangeSkin(inst) -- YUKARI 스킨관련
     inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
@@ -185,7 +162,6 @@ end
 
 ----------스킨 끝
 
-	
 local function common_postinit (inst) --정신
     
     inst:AddTag("anan")--자신의 태그 
@@ -206,7 +182,9 @@ end
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
+    
     inst.soundsname = "wortox"
+    inst.skinindex = 1
 
     inst:AddComponent("aoslevel")--레벨업
     inst:AddComponent("aosbuff")
@@ -242,13 +220,15 @@ local master_postinit = function(inst)
 
     inst.OnLoad = onload
     inst.OnNewSpawn = onload
+    inst.ChangeSkin = OnChangeSkin
+    inst.Skins = skins
 	
     --잠금해제
     inst:DoTaskInTime(0, function(inst)
-     inst.components.builder:AddRecipe("birdtrap")
-     inst.components.builder:AddRecipe("trap_teeth")
-      inst:PushEvent("unlockrecipe", { recipe = "birdtrap" })
-      inst:PushEvent("unlockrecipe", { recipe = "trap_teeth" })
+        inst.components.builder:AddRecipe("birdtrap")
+        inst.components.builder:AddRecipe("trap_teeth")
+        inst:PushEvent("unlockrecipe", { recipe = "birdtrap" })
+        inst:PushEvent("unlockrecipe", { recipe = "trap_teeth" })
     end)
     
     inst:ListenForEvent("hungerdelta", anan_OnHungerDelta)-- 허기에따른 변화 마침코드/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경

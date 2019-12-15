@@ -460,7 +460,6 @@ require "util"
 local containers = require("containers")
 local IsServer = GLOBAL.TheNet:GetIsServer()
 --
-GLOBAL.SendiForceOverrideSkin = GetModConfigData("skinoverride")
 
 modimport "scripts/tunings_sendi.lua" -- 튜닝 파일 로드
 
@@ -518,6 +517,29 @@ function Combat.GetAttacked(self, attacker, damage, ...)
 	end
 
 	return _GetAttacked(self, attacker, damage, ...)
+end
+
+GLOBAL.SetSkinBuild = function(inst) -- YUKARI 센디 스킨옵션 관련 
+    local index = inst.skinindex
+
+    if index == 1 then
+        inst.AnimState:SetBuild(inst.prefab)
+    else
+        local OverrideSkin = GetModConfigData("skinoverride")
+        inst.AnimState:SetBuild(inst.prefab.."_skin_"..inst.Skins[index])
+
+        if OverrideSkin == 2 then
+            inst.AnimState:ClearOverrideSymbol("swap_body")
+        elseif OverrideSkin == 3 and not inst.components.inventory:EquipHasTag("sendis") then
+            inst.AnimState:ClearOverrideSymbol("swap_body")
+        end
+
+        if inst.components.inventory:EquipHasTag("sleevefix") then
+            inst.AnimState:OverrideSymbol("arm_upper", "sendi", "arm_upper")
+        else
+            inst.AnimState:ClearOverrideSymbol("arm_upper")
+        end
+    end
 end
 
 -- 미트무시
