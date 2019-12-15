@@ -3,6 +3,12 @@ local CONST = TUNING.ANAN
 
 local assets = {
     Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+	---
+	
+	Asset("ANIM", "anim/anan_skin_christmas.zip"), -- 크리스마스 사이드테일
+    -- Asset("ANIM", "anim/sendi_skin_christmas_b.zip"),  --크리스마스 롱테일 
+    -- Asset("ANIM", "anim/sendi_skin_ignia.zip"), --ver.이그니아 
+    -- Asset("ANIM", "anim/sendi_skin_ignias.zip"), --ver.이그니아 금발
 }
 local prefabs = {}
 
@@ -82,8 +88,8 @@ end
 
 --   캐릭터 능력 관련 펑션들
 local function CalcSanityAura(inst, observer)--정신
-   if observer:HasTag("tees") then --발견한자의 이름 [오라를 받을사람]
-      return TUNING.SANITYAURA_MED
+   if observer:HasTag("aosplayer") then --발견한자의 이름 [오라를 받을사람]
+      return TUNING.SANITYAURA_SMALL
    end   
    return 0
 end
@@ -140,7 +146,46 @@ local function anan_Onhungrypuppy(inst) --배고픈강아지 허기수치가 30 
         inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
     end
 end
-            
+    
+
+--스킨추가
+
+local skins = { -- "anan_skin_" [스킨] 뒤에 나오는 이름
+    "DEFAULT", "christmas"
+}
+
+local function SetSkinBuild(inst) -- YUKARI 센디 스킨옵션 관련 
+    local index = inst.skinindex
+
+    if index == 1 then
+        inst.AnimState:SetBuild("anan")
+    else
+        local OverrideSkin =_G.ananForceOverrideSkin
+        inst.AnimState:SetBuild("anan_skin_"..skins[index])
+
+        if OverrideSkin == 2 then
+            inst.AnimState:ClearOverrideSymbol("swap_body")
+        elseif OverrideSkin == 3 and not inst.components.inventory:EquipHasTag("anans") then
+            inst.AnimState:ClearOverrideSymbol("swap_body")
+        end
+
+        if inst.components.inventory:EquipHasTag("sleevefix") then
+            inst.AnimState:OverrideSymbol("arm_upper", "anan", "arm_upper")
+        else
+            inst.AnimState:ClearOverrideSymbol("arm_upper")
+        end
+    end
+end
+
+local function OnChangeSkin(inst) -- YUKARI 스킨관련
+    inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
+    SetSkinBuild(inst)
+    -- TODO : 감정표현 추가
+end
+
+----------스킨 끝
+
+	
 local function common_postinit (inst) --정신
     
     inst:AddTag("anan")--자신의 태그 

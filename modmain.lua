@@ -861,6 +861,9 @@ function ChangeSkin(inst)
     --]] -- 태그제거 
 end
 AddModRPCHandler("sendi", "skin", ChangeSkin)
+AddModRPCHandler("anan", "skin", ChangeSkin)
+--AddModRPCHandler("tees", "skin", ChangeSkin)
+
 --센디스킨
 
 STRINGS.NAMES.SENDI = "sendi"

@@ -89,6 +89,13 @@ local function onload(inst)
     end
 end
 
+local function CalcSanityAura(inst, observer)--정신
+   if observer:HasTag("aosplayer") then --발견한자의 이름 [오라를 받을사람]
+      return TUNING.SANITYAURA_SMALL
+   end   
+   return 0
+end
+
 --MH 모드옵션 불러오기
 --local modoption = GetModConfigData("modoption")
 --MH 모드옵션 불러오기
@@ -156,6 +163,9 @@ local function OnChangeSkin(inst) -- YUKARI 스킨관련
     -- TODO : 감정표현 추가
 end
 
+----------스킨 끝
+
+
 local function OnEquip(inst, data) 
     if data.eslot == EQUIPSLOTS.BODY then
         SetSkinBuild(inst)
@@ -196,8 +206,6 @@ local function NoEatCookPotFood(inst)
     end
 end
 
-----------스킨 끝
-
 local common_postinit = function(inst) 
     --센디의 커스텀레시피를 추가합니다. 
     inst.MiniMapEntity:SetIcon( "sendi.tex" )
@@ -229,6 +237,9 @@ local master_postinit = function(inst)
     inst:AddComponent("aosbuff")
     inst:AddComponent("aoslevel")--레벨업 컴포넌트
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
+    
+	inst:AddComponent("sanityaura")--센티넬아우라 
+    inst.components.sanityaura.aurafn = CalcSanityAura
     
     inst:ListenForEvent("oneat", eatunfinishedfoodfn) -- 먹었을 때
     NoEatCookPotFood(inst)
