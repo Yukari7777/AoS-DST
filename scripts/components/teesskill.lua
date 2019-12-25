@@ -39,11 +39,7 @@ function TeesSkill:OnStartEverguard(inst)
         inst.SkillTask = inst:DoPeriodicTask(0, Hardening)  -- 0초마다 반복 = 1프레임(0.033초)마다 반복
         self.ishardening = true
 
-<<<<<<< HEAD
         if math.random() < 0.88 then -- 스킬을 쓸 때 88퍼 확률로 대사를 말함
-=======
-        if math.random() < 0.33 then -- 스킬을 쓸 때 33퍼 확률로 대사를 말함
->>>>>>> 9ab15c6323b683130ec9a8e7b2bbc7f40d99df6e
             inst.components.talker:Say(GetString(inst.prefab, "SKILL_EVERGUARD"))
         end
 
