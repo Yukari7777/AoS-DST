@@ -1,6 +1,6 @@
-local STUNING = TUNING.SENDI
+local CONST = TUNING.SENDI
 
-local sendiskill = Class(function(self, inst)
+local SendiSkill = Class(function(self, inst)
     self.inst = inst
 
 	self.shouldcharge = false
@@ -46,7 +46,7 @@ local function DoRapierCharge(inst)
 				local targetpos = v:GetPosition()
 				v.Transform:SetPosition(targetpos.x + (math.sin(angle) * VELOCITY) , 0, targetpos.z + (math.cos(angle) * VELOCITY))
 				if not v:HasTag("damagetaken") then
-					v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_1) -- 데미지1
+					v.components.combat:GetAttacked(inst, CONST.SKILL_RAPIER_DAMAGE_1) -- 데미지1
 					v:AddTag("damagetaken")
 					v:DoTaskInTime(15 * FRAMES, function()
 						v:RemoveTag("damagetaken")
@@ -57,11 +57,11 @@ local function DoRapierCharge(inst)
 	end
 end
 
-function sendiskill:IsCharging()
+function SendiSkill:IsCharging()
 	return self.shouldcharge
 end
 
-function sendiskill:OnStartRapier(inst, angle)
+function SendiSkill:OnStartRapier(inst, angle)
 	if inst.SkillTask == nil then 
 		self.angle = angle
 		inst.SkillTask = inst:DoPeriodicTask(0, DoRapierCharge)  -- 0초마다 반복 = 1프레임(0.033초)마다 반복
@@ -69,10 +69,10 @@ function sendiskill:OnStartRapier(inst, angle)
 	end
 end
 
-function sendiskill:Explode(inst)
+function SendiSkill:Explode(inst)
 	self.shouldcharge = true
 	if inst.components.aosmana ~= nil then
-		inst.components.aosmana:DoDelta(- STUNING.SKILL_RAPIER_MANACOST )
+		inst.components.aosmana:DoDelta( -CONST.SKILL_RAPIER_MANACOST )
 	end
 
 	local x, y, z = inst.Transform:GetWorldPosition()
@@ -84,12 +84,12 @@ function sendiskill:Explode(inst)
 	local ents = TheSim:FindEntities(x, y, z, 5, { "_combat" })
 	for k,v in pairs(ents) do 
 		if v.components.health ~= nil and _G.IsPreemptiveEnemy(inst, v) then
-			v.components.combat:GetAttacked(inst, STUNING.SKILL_RAPIER_DAMAGE_2) -- 데미지2
+			v.components.combat:GetAttacked(inst, CONST.SKILL_RAPIER_DAMAGE_2) -- 데미지2
 		end
 	end
 end
 
-function sendiskill:OnFinishCharge(inst)
+function SendiSkill:OnFinishCharge(inst)
 	inst.Physics:Stop()
     inst.Physics:SetMotorVel(0, 0, 0)
 	ValidatePosition(inst)
@@ -111,7 +111,7 @@ local function DoIgniaRunCharge(inst)
 	self.tickafterskill = self.tickafterskill + 1
 end
 
-function sendiskill:OnStartIgniaRun(inst)
+function SendiSkill:OnStartIgniaRun(inst)
 	if inst.SkillTask == nil then 
 		self.angle = inst.Transform:GetRotation()
 		self.shouldcharge = true
@@ -120,11 +120,11 @@ function sendiskill:OnStartIgniaRun(inst)
 		inst.components.health:SetInvincible(true)
 
 		if inst.components.aosmana ~= nil then
-			inst.components.aosmana:DoDelta( -STUNING.SKILL_IGNIARUN_MANACOST )
+			inst.components.aosmana:DoDelta( -CONST.SKILL_IGNIARUN_MANACOST )
 		end
 
 		SpawnPrefab("explode_small").Transform:SetPosition(inst.Transform:GetWorldPosition())
 	end
 end
 
-return sendiskill
+return SendiSkill

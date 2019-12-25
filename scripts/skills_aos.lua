@@ -8,7 +8,6 @@ local ActionHandler = GLOBAL.ActionHandler
 local EventHandler = GLOBAL.EventHandler
 local EQUIPSLOTS = GLOBAL.EQUIPSLOTS
 local FRAMES = GLOBAL.FRAMES
-local CONST = TUNING.SENDI
 
 GLOBAL.IsPreemptiveEnemy = function(inst, target)
    -- 트리가드를 제외한 몬스터
@@ -60,11 +59,17 @@ local function OnStartSkillGeneral(inst, shouldstop)
    inst.components.locomotor:Clear()
    inst:ClearBufferedAction()
    ForceStopHeavyLifting(inst)
-   if shouldstop and inst.components.playercontroller ~= nil then
+   if shouldstop ~= false and inst.components.playercontroller ~= nil then
       inst.components.playercontroller:RemotePausePrediction()
       inst.components.playercontroller:Enable(false)
    end
    inst:PerformBufferedAction()
+end
+
+local function OnStartSkillGeneralClient(inst)
+   inst.components.locomotor:Stop()
+   inst.components.locomotor:Clear()
+   inst.entity:FlattenMovementPrediction()
 end
 
 local function OnFinishSkillGeneral(inst)
@@ -105,14 +110,14 @@ local rapier_SgS = State {
    tags = { "busy", "doing", "skill", "pausepredict", "aoe", "nointerrupt", "nomorph"},
 
    onenter = function(inst)
-      OnStartSkillGeneral(inst, true)
+      OnStartSkillGeneral(inst)
       local x, y, z = GetPositionToClosestEnemy(inst)
       if x ~= nil then inst:ForceFacePoint(x, y, z) end
       inst.sg:SetTimeout(12 * FRAMES)
       inst.AnimState:PlayAnimation("whip_pre") -- YUKARI : TODO. 커스텀 애니메이션. 프레임 수 7
-        inst.AnimState:PushAnimation("whip", false)
+      inst.AnimState:PushAnimation("whip", false)
 
-        inst.sg.statemem.angle = inst.Transform:GetRotation() -- 가까이에 적이 있을경우 적에게, 없으면 바라보던 방향으로 돌진
+      inst.sg.statemem.angle = inst.Transform:GetRotation() -- 가까이에 적이 있을경우 적에게, 없으면 바라보던 방향으로 돌진
       inst.components.sendiskill:OnStartRapier(inst, inst.sg.statemem.angle)
    end,
 
@@ -148,9 +153,7 @@ local rapier_SgC = State {
    tags = { "doing", "attack", "skill" },
 
    onenter = function(inst)
-      inst.components.locomotor:Stop()
-      inst.components.locomotor:Clear()
-      inst.entity:FlattenMovementPrediction()
+      OnStartSkillGeneralClient(inst)
       inst.AnimState:PlayAnimation("whip_pre")
       inst.AnimState:PushAnimation("whip", false)
       inst:PerformPreviewBufferedAction()
@@ -173,7 +176,7 @@ local rapier_SgC = State {
    end,
 }
 
-AddSkill("rapier", "sendi", rapier_SgS, rapier_SgC, CONST.SKILL_RAPIER_MANACOST)
+AddSkill("rapier", "sendi", rapier_SgS, rapier_SgC, TUNING.SENDI.SKILL_RAPIER_MANACOST)
 
 
 local igniarun_SgS = State { 
@@ -181,9 +184,9 @@ local igniarun_SgS = State {
    tags = { "busy", "doing", "skill", "pausepredict", "nomorph" },
 
    onenter = function(inst)
-      OnStartSkillGeneral(inst, true)
+      OnStartSkillGeneral(inst)
       inst.sg:SetTimeout(13 * FRAMES)
-        inst.AnimState:PlayAnimation("jumpout")
+      inst.AnimState:PlayAnimation("jumpout")
 
       inst.components.sendiskill:OnStartIgniaRun(inst)
    end,
@@ -223,9 +226,7 @@ local igniarun_SgC = State {
    tags = { "doing", "skill" },
 
    onenter = function(inst)
-      inst.components.locomotor:Stop()
-      inst.components.locomotor:Clear()
-      inst.entity:FlattenMovementPrediction()
+      OnStartSkillGeneralClient(inst)
       inst.AnimState:PlayAnimation("jumpout")
 
       inst:PerformPreviewBufferedAction()
@@ -248,4 +249,89 @@ local igniarun_SgC = State {
    end,
 }
 
-AddSkill("igniarun", "sendi", igniarun_SgS, igniarun_SgC, CONST.SKILL_IGNIARUN_MANACOST)
+AddSkill("igniarun", "sendi", igniarun_SgS, igniarun_SgC, TUNING.SENDI.SKILL_IGNIARUN_MANACOST)
+
+local everguard_SgS = State {
+   name = "everguard",
+   tags = { "doing", "skill", "busy", "pausepredict" },
+
+   onenter = function(inst)
+      OnStartSkillGeneral(inst)
+      inst.AnimState:PlayAnimation("pickup")
+      inst.AnimState:PushAnimation("pickup_lag", true)
+
+      inst.sg:SetTimeout(60 * FRAMES)
+      inst.components.teesskill:OnStartEverguard(inst)
+   end,
+
+   timeline =
+   {
+      TimeEvent(12 * FRAMES, function(inst)
+         inst.AnimState:Pause()
+      end),
+
+      TimeEvent(44 * FRAMES, function(inst)
+         inst.AnimState:Resume()
+         inst.AnimState:PushAnimation("pickup_pst", false)
+         inst.components.teesskill:Dehard(inst)
+      end),
+   },
+
+   events = {
+      EventHandler("animover", function(inst)
+         if inst.AnimState:AnimDone() then
+            inst.components.teesskill:OnFinishEverguard(inst)
+            inst.AnimState:Resume()
+            inst.sg:GoToState("idle", true)
+         end
+      end),
+   },
+ 
+   ontimeout = function(inst)
+      inst.components.teesskill:OnFinishEverguard(inst)
+      inst.AnimState:Resume()
+      inst.sg:GoToState("idle", true)
+      OnFinishSkillGeneral(inst)
+   end,
+   
+   onexit = function(inst)   
+      inst.components.teesskill:OnFinishEverguard(inst)
+      inst.AnimState:Resume()
+      if inst.bufferedaction == inst.sg.statemem.action then
+         inst:ClearBufferedAction()
+      end
+      OnFinishSkillGeneral(inst)
+   end,
+}
+
+local everguard_SgC = State {
+   name = "everguard",
+   tags = { "doing", "skill" },
+
+   onenter = function(inst)
+      OnStartSkillGeneralClient(inst)
+      inst.AnimState:PlayAnimation("pickup")
+      inst.AnimState:PushAnimation("pickup_lag", true)
+
+      inst:PerformPreviewBufferedAction()
+      inst.sg:SetTimeout(120 * FRAMES)
+   end,
+
+   onupdate = function(inst)
+      if inst.bufferedaction == nil then
+         inst.AnimState:PlayAnimation("pickup_lag", true)
+         inst.sg:GoToState("idle", true)
+      end
+   end,
+
+   ontimeout = function(inst)
+      inst:ClearBufferedAction()
+      inst.sg:GoToState("idle", inst.entity:FlattenMovementPrediction() and "noanim" or nil)
+   end,
+   
+   onexit = function(inst)   
+      inst.entity:SetIsPredictingMovement(true)
+   end,
+}
+
+AddSkill("everguard", "tees", everguard_SgS, everguard_SgC, TUNING.TEES.SKILL_EVERGUARD_MANACOST)

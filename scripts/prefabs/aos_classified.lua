@@ -7,7 +7,7 @@ end
 local function OnEntityReplicated(inst)    
     inst._parent = inst.entity:GetParent()
     if inst._parent == nil then
-        print("Unable to initialize classified data for player Sendi")
+        print("Unable to initialize classified data for one of AOS player.")
     else
         inst._parent:AttachAoSClassified(inst)
         for i, v in ipairs({ "aosmana" }) do
@@ -25,7 +25,7 @@ end
 local function RegisterKeyEvent(classified)
     local parent = classified._parent
     if parent.HUD == nil then return end -- if it's not a client, stop here.
-    local modname = KnownModIndex:GetModActualName("[DST]Sendi")
+    local modname = KnownModIndex:GetModActualName("[DST]Tales of Seed") or KnownModIndex:GetModActualName("[DST]Tales of Seed - Test")
 
     if parent:HasTag("aosplayer") then
         local SkinKey = GetModConfigData("skin", modname) or "KEY_P"
@@ -38,11 +38,11 @@ local function RegisterKeyEvent(classified)
         local StatusKey = GetModConfigData("statuskey", modname) or "KEY_K"
         TheInput:AddKeyDownHandler(_G[StatusKey], function()
             if KeyCheckCommon(parent) then
-                SendModRPCToServer(MOD_RPC["sendi"]["status"]) 
+                SendModRPCToServer(MOD_RPC["aosgeneral"]["status"]) 
             end
         end) 
         
-        local Skill1_Key = GetModConfigData("skill_1", modname) or "KEY_V"
+        local Skill1_Key = GetModConfigData("skill_1", modname) or "KEY_V" --1번 스킬
         if parent:HasTag("sendi") then
             TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
                 if KeyCheckCommon(parent) then
@@ -57,9 +57,9 @@ local function RegisterKeyEvent(classified)
             TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
                 if KeyCheckCommon(parent) then
                     if TheInput:IsKeyDown(KEY_SHIFT) then
-                        --SendModRPCToServer(MOD_RPC["tees"]["rapier"]) 
+                        --SendModRPCToServer(MOD_RPC["tees"]["viperbite"]) -- 가명 : 독사 물기
                     else
-                        --SendModRPCToServer(MOD_RPC["tees"]["everguard"]) 
+                        SendModRPCToServer(MOD_RPC["tees"]["everguard"]) -- 절대 방어
                     end
                 end
             end)
@@ -79,9 +79,10 @@ local function RegisterNetListeners(inst)
 
         AddSkillEventListener(inst, "rapier")
         AddSkillEventListener(inst, "igniarun")
-    else
-        
+        AddSkillEventListener(inst, "viperbite")
+        AddSkillEventListener(inst, "everguard")
     end
+    
     RegisterKeyEvent(inst)
 end
 
