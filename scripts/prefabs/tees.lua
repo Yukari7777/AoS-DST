@@ -134,6 +134,7 @@ local master_postinit = function(inst)
 	inst:AddComponent("aosbuff")
     inst:AddComponent("aosmana")
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
+	inst:AddComponent("teesskill")
 	
     inst:AddComponent("sanityaura")
     inst.components.sanityaura.aurafn = CalcSanityAura

@@ -603,7 +603,7 @@ local function SayInfo(inst)--센디레벨업
     
     inst.components.talker:Say(str)
 end
-AddModRPCHandler("sendi", "status", SayInfo)
+AddModRPCHandler("aosgeneral", "status", SayInfo)
 
 --드롭 exp
 function TESTFUNCAAA(inst)

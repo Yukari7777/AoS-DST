@@ -64,12 +64,43 @@ local BUFF_TYPE = {
             end
 
             if inst.components.aosbuff.buff.poison.arg[2] >= 10 then
+                inst:AddTag("teespoison")
+            else
+                inst:RemoveTag("teespoison")
+            end
+        end,
+        
+        onfinish = function(inst)
+            inst.AnimState:SetMultColour(1, 1, 1, 1)
+        end,
+    },
+
+    venom = {
+        isdebuff = true,
+        interval = CONST.DEBUFF_VENOM_INTERVAL,
+        maxtime = CONST.DEBUFF_VENOM_MAX_TIME,
+        extendmult = CONST.DEBUFF_VENOM_EXTEND_MULT,
+
+        onstart = function(inst)
+            inst.AnimState:SetMultColour(0.9, 0.2, 0.9, 1)
+        end,
+
+        fn = function(inst)
+            if inst.components.health ~= nil and not inst.components.health:IsDead() then
+                local hp = inst.components.health.currenthealth
+                local delta = CONST.DEBUFF_VENOM_DAMAGE
+                delta = delta >= hp and hp - 1 or delta
+
+                inst.components.health:DoDelta(-delta, nil)
+            end
+
+            if inst.components.aosbuff.buff.venom.arg[2] >= 10 then
                 inst:AddTag("teesvenom")
             else
                 inst:RemoveTag("teesvenom")
             end
         end,
-        
+
         onfinish = function(inst)
             inst.AnimState:SetMultColour(1, 1, 1, 1)
         end,
