@@ -884,7 +884,7 @@ function ChangeSkin(inst)
 end
 AddModRPCHandler("sendi", "skin", ChangeSkin)
 AddModRPCHandler("anan", "skin", ChangeSkin)
---AddModRPCHandler("tees", "skin", ChangeSkin)
+AddModRPCHandler("tees", "skin", ChangeSkin)
 
 --센디스킨
 

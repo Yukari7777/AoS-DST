@@ -1998,9 +1998,13 @@ return {
     PIE_BERRY_COOKED = "새콤달콤~ 맛있는거~♪",
     DUMPLING = "이런건 먹는게 아니라니까!!",
     DUMPLING_COOKED = "고기와 꼬기와 꼬깅! 완벽해!",
-
-    
     },
+
+    DESCRIBE_NOMANA = { -- 마나 없을때 대사
+		"마나부족대사 1",
+		"마나부족대사 2",
+		"마나부족대사 3",
+	},
     
     DESCRIBE_LEVELUP = {
         "우와, 나 완전 강해!",

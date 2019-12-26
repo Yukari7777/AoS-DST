@@ -97,15 +97,15 @@ local function onattackother(inst, data)-- 33초에 거쳐 딜을입힘.
     end
 end
 
+local skins = {
+    "DEFAULT",
+}
+
 local function OnChangeSkin(inst) -- YUKARI 스킨관련
     inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
     SetSkinBuild(inst)
     -- TODO : 감정표현 추가
 end
-
-local skins = {
-    "DEFAULT",
-}
 
 local function common_postinit (inst) --정신
     inst:AddTag("sneakysnake") -- 그림자 몹을 제외한 모든 몹에게서 선공당하지 않음

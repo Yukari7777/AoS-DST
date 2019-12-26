@@ -2004,6 +2004,12 @@ return {
 	DUMPLING_COOKED = "유리누나가 정말 좋아하는 만두야, 맛있어!",
 
 	},
+
+	DESCRIBE_NOMANA = { -- 마나 없을때 대사
+		"마나부족대사 1",
+		"마나부족대사 2",
+		"마나부족대사 3",
+	},
 	
 	DESCRIBE_LEVELUP = {
 		"아르릉!!!",
