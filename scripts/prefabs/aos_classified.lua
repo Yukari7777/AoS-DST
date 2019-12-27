@@ -57,7 +57,7 @@ local function RegisterKeyEvent(classified)
             TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
                 if KeyCheckCommon(parent) then
                     if TheInput:IsKeyDown(KEY_SHIFT) then
-                        --SendModRPCToServer(MOD_RPC["tees"]["viperbite"]) -- 가명 : 독사 물기
+                        SendModRPCToServer(MOD_RPC["tees"]["viperbite"]) -- 가명 : 독사 물기
                     else
                         SendModRPCToServer(MOD_RPC["tees"]["everguard"]) -- 절대 방어
                     end
@@ -67,7 +67,7 @@ local function RegisterKeyEvent(classified)
     end
 end
 
-local function AddSkillEventListener(inst, name)
+local function AddCommonSkillEventListener(inst, name)
     inst:ListenForEvent("on"..name, function(parent)
         parent.components.playercontroller:DoAction(BufferedAction(parent, nil, ACTIONS[name:upper()]))
     end, inst._parent)
@@ -77,10 +77,10 @@ local function RegisterNetListeners(inst)
     if TheWorld.ismastersim then
         inst._parent = inst.entity:GetParent()
 
-        AddSkillEventListener(inst, "rapier")
-        AddSkillEventListener(inst, "igniarun")
-        AddSkillEventListener(inst, "viperbite")
-        AddSkillEventListener(inst, "everguard")
+        AddCommonSkillEventListener(inst, "rapier")
+        AddCommonSkillEventListener(inst, "igniarun")
+        AddCommonSkillEventListener(inst, "viperbite")
+        AddCommonSkillEventListener(inst, "everguard")
     end
     
     RegisterKeyEvent(inst)
@@ -100,6 +100,8 @@ local function fn()
 
     inst.rapier = net_event(inst.GUID, "onrapier")
     inst.igniarun = net_event(inst.GUID, "onigniarun")
+    inst.viperbite = net_event(inst.GUID, "onviperbite")
+    inst.everguard = net_event(inst.GUID, "oneverguard")
 
     --Delay net listeners until after initial values are deserialized
     inst:DoTaskInTime(0, RegisterNetListeners)

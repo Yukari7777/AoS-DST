@@ -64,4 +64,31 @@ function TeesSkill:OnFinishEverguard(inst)
 	end
 end
 
+function TeesSkill:FindVenomed(t)
+    local targets = {}
+
+    for k, v in pairs(targets) do
+        if v:HasTag("teesvenom") then
+            table.insert(targets, v)
+        end
+    end
+
+    return next(targets) ~= nil and targets or nil
+end
+
+function TeesSkill:GetVenomspreadTarget()
+    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS) -- defined in skills_aos.lua
+    local tovenom = self:FindVenomed(targets)
+    local closest = tovenom ~= nil and tovenom[1] or nil
+
+    return closest, tovenom
+end
+
+function TeesSkill:GetViperbiteTarget()
+    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VIPERBITE_TARGET_RADIUS) -- defined in skills_aos.lua
+    if targets ~= nil then
+		return targets[1]
+	end
+end
+
 return TeesSkill
