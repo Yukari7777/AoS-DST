@@ -23,10 +23,7 @@ local function Reflect(inst, data)
         local combat = attacker.components.combat
 
         combat:GetAttacked(inst, (combat.defaultdamage or 10) * CONST.SKILL_EVERGUARD_BACKFIRE_MULT)
-        if attacker.components.aosbuff == nil then
-            attacker:AddComponent("aosbuff")
-        end
-        attacker.components.aosbuff:AddBuff("poison", 3)
+        AoSAddBuff(attacker, "poison", 3)
     end
 end
 
@@ -89,6 +86,32 @@ function TeesSkill:GetViperbiteTarget()
     if targets ~= nil then
 		return targets[1]
 	end
+end
+
+function TeesSkill:Viperbite(target)
+    if not target or target.components.health ~= nil and target.components.health:IsDead() then return end
+
+    local inst = self.inst
+    if inst.components.aosmana ~= nil then
+		--inst.components.aosmana:DoDelta( -CONST.SKILL_EVERGUARD_MANACOST )
+    end
+    
+    -- 티스가 스킬로 맞춘 적이 너무 가까이에 있을경우 어그로 끌림
+    local targets = _G.GetSkillTargetsInRadius(inst, CONST.SKILL_VIPERBITE_AGGRO_RADIUS) --어그로범위 = 6\
+    local shouldtarget = false
+    if targets ~= nil then 
+        for k, v in pairs(targets) do
+            if v == target then
+                shouldtarget = true
+                break
+            end
+        end
+    end
+
+    if _G.IsPreemptiveEnemy(inst, target) then
+        target.components.combat:GetAttacked(shouldtarget and inst or nil, CONST.SKILL_VIPERVITE_DAMAGE)
+        AoSAddBuff(target, "venom", 5)
+    end
 end
 
 return TeesSkill

@@ -99,10 +99,7 @@ local function onattack(inst, attacker, target)--파이어 관련 코딩
         end)
     end 
 
-    if not target.components.aosbuff then
-        target:AddComponent("aosbuff")
-    end
-    target.components.aosbuff:AddBuff("flame", 2) -- 불 디버프를 2초간 부여
+    AoSAddBuff(target, "flame", 2)
 end
 
 local function ontakefuel(inst)

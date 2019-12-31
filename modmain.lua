@@ -894,6 +894,7 @@ STRINGS.NAMES.TEES = "tees"
 modimport "scripts/aosmana_init.lua"
 modimport "scripts/actions_aos.lua"
 modimport "scripts/skills_aos.lua"
+modimport "scripts/aoslogic.lua"
 modimport "scripts/recipes_sendi.lua"
 
 AddModCharacter("sendi", "FEMALE") --캐릭터를 마지막에 추가한다.

@@ -89,10 +89,7 @@ local function onattackother(inst, data)-- 33초에 거쳐 딜을입힘.
         local target = data.target
 
         if not target:HasTag("player") then --플레이어에게 딜이 들어가지않음.
-            if not target.components.aosbuff then
-                target:AddComponent("aosbuff")
-            end
-            target.components.aosbuff:AddBuff("poison", 5)
+            AoSAddBuff(target, "poison", 5)
         end
     end
 end

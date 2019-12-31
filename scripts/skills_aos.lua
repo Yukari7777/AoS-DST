@@ -16,7 +16,7 @@ GLOBAL.IsPreemptiveEnemy = function(inst, target)
    -- 친구가 제외
    -- 자기자신이 제외
    -- 날 공격하려 하는(타겟으로 삼은) 경우 무조건
-   return (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif"))) and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player"))) or (target.components.combat ~= nil and target.components.combat.target == inst) and target ~= inst
+   return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif"))) and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player"))) or target.components.combat.target == inst and target ~= inst
 end
 
 local function PutTarget(t, v)
@@ -35,10 +35,10 @@ GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
 	   -- 1) 가장 가까운 보스(단, 트리가드 제외)
 	   -- 2) 나를 타겟한 적.
       -- 3) 선공 할만한 적
-      if not (v.components.health ~= nil and v.components.health:IsDead()) then 
+      if not (v == inst and v.components.health ~= nil and v.components.health:IsDead()) then 
          if v:HasTag("epic") and not v:HasTag("leif") then
             PutTarget(targets, v)
-         elseif v ~= inst and v.components.combat ~= nil and v.components.combat.target == inst then
+         elseif v.components.combat ~= nil and v.components.combat.target == inst then
             PutTarget(targets, v)
          elseif GLOBAL.IsPreemptiveEnemy(inst, v) then
             PutTarget(targets, v)
@@ -85,7 +85,7 @@ local function nullfn()  -- AddAction's third argument type must be function. An
    return true 
 end
 
-local function AddCommonSkill(skillname, character, SgS, SgC, manacost)
+local function RegisterSkill(skillname, character, Stategraph, manacost, customHandler)
    -- This is a constructor to make key-press-to-action.
    -- Does Anyone want to use this function, feel free to use it
    -- and don't forget to rename ModRPCHandler's namespace and copy nullfn.
@@ -93,21 +93,23 @@ local function AddCommonSkill(skillname, character, SgS, SgC, manacost)
 
    AddAction(upperskillname, skillname, nullfn)
    AddModRPCHandler(character, skillname, function(inst)
-      if manacost ~= nil and inst.components.aosmana ~= nil and inst.components.aosmana.current >= manacost or manacost == nil then
-         inst:PushEvent("on"..skillname) -- See aos_classified how to excute actions via PushEvent.
+      if customHandler ~= nil then 
+         customHandler(inst)
       else
-         inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
+         if manacost ~= nil and inst.components.aosmana ~= nil and inst.components.aosmana.current >= manacost or manacost == nil then
+            inst:PushEvent("on"..skillname) -- See aos_classified how to excute actions via PushEvent.
+         else
+            inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
+         end
       end
    end)
 
-   AddStategraphState("wilson", SgS) -- Client Stategraph
-   AddStategraphState("wilson_client", SgC) -- Server Stategraph
+   AddStategraphState("wilson", Stategraph) -- Server Stategraph
    AddStategraphActionHandler("wilson", ActionHandler(ACTIONS[upperskillname], skillname))
-   AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS[upperskillname], skillname))
 end
 
 --------------------------------------------------------------------------------------------------------------------
-local rapier_SgS = State { 
+local rapier_Sg = State { 
    name = "rapier",
    tags = { "busy", "doing", "skill", "pausepredict", "aoe", "nointerrupt", "nomorph" },
 
@@ -150,38 +152,10 @@ local rapier_SgS = State {
    end,
 }
 
-local rapier_SgC = State {
-   name = "rapier",
-   tags = { "doing", "attack", "skill" },
-
-   onenter = function(inst)
-      OnStartSkillGeneralClient(inst)
-      inst.AnimState:PlayAnimation("whip_pre")
-      inst.AnimState:PushAnimation("whip", false)
-      inst:PerformPreviewBufferedAction()
-      inst.sg:SetTimeout(11 * FRAMES)
-   end,
-   
-   onupdate = function(inst)
-      if inst.bufferedaction == nil then
-         inst.sg:GoToState("idle", true)
-      end
-   end,
-
-   ontimeout = function(inst)
-      inst:ClearBufferedAction()
-      inst.sg:GoToState("idle", inst.entity:FlattenMovementPrediction() and "noanim" or nil)
-   end,
-   
-   onexit = function(inst)   
-      inst.entity:SetIsPredictingMovement(true)
-   end,
-}
-
-AddCommonSkill("rapier", "sendi", rapier_SgS, rapier_SgC, TUNING.SENDI.SKILL_RAPIER_MANACOST)
+RegisterSkill("rapier", "sendi", rapier_Sg, TUNING.SENDI.SKILL_RAPIER_MANACOST)
 
 
-local igniarun_SgS = State { 
+local igniarun_Sg = State { 
    name = "igniarun",
    tags = { "busy", "doing", "skill", "pausepredict", "nomorph" },
 
@@ -223,37 +197,9 @@ local igniarun_SgS = State {
    end,
 }
 
-local igniarun_SgC = State {
-   name = "igniarun",
-   tags = { "doing", "skill" },
+RegisterSkill("igniarun", "sendi", igniarun_Sg, TUNING.SENDI.SKILL_IGNIARUN_MANACOST)
 
-   onenter = function(inst)
-      OnStartSkillGeneralClient(inst)
-      inst.AnimState:PlayAnimation("jumpout")
-
-      inst:PerformPreviewBufferedAction()
-      inst.sg:SetTimeout(11 * FRAMES)
-   end,
-   
-   onupdate = function(inst)
-      if inst.bufferedaction == nil then
-         inst.sg:GoToState("idle", true)
-      end
-   end,
-
-   ontimeout = function(inst)
-      inst:ClearBufferedAction()
-      inst.sg:GoToState("idle", inst.entity:FlattenMovementPrediction() and "noanim" or nil)
-   end,
-   
-   onexit = function(inst)   
-      inst.entity:SetIsPredictingMovement(true)
-   end,
-}
-
-AddCommonSkill("igniarun", "sendi", igniarun_SgS, igniarun_SgC, TUNING.SENDI.SKILL_IGNIARUN_MANACOST)
-
-local everguard_SgS = State {
+local everguard_Sg = State {
    name = "everguard",
    tags = { "busy", "doing", "skill", "pausepredict", "nointerrupt", "nomorph", },
 
@@ -306,66 +252,44 @@ local everguard_SgS = State {
    end,
 }
 
-local everguard_SgC = State {
-   name = "everguard",
-   tags = { "doing", "skill" },
+RegisterSkill("everguard", "tees", everguard_Sg, TUNING.TEES.SKILL_EVERGUARD_MANACOST)
 
-   onenter = function(inst)
-      OnStartSkillGeneralClient(inst)
-      inst.AnimState:PlayAnimation("pickup")
-      inst.AnimState:PushAnimation("pickup_lag", true)
 
-      inst:PerformPreviewBufferedAction()
-      inst.sg:SetTimeout(120 * FRAMES)
-   end,
-
-   onupdate = function(inst)
-      if inst.bufferedaction == nil then
-         inst.sg:GoToState("idle", true)
-      end
-   end,
-
-   ontimeout = function(inst)
-      inst:ClearBufferedAction()
-      inst.sg:GoToState("idle", inst.entity:FlattenMovementPrediction() and "noanim" or nil)
-   end,
-   
-   onexit = function(inst)   
-      inst.entity:SetIsPredictingMovement(true)
-   end,
-}
-
-AddCommonSkill("everguard", "tees", everguard_SgS, everguard_SgC, TUNING.TEES.SKILL_EVERGUARD_MANACOST)
-
-local viperbite_SgS = State {
+local viperbite_Sg = State {
    name = "viperbite",
-   tags = { "busy", "doing", "skill", "pausepredict", },
+   tags = { "busy", "doing", "skill", "pausepredict", "nomorph" },
 
    onenter = function(inst)
       OnStartSkillGeneral(inst)
       local target = inst.components.teesskill:GetViperbiteTarget()
-      inst.AnimState:PlayAnimation("dart_pre")
-      inst.AnimState:PushAnimation("dart", false)
       inst.sg:SetTimeout(18 * FRAMES)
 
       if target ~= nil and target:IsValid() then
-         inst:FacePoint(target.Transform:GetWorldPosition())
+         local x, y, z = target.Transform:GetWorldPosition()
+         inst:ForceFacePoint(x, y, z)
          inst.sg.statemem.attacktarget = target
       end
+
+      inst.AnimState:PlayAnimation("dart", false) -- 모션을 바라보는 방향을 클라이언트와 동기화 시키는것 보류
    end,
 
    timeline = {
+      TimeEvent(6 * FRAMES, function(inst)
+         inst.SoundEmitter:PlaySound("dontstarve/wilson/blowdart_shoot", nil, nil, true)
+      end),
       TimeEvent(8 * FRAMES, function(inst)
          local target = inst.sg.statemem.attacktarget
-         --inst.components.teesskill:Viperbite(target)
+         inst.components.teesskill:Viperbite(target)
       end),
    },
 
-   onupdate = function(inst)
-      if inst.bufferedaction == nil then
-         inst.sg:GoToState("idle", true)
-      end
-   end,
+   events = {
+      EventHandler("animover", function(inst)
+         if inst.AnimState:AnimDone() then
+            inst.sg:GoToState("idle", true)
+         end
+      end),
+   },
 
    ontimeout = function(inst)
       OnFinishSkillGeneral(inst)
@@ -376,48 +300,14 @@ local viperbite_SgS = State {
    end,
 }
 
-local viperbite_SgC = State {
-   name = "viperbite",
-   tags = { "doing", "skill", "notalking" },
+local venomspread_Sg = State {
+   name = "venomspread",
+   tags = { "busy", "doing", "skill", "pausepredict", "nomorph" },
 
-   onenter = function(inst)
-      OnStartSkillGeneralClient(inst)
-      inst.AnimState:PlayAnimation("dart_pre")
-      inst.AnimState:PushAnimation("dart", false)
-      inst:PerformPreviewBufferedAction()
-      inst.sg:SetTimeout(18 * FRAMES)
-   end,
-
-   timeline = {
-      TimeEvent(8 * FRAMES, function(inst)
-         --inst.sg:RemoveStateTag("abouttoattack")
-      end),
-   },
-
-   events = {
-      EventHandler("animqueueover", function(inst)
-         if inst.AnimState:AnimDone() then
-            inst.sg:GoToState("idle")
-         end
-      end),
-   },
-
-   onexit = function(inst)
-      inst.entity:SetIsPredictingMovement(true)
-   end,
+   
 }
 
-local venomspread_SgS = nil
-
-
-AddAction("VIPERBITE", "viperbite", nullfn)
-AddAction("VENOMSPREAD", "venomspread", nullfn)
-AddStategraphState("wilson", viperbite_SgS) -- Client Stategraph
-AddStategraphState("wilson_client", viperbite_SgC) -- Server Stategraph
-AddStategraphActionHandler("wilson", ActionHandler(ACTIONS["VIPERBITE"], "viperbite"))
-AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS["VIPERBITE"], "viperbite"))
-
-AddModRPCHandler("tees", "viperbite", function(inst)
+viperbite_CH = function(inst)
    local target = inst.components.teesskill:GetVenomspreadTarget()
    if target ~= nil and target:IsAlive() then
       inst:PushEvent("onvenomspread")
@@ -428,4 +318,6 @@ AddModRPCHandler("tees", "viperbite", function(inst)
          inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
       end
    end
-end)
+end
+
+RegisterSkill("viperbite", "tees", viperbite_Sg, TUNING.TEES.SKILL_VIPERVITE_MANACOST, viperbite_CH)

@@ -52,6 +52,7 @@ local BUFF_TYPE = {
 
         onstart = function(inst)
             inst.AnimState:SetMultColour(0.8, 0.3, 0.8, 1)
+            inst:AddTag("teespoison")
         end,
 
         fn = function(inst)
@@ -62,16 +63,11 @@ local BUFF_TYPE = {
 
                 inst.components.health:DoDelta(-delta, nil)
             end
-
-            if inst.components.aosbuff.buff.poison.arg[2] >= 10 then
-                inst:AddTag("teespoison")
-            else
-                inst:RemoveTag("teespoison")
-            end
         end,
         
         onfinish = function(inst)
             inst.AnimState:SetMultColour(1, 1, 1, 1)
+            inst:RemoveTag("teespoison")
         end,
     },
 
@@ -83,6 +79,7 @@ local BUFF_TYPE = {
 
         onstart = function(inst)
             inst.AnimState:SetMultColour(0.9, 0.2, 0.9, 1)
+            inst:AddTag("teesvenom")
         end,
 
         fn = function(inst)
@@ -93,16 +90,11 @@ local BUFF_TYPE = {
 
                 inst.components.health:DoDelta(-delta, nil)
             end
-
-            if inst.components.aosbuff.buff.venom.arg[2] >= 10 then
-                inst:AddTag("teesvenom")
-            else
-                inst:RemoveTag("teesvenom")
-            end
         end,
 
         onfinish = function(inst)
             inst.AnimState:SetMultColour(1, 1, 1, 1)
+            inst:RemoveTag("teesvenom")
         end,
     },
 
