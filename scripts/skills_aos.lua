@@ -16,14 +16,19 @@ GLOBAL.IsPreemptiveEnemy = function(inst, target)
    -- 친구가 제외
    -- 자기자신이 제외
    -- 날 공격하려 하는(타겟으로 삼은) 경우 무조건
-   return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif"))) and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player"))) or target.components.combat.target == inst and target ~= inst
+   return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) 
+      and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif")))
+      and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player")))
+   or target.components.combat.target == inst and target ~= inst
 end
 
-local function PutTarget(t, v)
+GLOBAL.PutTarget = function(t, v)
    if not table.contains(t, v) then
       table.insert(t, v)
    end
 end
+
+local PutTarget = GLOBAL.PutTarget
 
 GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
 	local x, y, z = inst.Transform:GetWorldPosition()
@@ -40,7 +45,7 @@ GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
             PutTarget(targets, v)
          elseif v.components.combat ~= nil and v.components.combat.target == inst then
             PutTarget(targets, v)
-         elseif GLOBAL.IsPreemptiveEnemy(inst, v) then
+         elseif inst:HasTag("player") and GLOBAL.IsPreemptiveEnemy(inst, v) then
             PutTarget(targets, v)
          end
       end
@@ -66,12 +71,6 @@ local function OnStartSkillGeneral(inst, shouldstop)
       inst.components.playercontroller:Enable(false)
    end
    inst:PerformBufferedAction()
-end
-
-local function OnStartSkillGeneralClient(inst)
-   inst.components.locomotor:Stop()
-   inst.components.locomotor:Clear()
-   inst.entity:FlattenMovementPrediction()
 end
 
 local function OnFinishSkillGeneral(inst)
@@ -302,9 +301,36 @@ local viperbite_Sg = State {
 
 local venomspread_Sg = State {
    name = "venomspread",
-   tags = { "busy", "doing", "skill", "pausepredict", "nomorph" },
+   tags = { "busy", "doing", "skill", "pausepredict", "nomorph", "aoe" },
 
-   
+   onenter = function(inst)
+      OnStartSkillGeneral(inst)
+      inst.sg:SetTimeout(24 * FRAMES)
+      inst.AnimState:PlayAnimation("staff_pre")
+   end,
+
+   timeline = {
+      TimeEvent(16 * FRAMES, function(inst)
+         inst.components.teesskill:VenomSpread()
+         inst.AnimState:PlayAnimation("whip", false)
+      end),
+   },
+
+   events = {
+      EventHandler("animover", function(inst)
+         if inst.AnimState:AnimDone() then
+            inst.sg:GoToState("idle", true)
+         end
+      end),
+   },
+
+   ontimeout = function(inst)
+      OnFinishSkillGeneral(inst)
+   end,
+
+   onexit = function(inst)   
+      OnFinishSkillGeneral(inst)
+   end,
 }
 
 viperbite_CH = function(inst)
@@ -321,3 +347,4 @@ viperbite_CH = function(inst)
 end
 
 RegisterSkill("viperbite", "tees", viperbite_Sg, TUNING.TEES.SKILL_VIPERVITE_MANACOST, viperbite_CH)
+RegisterSkill("venomspread", "tees", venomspread_Sg)

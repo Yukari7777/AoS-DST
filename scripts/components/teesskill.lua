@@ -76,9 +76,8 @@ end
 function TeesSkill:GetVenomspreadTarget()
     local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS) -- defined in skills_aos.lua
     local tovenom = self:FindVenomed(targets)
-    local closest = tovenom ~= nil and tovenom[1] or nil
 
-    return closest, tovenom
+    return tovenom
 end
 
 function TeesSkill:GetViperbiteTarget()
@@ -97,7 +96,7 @@ function TeesSkill:Viperbite(target)
     end
     
     -- 티스가 스킬로 맞춘 적이 너무 가까이에 있을경우 어그로 끌림
-    local targets = _G.GetSkillTargetsInRadius(inst, CONST.SKILL_VIPERBITE_AGGRO_RADIUS) --어그로범위 = 6\
+    local targets = _G.GetSkillTargetsInRadius(inst, CONST.SKILL_VIPERBITE_AGGRO_RADIUS) --어그로범위 = 6
     local shouldtarget = false
     if targets ~= nil then 
         for k, v in pairs(targets) do
@@ -111,6 +110,29 @@ function TeesSkill:Viperbite(target)
     if _G.IsPreemptiveEnemy(inst, target) then
         target.components.combat:GetAttacked(shouldtarget and inst or nil, CONST.SKILL_VIPERVITE_DAMAGE)
         AoSAddBuff(target, "venom", 5)
+    end
+end
+
+function TeesSkill:VenomSpread()
+    local inst = self.inst
+    local targets = self:GetVenomspreadTarget() or {}
+    local spreadtarget = {}
+
+    for k, v in pairs(targets) do
+        if _G.IsPreemptiveEnemy(inst, target) then
+            target.components.combat:GetAttacked(nil, CONST.SKILL_VENOMSPREAD_DAMAGE)
+        end
+
+        local tospread = _G.GetSkillTargetsInRadius(CONST.SKILL_VENOMSPREAD_SPREAD_RADIUS) or {}
+        for k2, v2 in pairs(tospread) do
+            _G.PutTarget(spreadtarget, v2)
+        end
+    end
+
+    for k, v in pairs(spreadtarget) do
+        if _G.IsPreemptiveEnemy(inst, v) then
+            AoSAddBuff(v, "poison", 5)
+        end
     end
 end
 
