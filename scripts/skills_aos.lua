@@ -269,13 +269,11 @@ local viperbite_Sg = State {
          inst.sg.statemem.attacktarget = target
       end
 
+      inst.SoundEmitter:PlaySound("dontstarve/wilson/blowdart_shoot", nil, nil, true)
       inst.AnimState:PlayAnimation("dart", false) -- 모션을 바라보는 방향을 클라이언트와 동기화 시키는것 보류
    end,
 
    timeline = {
-      TimeEvent(6 * FRAMES, function(inst)
-         inst.SoundEmitter:PlaySound("dontstarve/wilson/blowdart_shoot", nil, nil, true)
-      end),
       TimeEvent(8 * FRAMES, function(inst)
          local target = inst.sg.statemem.attacktarget
          inst.components.teesskill:Viperbite(target)
@@ -301,12 +299,12 @@ local viperbite_Sg = State {
 
 local venomspread_Sg = State {
    name = "venomspread",
-   tags = { "busy", "doing", "skill", "pausepredict", "nomorph", "aoe" },
+   tags = { "busy", "doing", "skill", "pausepredict", "aoe", "nointerrupt", "nomorph" },
 
    onenter = function(inst)
       OnStartSkillGeneral(inst)
       inst.sg:SetTimeout(24 * FRAMES)
-      inst.AnimState:PlayAnimation("staff_pre")
+      inst.AnimState:PlayAnimation("staff_pre", false)
    end,
 
    timeline = {
@@ -339,7 +337,8 @@ viperbite_CH = function(inst)
       inst:PushEvent("onvenomspread")
    else
       if inst.components.aosmana ~= nil and inst.components.aosmana.current >= TUNING.TEES.SKILL_VIPERVITE_MANACOST then
-         inst:PushEvent("onviperbite")
+         --inst:PushEvent("onviperbite")
+         inst:PushEvent("onvenomspread")
       else
          inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
       end

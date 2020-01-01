@@ -80,6 +80,7 @@ local function RegisterNetListeners(inst)
         AddCommonSkillEventListener(inst, "rapier")
         AddCommonSkillEventListener(inst, "igniarun")
         AddCommonSkillEventListener(inst, "viperbite")
+        AddCommonSkillEventListener(inst, "venomspread")
         AddCommonSkillEventListener(inst, "everguard")
     end
     
@@ -97,11 +98,6 @@ local function fn()
     inst.maxaosmana = net_ushortint(inst.GUID, "maxaosmana")
     inst.currentaosmana = net_ushortint(inst.GUID, "currentaosmana")
     inst.aosmanaratescale = net_ushortint(inst.GUID, "aosmanaratescale")
-
-    inst.rapier = net_event(inst.GUID, "onrapier")
-    inst.igniarun = net_event(inst.GUID, "onigniarun")
-    inst.viperbite = net_event(inst.GUID, "onviperbite")
-    inst.everguard = net_event(inst.GUID, "oneverguard")
 
     --Delay net listeners until after initial values are deserialized
     inst:DoTaskInTime(0, RegisterNetListeners)
