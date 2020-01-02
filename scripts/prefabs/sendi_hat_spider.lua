@@ -99,8 +99,8 @@ local function fn(Sim)
     inst.components.equippable:SetOnUnequip(OnUnequip)
 
 	inst:AddComponent("waterproofer") --방수
-    inst.components.waterproofer:SetEffectiveness(0.80)
-	inst.components.equippable.dapperness = -0.1
+    inst.components.waterproofer:SetEffectiveness(0.70)
+	inst.components.equippable.dapperness = -0.067 --초당 정신력
 	
 	-- 방수율을 뜻합니다 (0.방수율)
 	
