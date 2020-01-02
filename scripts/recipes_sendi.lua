@@ -61,7 +61,8 @@ end--블랙
 
 local aos_seed_boss_yellow = Ingredient("aos_seed_boss_yellow", 1) -- YUKARI : 어떤 모드아이템이 재료로 들어가야 할경우 이렇게 추가해야함.
 local aos_seed_boss_yellow2 = Ingredient( "aos_seed_boss_yellow", 2) -- YUKARI : 어떤 모드아이템이 재료로 들어가야 할경우 이렇게 추가해야함.
-for k, v in pairs({aos_seed_boss_yellow, aos_seed_boss_yellow2}) do 
+local aos_seed_boss_yellow2 = Ingredient( "aos_seed_boss_yellow", 3)
+for k, v in pairs({aos_seed_boss_yellow, aos_seed_boss_yellow2, aos_seed_boss_yellow3}) do 
     v.atlas = "images/inventoryimages/aos_seed_boss_yellow.xml"
 end--행복[꿀]
 
@@ -207,7 +208,7 @@ AddRecipe("sendi_food_bread_but", --식빵반죽
 OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_bread_but.xml", "sendi_food_bread_but.tex")
 
 AddRecipe("sendi_food_rice_tuna", --참치밥
-{sendi_food_ricewheat3, Ingredient("fish", 2), Ingredient("carrot", 2)}, 
+{sendi_food_ricewheat3, Ingredient("fishmeat_small", 2), Ingredient("carrot", 2)}, 
 OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_rice_tuna.xml", "sendi_food_rice_tuna.tex")
 --5차음식 
 AddRecipe("sendi_food_chicken", --치킨
@@ -303,7 +304,7 @@ local MonarchCrown = Ingredient( "sendi_hat_crown", 1)
 MonarchCrown.atlas ="images/inventoryimages/sendi_hat_crown.xml"
 ---------------------------------- 프랜드 헬멧
 AddRecipe("sendi_hat_spider", 
-{Ingredient("spidereggsack", 3),Ingredient("hivehat", 1), aos_seed_boss_white2}, 
+{Ingredient("spidereggsack", 3),Ingredient("spiderhat", 2), aos_seed_boss_yellow2}, --hivehat[여왕벌]
 SENDITAB, TECH.SCIENCE_TWO, nil, nil, nil, nil, "sendi", "images/inventoryimages/sendi_hat_spider.xml", "sendi_hat_spider.tex")   
 
 local SendiHatspider = Ingredient( "sendi_hat_spider", 1) 
@@ -312,7 +313,7 @@ SendiHatspider.atlas ="images/inventoryimages/sendi_hat_spider.xml"
 ---------------------------------- 스파이더 헬멧
 
 AddRecipe("sendi_hat_goggles", 
-{MonarchCrown, SendiHatspider, aos_seed_boss_yellow2}, 
+{MonarchCrown, SendiHatspider, aos_seed_boss_white2}, 
 SENDITAB, TECH.SCIENCE_TWO, nil, nil, nil, nil, "sendi", "images/inventoryimages/sendi_hat_goggles.xml", "sendi_hat_goggles.tex")   
 
 local frandgoggles = Ingredient( "sendi_hat_goggles", 1) 
@@ -387,7 +388,7 @@ AddRecipe("sendiobject_hut",
 AOSTAB, TECH.SCIENCE_TWO, "sendiobject_hut_placer", nil, nil, nil, "aosplayer", "images/inventoryimages/sendiobject_hut.xml", "sendiobject_hut.tex" ) 
 ---------------------------------- 센디 오두막
 AddRecipe("sendiobject_warehouse", 
-{Ingredient("wall_stone_item", 18), Ingredient("hammer", 1), aos_seed_boss_white}, 
+{Ingredient("wall_stone_item", 18), Ingredient("hammer", 1), aos_seed_boss_autumn}, 
 AOSTAB, TECH.SCIENCE_TWO, "sendiobject_warehouse_placer", nil, nil, nil, "aosplayer", "images/inventoryimages/sendiobject_warehouse.xml", "sendiobject_warehouse.tex" ) 
 ---------------------------------- 센디 창고
 AddRecipe("sendiobject_icebox", 
