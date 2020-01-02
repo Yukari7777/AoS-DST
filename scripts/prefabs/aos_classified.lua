@@ -67,21 +67,10 @@ local function RegisterKeyEvent(classified)
     end
 end
 
-local function AddCommonSkillEventListener(inst, name)
-    inst:ListenForEvent("on"..name, function(parent)
-        parent.components.playercontroller:DoAction(BufferedAction(parent, nil, ACTIONS[name:upper()]))
-    end, inst._parent)
-end
-
 local function RegisterNetListeners(inst)
     if TheWorld.ismastersim then
         inst._parent = inst.entity:GetParent()
-
-        AddCommonSkillEventListener(inst, "rapier")
-        AddCommonSkillEventListener(inst, "igniarun")
-        AddCommonSkillEventListener(inst, "viperbite")
-        AddCommonSkillEventListener(inst, "venomspread")
-        AddCommonSkillEventListener(inst, "everguard")
+    
     end
     
     RegisterKeyEvent(inst)

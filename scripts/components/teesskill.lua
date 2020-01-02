@@ -41,7 +41,7 @@ function TeesSkill:OnStartEverguard(inst)
         end
 
         inst:ListenForEvent("blocked", Reflect)
-        inst.components.health:SetInvincible(true)
+        _G.MakePysicalInvincible(inst, true)
 	end
 end
 
@@ -52,7 +52,7 @@ end
 
 function TeesSkill:OnFinishEverguard(inst)
     self.tick = 0
-    inst.components.health:SetInvincible(false)
+    _G.MakePysicalInvincible(inst, false)
     inst:RemoveEventCallback("blocked", Reflect)
 
 	if inst.SkillTask ~= nil then 
@@ -74,14 +74,14 @@ function TeesSkill:FindVenomed(t)
 end
 
 function TeesSkill:GetVenomspreadTarget()
-    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS) -- defined in skills_aos.lua
+    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS)
     local tovenom = self:FindVenomed(targets)
 
     return tovenom
 end
 
 function TeesSkill:GetViperbiteTarget()
-    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VIPERBITE_TARGET_RADIUS) -- defined in skills_aos.lua
+    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VIPERBITE_TARGET_RADIUS)
     if targets ~= nil then
 		return targets[1]
 	end

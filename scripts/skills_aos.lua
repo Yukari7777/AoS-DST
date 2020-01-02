@@ -9,50 +9,7 @@ local EventHandler = GLOBAL.EventHandler
 local EQUIPSLOTS = GLOBAL.EQUIPSLOTS
 local FRAMES = GLOBAL.FRAMES
 local next = GLOBAL.next
-
-GLOBAL.IsPreemptiveEnemy = function(inst, target)
-   -- 트리가드를 제외한 몬스터
-   -- PVP가 켜져있을경우 플레이어 아닐경우 제외
-   -- 친구가 제외
-   -- 자기자신이 제외
-   -- 날 공격하려 하는(타겟으로 삼은) 경우 무조건
-   return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) 
-      and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif")))
-      and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player")))
-   or target.components.combat.target == inst and target ~= inst
-end
-
-GLOBAL.PutTarget = function(t, v)
-   if not table.contains(t, v) then
-      table.insert(t, v)
-   end
-end
-
 local PutTarget = GLOBAL.PutTarget
-
-GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, radius, { "_combat" } ) -- See entityreplica.lua (for _combat tag usage)
-   local targets = {}
- 
-	for k, v in pairs(ents) do
-	   -- 적 타겟순서
-	   -- 1) 가장 가까운 보스(단, 트리가드 제외)
-	   -- 2) 나를 타겟한 적.
-      -- 3) 선공 할만한 적
-      if not (v == inst and v.components.health ~= nil and v.components.health:IsDead()) then 
-         if v:HasTag("epic") and not v:HasTag("leif") then
-            PutTarget(targets, v)
-         elseif v.components.combat ~= nil and v.components.combat.target == inst then
-            PutTarget(targets, v)
-         elseif inst:HasTag("player") and GLOBAL.IsPreemptiveEnemy(inst, v) then
-            PutTarget(targets, v)
-         end
-      end
-   end
-   
-	return next(targets) ~= nil and targets or nil
-end
 
 local function ForceStopHeavyLifting(inst) 
     if inst.components.inventory:IsHeavyLifting() then
@@ -105,7 +62,14 @@ local function RegisterSkill(skillname, character, Stategraph, manacost, customH
 
    AddStategraphState("wilson", Stategraph) -- Server Stategraph
    AddStategraphActionHandler("wilson", ActionHandler(ACTIONS[upperskillname], skillname))
+   AddPrefabPostInit(character, function(inst)
+      inst:ListenForEvent("on"..skillname, function()
+         inst.components.playercontroller:DoAction(BufferedAction(inst, nil, ACTIONS[upperskillname]))
+      end)
+   end)
 end
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 local rapier_Sg = State { 
@@ -198,6 +162,7 @@ local igniarun_Sg = State {
 
 RegisterSkill("igniarun", "sendi", igniarun_Sg, TUNING.SENDI.SKILL_IGNIARUN_MANACOST)
 
+local spiderpath = "dontstarve/creatures/spider/"
 local everguard_Sg = State {
    name = "everguard",
    tags = { "busy", "doing", "skill", "pausepredict", "nointerrupt", "nomorph", },
@@ -208,6 +173,7 @@ local everguard_Sg = State {
       inst.AnimState:PushAnimation("pickup_lag", true)
 
       inst.sg:SetTimeout(60 * FRAMES)
+      inst.SoundEmitter:PlaySound(spiderpath.."fallAsleep")
       inst.components.teesskill:OnStartEverguard(inst)
    end,
 
@@ -220,6 +186,7 @@ local everguard_Sg = State {
       TimeEvent(44 * FRAMES, function(inst)
          inst.AnimState:Resume()
          inst.AnimState:PushAnimation("pickup_pst", false)
+         inst.SoundEmitter:PlaySound(spiderpath.."wakeup")
          inst.components.teesskill:Dehard(inst)
       end),
    },
@@ -252,7 +219,6 @@ local everguard_Sg = State {
 }
 
 RegisterSkill("everguard", "tees", everguard_Sg, TUNING.TEES.SKILL_EVERGUARD_MANACOST)
-
 
 local viperbite_Sg = State {
    name = "viperbite",
@@ -303,14 +269,18 @@ local venomspread_Sg = State {
 
    onenter = function(inst)
       OnStartSkillGeneral(inst)
-      inst.sg:SetTimeout(24 * FRAMES)
-      inst.AnimState:PlayAnimation("staff_pre", false)
+      inst.sg:SetTimeout(36 * FRAMES)
+      inst.AnimState:PlayAnimation("staff_pre", true)
+      inst.AnimState:PushAnimation("atk", false)
    end,
 
    timeline = {
-      TimeEvent(16 * FRAMES, function(inst)
+      TimeEvent(6 * FRAMES, function(inst)
+         inst.AnimState:Pause()
+      end),
+      TimeEvent(24 * FRAMES, function(inst)
+         inst.AnimState:Resume()
          inst.components.teesskill:VenomSpread()
-         inst.AnimState:PlayAnimation("whip", false)
       end),
    },
 
@@ -318,16 +288,19 @@ local venomspread_Sg = State {
       EventHandler("animover", function(inst)
          if inst.AnimState:AnimDone() then
             inst.sg:GoToState("idle", true)
+            inst.AnimState:Resume()
          end
       end),
    },
 
    ontimeout = function(inst)
       OnFinishSkillGeneral(inst)
+      inst.AnimState:Resume()
    end,
 
    onexit = function(inst)   
       OnFinishSkillGeneral(inst)
+      inst.AnimState:Resume()
    end,
 }
 
