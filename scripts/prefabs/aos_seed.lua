@@ -121,7 +121,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
-        exp = 250,
+        exp = 125,
     },
 
     boss_yellow = {
