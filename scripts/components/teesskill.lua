@@ -73,7 +73,7 @@ function TeesSkill:Viperbite(target)
 
     local inst = self.inst
     if inst.components.aosmana ~= nil then
-		--inst.components.aosmana:DoDelta( -CONST.SKILL_EVERGUARD_MANACOST )
+		inst.components.aosmana:DoDelta( -CONST.SKILL_EVERGUARD_MANACOST )
     end
     
     -- 티스가 스킬로 맞춘 적이 너무 가까이에 있을경우 어그로 끌림
