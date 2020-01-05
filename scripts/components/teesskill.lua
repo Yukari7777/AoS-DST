@@ -61,25 +61,6 @@ function TeesSkill:OnFinishEverguard(inst)
 	end
 end
 
-function TeesSkill:FindVenomed(t)
-    local targets = {}
-
-    for k, v in pairs(targets) do
-        if v:HasTag("teesvenom") then
-            table.insert(targets, v)
-        end
-    end
-
-    return next(targets) ~= nil and targets or nil
-end
-
-function TeesSkill:GetVenomspreadTarget()
-    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS)
-    local tovenom = self:FindVenomed(targets)
-
-    return tovenom
-end
-
 function TeesSkill:GetViperbiteTarget()
     local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VIPERBITE_TARGET_RADIUS)
     if targets ~= nil then
@@ -113,24 +94,46 @@ function TeesSkill:Viperbite(target)
     end
 end
 
+function TeesSkill:FindVenomed(t)
+    local targets = {}
+
+    for k, v in pairs(t) do
+        if v:HasTag("teesvenom") then
+            table.insert(targets, v)
+        end
+    end
+
+    return next(targets) ~= nil and targets or nil
+end
+
+function TeesSkill:GetVenomspreadTarget()
+    local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_VENOMSPREAD_TARGET_RADIUS) or {}
+    local tovenom = self:FindVenomed(targets)
+
+    return tovenom
+end
+
 function TeesSkill:VenomSpread()
     local inst = self.inst
     local targets = self:GetVenomspreadTarget() or {}
     local spreadtarget = {}
 
-    for k, v in pairs(targets) do
+    for k, target in pairs(targets) do
         if _G.IsPreemptiveEnemy(inst, target) then
-            target.components.combat:GetAttacked(nil, CONST.SKILL_VENOMSPREAD_DAMAGE)
+            target.components.combat:GetAttacked(inst, CONST.SKILL_VENOMSPREAD_DAMAGE)
+            _G.AoSRemoveBuff(target, "venom")
         end
 
-        local tospread = _G.GetSkillTargetsInRadius(CONST.SKILL_VENOMSPREAD_SPREAD_RADIUS) or {}
-        for k2, v2 in pairs(tospread) do
-            _G.PutTarget(spreadtarget, v2)
+        local tospread = _G.GetCombatableInRadius(target, CONST.SKILL_VENOMSPREAD_SPREAD_RADIUS) or {}
+        _G.PutTarget(spreadtarget, target)
+        for k2, v in pairs(tospread) do
+            _G.PutTarget(spreadtarget, v)
         end
     end
 
     for k, v in pairs(spreadtarget) do
         if _G.IsPreemptiveEnemy(inst, v) then
+            v.components.combat:GetAttacked(inst, 1)
             AoSAddBuff(v, "poison", 5)
         end
     end

@@ -7,32 +7,50 @@ GLOBAL.AoSAddBuff = function(inst, buffname, duration) --버프 이름, 초
     inst.components.aosbuff:AddBuff(buffname, duration)
 end
 
+GLOBAL.AoSRemoveBuff = function(inst, buffname, finish)
+   if inst.components.aosbuff ~= nil then
+      inst.components.aosbuff:RemoveBuff(buffname, finish)
+   end
+end
+
 GLOBAL.MakePysicalInvincible = function(inst, invincible)
     inst.components.combat.externaldamagetakenmultipliers:SetModifier(inst, invincible and 0 or 1, "aosinvincible")
 end
 
 GLOBAL.IsPreemptiveEnemy = function(inst, target)
-    -- 트리가드를 제외한 몬스터
-    -- PVP가 켜져있을경우 플레이어 아닐경우 제외
-    -- 친구가 제외
-    -- 자기자신이 제외
-    -- 날 공격하려 하는(타겟으로 삼은) 경우 무조건
-    return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) 
-       and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif")))
-       and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player")))
-    or target.components.combat.target == inst and target ~= inst
- end
+   -- 트리가드를 제외한 몬스터
+   -- PVP가 켜져있을경우 플레이어 아닐경우 제외
+   -- 친구가 제외
+   -- 자기자신이 제외
+   -- 날 공격하려 하는(타겟으로 삼은) 경우 무조건
+   return (target.components.combat ~= nil and target.components.health ~= nil and not target.components.health:IsDead()) 
+      and (target:HasTag("monster") or (target:HasTag("epic") and not target:HasTag("leif")))
+      and not (target:HasTag("companion") and (TheNet:GetPtargetPEnabled() or not target:HasTag("player")))
+   or target.components.combat.target == inst and target ~= inst
+end
  
- GLOBAL.PutTarget = function(t, v)
-    if not table.contains(t, v) then
-       table.insert(t, v)
-    end
- end
+GLOBAL.PutTarget = function(t, v)
+   if not table.contains(t, v) then
+      table.insert(t, v)
+   end
+end
 
- local PutTarget = GLOBAL.PutTarget
- GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
-	local x, y, z = inst.Transform:GetWorldPosition()
-	local ents = TheSim:FindEntities(x, y, z, radius, { "_combat" } ) -- See entityreplica.lua (for _combat tag usage)
+GLOBAL.GetCombatableInRadius = function(inst, radius)
+   local x, y, z = inst.Transform:GetWorldPosition()
+   local targets = TheSim:FindEntities(x, y, z, radius, {"_combat"}) -- See entityreplica.lua (for _combat tag usage)
+
+   for k, v in pairs(targets) do
+      if v.components.health == nil or v.components.health:IsDead() then
+         table.remove(targets, k)
+      end
+   end
+   
+   return next(targets) ~= nil and targets or nil
+end
+
+local PutTarget = GLOBAL.PutTarget
+GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
+	local ents = GLOBAL.GetCombatableInRadius(inst, radius) or {}
    local targets = {}
  
 	for k, v in pairs(ents) do
@@ -45,7 +63,7 @@ GLOBAL.IsPreemptiveEnemy = function(inst, target)
             PutTarget(targets, v)
          elseif v.components.combat ~= nil and v.components.combat.target == inst then
             PutTarget(targets, v)
-         elseif inst:HasTag("player") and GLOBAL.IsPreemptiveEnemy(inst, v) then
+         elseif GLOBAL.IsPreemptiveEnemy(inst, v) then
             PutTarget(targets, v)
          end
       end

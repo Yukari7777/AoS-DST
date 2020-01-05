@@ -78,7 +78,7 @@ local BUFF_TYPE = {
         extendmult = CONST.DEBUFF_VENOM_EXTEND_MULT,
 
         onstart = function(inst)
-            inst.AnimState:SetMultColour(0.9, 0.2, 0.9, 1)
+            inst.AnimState:SetMultColour(1, 0.1, 1, 1)
             inst:AddTag("teesvenom")
         end,
 

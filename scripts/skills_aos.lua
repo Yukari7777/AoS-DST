@@ -269,17 +269,15 @@ local venomspread_Sg = State {
 
    onenter = function(inst)
       OnStartSkillGeneral(inst)
-      inst.sg:SetTimeout(36 * FRAMES)
-      inst.AnimState:PlayAnimation("staff_pre", true)
-      inst.AnimState:PushAnimation("atk", false)
+      inst.sg:SetTimeout(42 * FRAMES)
+      inst.AnimState:PlayAnimation("staff", false)
+      inst.SoundEmitter:PlaySound(spiderpath.."scream")
    end,
 
    timeline = {
-      TimeEvent(6 * FRAMES, function(inst)
-         inst.AnimState:Pause()
-      end),
-      TimeEvent(24 * FRAMES, function(inst)
-         inst.AnimState:Resume()
+      TimeEvent(36 * FRAMES, function(inst)
+         inst.AnimState:PlayAnimation("atk", false)
+         inst.SoundEmitter:PlaySound(spiderpath.."Attack")
          inst.components.teesskill:VenomSpread()
       end),
    },
@@ -306,12 +304,12 @@ local venomspread_Sg = State {
 
 viperbite_CH = function(inst)
    local target = inst.components.teesskill:GetVenomspreadTarget()
-   if target ~= nil and target:IsAlive() then
+   print(target)
+   if target ~= nil then
       inst:PushEvent("onvenomspread")
    else
       if inst.components.aosmana ~= nil and inst.components.aosmana.current >= TUNING.TEES.SKILL_VIPERVITE_MANACOST then
-         --inst:PushEvent("onviperbite")
-         inst:PushEvent("onvenomspread")
+         inst:PushEvent("onviperbite")
       else
          inst.components.talker:Say(GetString(inst.prefab, "DESCRIBE_NOMANA"))
       end
