@@ -73,7 +73,7 @@ function TeesSkill:Viperbite(target)
 
     local inst = self.inst
     if inst.components.aosmana ~= nil then
-		inst.components.aosmana:DoDelta( -CONST.SKILL_EVERGUARD_MANACOST )
+		inst.components.aosmana:DoDelta( -CONST.SKILL_VIPERVITE_MANACOST )
     end
     
     -- 티스가 스킬로 맞춘 적이 너무 가까이에 있을경우 어그로 끌림
@@ -137,6 +137,12 @@ function TeesSkill:VenomSpread()
             AoSAddBuff(v, "poison", 5)
         end
     end
+    
+    local inst = self.inst --G추가 터뜨릴대 마나한번 더 까여라~~~
+    if inst.components.aosmana ~= nil then
+		inst.components.aosmana:DoDelta( -CONST.SKILL_VIPERVITE_MANACOST )
+    end
+    
 end
 
 return TeesSkill
