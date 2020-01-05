@@ -3,9 +3,9 @@ local STRINGS = GLOBAL.STRINGS
  --STRINGS.NAMES : 지정할 이름 
  --DESCRIBE : 말하게 하는 명령어
 
-STRINGS.CHARACTER_TITLES.sendi = "센디(인간)"
+STRINGS.CHARACTER_TITLES.sendi = "센디(인간) *전용기"
 STRINGS.CHARACTER_NAMES.sendi = "센디"
-STRINGS.CHARACTER_DESCRIPTIONS.sendi = "*평범한 체력과 데미지\n*화룡과의 친화 :: 마력을이용한 모닥불 제조\n*허기를 소모한 작은 광원효과.\n\n*전용 회피기와 전용 돌진기[V/V+Sh]\n*까다로운 식성과 수많은 전용장비"
+STRINGS.CHARACTER_DESCRIPTIONS.sendi = "*평범한 체력과 데미지\n*화룡과의 친화 :: 마력을이용한 모닥불 제조\n*허기를 소모한 작은 광원효과.\n\n*전용 회피기와  돌진기[V/V+Sh]\n*까다로운 식성과 수많은 전용장비"
 STRINGS.CHARACTER_QUOTES.sendi = "\"어서 다른분들을 찾으러 가야해요!\""
 
 STRINGS.CHARACTER_TITLES.anan = "아난(늑대)"
@@ -13,9 +13,9 @@ STRINGS.CHARACTER_NAMES.anan = "Anan"
 STRINGS.CHARACTER_DESCRIPTIONS.anan = "*허기에 따른 공격&스피드 증가, 공복 가속\n*사냥꾼 :: 저렴한 덫 레시피와 육포제조\n*악몽연료를 이용해 보석전환\n\n*하운드가 공격하지 않습니다.\n*미칠경우 비선공 동물들이 그를 노립니다."
 STRINGS.CHARACTER_QUOTES.anan = "\"킁,킁.. 낯선 냄세야..\n어서 동료들을 찾아야겠어.\""
 
-STRINGS.CHARACTER_TITLES.tees = "티스(독잇뱀)"
+STRINGS.CHARACTER_TITLES.tees = "티스(독잇뱀) *전용기"
 STRINGS.CHARACTER_NAMES.tees = "Tees"
-STRINGS.CHARACTER_DESCRIPTIONS.tees = "* 연약한 체력과 데미지\n* 시간차 강력한 독데미지\n* 독잇뱀 :: 저렴한 다트 레시피\n\n*보스와 그림자를 제외한 모든 적이 그를 무시합니다\n*타인에게 정신력 오라"
+STRINGS.CHARACTER_DESCRIPTIONS.tees = "* 연약한 체력과 데미지\n* 시간차 강력한 독데미지\n* 독잇뱀 :: 저렴한 다트 레시피\n*대부분의 적들이 그를 무시합니다\n전용 무적기와 지속형 일격기 \n*타인에게 정신력 오라"
 STRINGS.CHARACTER_QUOTES.tees = "\"우웅.. 다들 어디있는거야?\""
 
 

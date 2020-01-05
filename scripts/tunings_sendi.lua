@@ -40,7 +40,7 @@ TUNING.AOS_GENERAL = {
 	DEBUFF_FROSTBITE_BREAK = 1.1, -- 추가 데미지 비율
 
     MILK_COOLTIME = 1200, -- 우유짜기 쿨타임
-    MILK_KICKCHANCE = 0.02, -- 발차기 할 확률
+    MILK_KICKCHANCE = 0.10, -- 발차기 할 확률
     MILK_MINAMOUNT = 3, -- 우유 주는 갯수
     MILK_MAXAMOUNT = 5,
 }
@@ -67,14 +67,14 @@ TUNING.SENDI = {
 }
 
 TUNING.ANAN = {--아난
-    DEFAULT_HEALTH = 100, --체력
-    DEFAULT_HUNGER = 90, --허기
+    DEFAULT_HEALTH = 80, --체력
+    DEFAULT_HUNGER = 150, --허기
     DEFAULT_SANITY = 60, --정신력
     DEFAULT_MANA = 50, -- 마나
 
     DEFAULT_DAMAGEMULTIPLIER = 0.5,
 
-    HEALTH_MODIFIER = 3.5, -- 레벨당 올라가는 체력 계수
+    HEALTH_MODIFIER = 4, -- 레벨당 올라가는 체력 계수
     HUNGER_MODIFIER = 0.8, -- 배고픔 계수
     SANITY_MODIFIER = 2, -- 정신 올라가는거 
     MANA_MODIFIER = 5,
@@ -100,14 +100,14 @@ TUNING.TEES = {--티스
     SKILL_EVERGUARD_MANACOST = 25,
     SKILL_EVERGUARD_BACKFIRE_MULT = 0.5, -- 데미지 반사 계수
 
-    SKILL_VIPERVITE_MANACOST = 15,
-    SKILL_VIPERVITE_DAMAGE = 20,
-    SKILL_VIPERVITE_POISON_RADIUS = 3, -- 타겟 주변에 독이 퍼지는 범위
+    SKILL_VIPERVITE_MANACOST = 10, --마나코스트
+    SKILL_VIPERVITE_DAMAGE = 50, --데미지
+    SKILL_VIPERVITE_POISON_RADIUS = 6, -- 타겟 주변에 독이 퍼지는 범위
     SKILL_VIPERBITE_TARGET_RADIUS = 12, --스킬 인식범위
-    SKILL_VIPERBITE_AGGRO_RADIUS = 6, -- 가까이에서 맞은 적이 티스를 어그로로 설정하는 범위
+    SKILL_VIPERBITE_AGGRO_RADIUS = 3, -- 가까이에서 맞은 적이 티스를 어그로로 설정하는 범위
 
     SKILL_VENOMSPREAD_TARGET_RADIUS = 16, -- 인식범위
-    SKILL_VENOMSPREAD_DAMAGE = 50,
-    SKILL_VENOMSPREAD_SPREAD_CHANCE = 0.5, -- 독이 주변으로 퍼질 확률
-    SKILL_VENOMSPREAD_SPREAD_RADIUS = 3, -- 주변으로 독이 퍼지는 범위
+    SKILL_VENOMSPREAD_DAMAGE = 100, --폭발 데미지
+    SKILL_VENOMSPREAD_SPREAD_CHANCE = 0.8, -- 독이 주변으로 퍼질 확률
+    SKILL_VENOMSPREAD_SPREAD_RADIUS = 6, -- 주변으로 독이 퍼지는 범위
 }

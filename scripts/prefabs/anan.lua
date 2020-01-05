@@ -137,12 +137,15 @@ local function anan_OnSanitychange(inst) --정신력이 30 이하이면 몬스�
 end
 
 local function anan_Onhungrypuppy(inst) --배고픈강아지 허기수치가 30 미만이면 허기수치가 1로 바뀐다. 
-    if inst.components.hunger.current < 50 then
+    if inst.components.hunger.current < 40 then
         inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 1)
-    else
-        if inst.components.hunger.current > 50 then
-            inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
-        end
+   
+    elseif inst.components.hunger.current > 50 then
+        inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 2)
+
+    elseif inst.components.hunger.current > 100 then
+        inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
+        
         inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE * 3)
     end
 end
