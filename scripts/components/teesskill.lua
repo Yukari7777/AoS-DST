@@ -8,15 +8,6 @@ local TeesSkill = Class(function(self, inst)
     self.tick = 0
 end)
 
-local PICKUP_DURATION = 11
-local function Hardening(inst)
-    local self = inst.components.teesskill
-    local c = self.ishardening and math.max(0.33,  1 - self.tick / PICKUP_DURATION) or math.max(0.33, self.tick / PICKUP_DURATION)
-    inst.AnimState:SetMultColour(c, c, c, 1)
-
-    self.tick = self.tick + 1
-end
-
 local function Reflect(inst, data)
     if data.attacker ~= nil and data.attacker.components.combat ~= nil then
         local attacker = data.attacker
@@ -25,6 +16,15 @@ local function Reflect(inst, data)
         combat:GetAttacked(inst, (combat.defaultdamage or 10) * CONST.SKILL_EVERGUARD_BACKFIRE_MULT)
         AoSAddBuff(attacker, "poison", 3)
     end
+end
+
+local PICKUP_DURATION = 11
+local function Hardening(inst)
+    local self = inst.components.teesskill
+    local c = self.ishardening and math.max(0.33,  1 - self.tick / PICKUP_DURATION) or math.max(0.33, self.tick / PICKUP_DURATION)
+    inst.AnimState:SetMultColour(c, c, c, 1)
+
+    self.tick = self.tick + 1
 end
 
 function TeesSkill:OnStartEverguard(inst)
@@ -89,7 +89,8 @@ function TeesSkill:Viperbite(target)
     end
 
     if _G.IsPreemptiveEnemy(inst, target) then
-        target.components.combat:GetAttacked(shouldtarget and inst or nil, CONST.SKILL_VIPERVITE_DAMAGE)
+        target.components.combat:GetAttacked(inst, CONST.SKILL_VIPERVITE_DAMAGE)
+        -- 어그로를 푸는식으로 바꾸기
         AoSAddBuff(target, "venom", 5)
     end
 end

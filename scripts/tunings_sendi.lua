@@ -80,7 +80,10 @@ TUNING.ANAN = {--아난
     MANA_MODIFIER = 5,
     DAMAGE_MODIFIER = 0.03, -- 공격력 계수
 
-    
+    SKILL_SNOWWIND_TOTAL_MANACOST = 30, -- 총 마나 소모량
+    SKILL_SNOWWIND_TARGET_RADIUS = 12, -- 범위
+    SKILL_SNOWWIND_DAMAGE = 15, -- 15데미지로 총 3번 공격
+
 }
 
 TUNING.TEES = {--티스

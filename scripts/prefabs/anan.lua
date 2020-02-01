@@ -191,8 +191,7 @@ local master_postinit = function(inst)
 
     inst:AddComponent("aoslevel")--레벨업
     inst:AddComponent("aosbuff")
-	inst:AddComponent("sendiskill")
-	
+	inst:AddComponent("ananskill")
     inst:AddComponent("aosmana")
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
 	

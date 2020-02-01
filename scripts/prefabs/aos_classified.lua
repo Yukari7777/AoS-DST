@@ -63,6 +63,16 @@ local function RegisterKeyEvent(classified)
                     end
                 end
             end)
+        elseif parent:HasTag("anan") then
+            TheInput:AddKeyDownHandler(_G[Skill1_Key], function()
+                if KeyCheckCommon(parent) then
+                    if TheInput:IsKeyDown(KEY_SHIFT) then
+                        SendModRPCToServer(MOD_RPC["anan"]["snowwind"]) -- 가명 : 눈보라
+                    else
+                        --SendModRPCToServer(MOD_RPC["anan"]["ananstealth"]) -- 은신
+                    end
+                end
+            end)
         end
     end
 end
@@ -70,9 +80,7 @@ end
 local function RegisterNetListeners(inst)
     if TheWorld.ismastersim then
         inst._parent = inst.entity:GetParent()
-    
     end
-    
     RegisterKeyEvent(inst)
 end
 

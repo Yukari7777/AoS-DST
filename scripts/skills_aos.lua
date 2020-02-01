@@ -304,7 +304,6 @@ local venomspread_Sg = State {
 
 viperbite_CH = function(inst)
    local target = inst.components.teesskill:GetVenomspreadTarget()
-   print(target)
    if target ~= nil then
       inst:PushEvent("onvenomspread")
    else
@@ -318,3 +317,73 @@ end
 
 RegisterSkill("viperbite", "tees", viperbite_Sg, TUNING.TEES.SKILL_VIPERVITE_MANACOST, viperbite_CH)
 RegisterSkill("venomspread", "tees", venomspread_Sg)
+
+local snowwind_Sg = State {
+   name = "snowwind",
+   tags = { "busy", "doing", "skill", "pausepredict", "nointerrupt", "nomorph", },
+
+   onenter = function(inst)
+      OnStartSkillGeneral(inst)
+      inst.AnimState:PlayAnimation("pickup")
+      inst.AnimState:PushAnimation("pickup_lag", true)
+
+      inst.sg:SetTimeout(60 * FRAMES)
+      if math.random() < 0.88 then -- 스킬을 쓸 때 88퍼 확률로 대사를 말함
+         inst.components.talker:Say(GetString(inst.prefab, "SKILL_SNOWWIND"))
+      end
+      --inst.SoundEmitter:PlaySound("얼어붙는 소리") 
+   end,
+
+   timeline =
+   {
+      TimeEvent(12 * FRAMES, function(inst)
+         inst.AnimState:Pause()
+         inst.components.ananskill:SnowWind(inst)
+      end),
+
+      TimeEvent(22 * FRAMES, function(inst)
+         inst.components.ananskill:SnowWind(inst)
+      end),
+
+      TimeEvent(32 * FRAMES, function(inst)
+         inst.components.ananskill:SnowWind(inst)
+      end),
+
+      TimeEvent(44 * FRAMES, function(inst)
+         inst.AnimState:Resume()
+         inst.AnimState:PushAnimation("pickup_pst", false)
+      end),
+   },
+
+   events = {
+      EventHandler("animover", function(inst)
+         if inst.AnimState:AnimDone() then
+            inst.AnimState:Resume()
+            inst.sg:GoToState("idle", true)
+         end
+      end),
+   },
+ 
+   ontimeout = function(inst)
+      inst.AnimState:Resume()
+      inst.sg:GoToState("idle", true)
+      OnFinishSkillGeneral(inst)
+   end,
+   
+   onexit = function(inst)   
+      inst.AnimState:Resume()
+      if inst.bufferedaction == inst.sg.statemem.action then
+         inst:ClearBufferedAction()
+      end
+      OnFinishSkillGeneral(inst)
+   end,
+}
+
+RegisterSkill("snowwind", "anan", snowwind_Sg, TUNING.ANAN.SKILL_SNOWWIND_TOTAL_MANACOST)
+
+local ananstealth_Sg = State {
+   name = "ananstealth",
+   tags = { "busy", "doing", "skill", "pausepredict", "nointerrupt", "nomorph", },
+}
+
+--RegisterSkill("ananstealth", "anan", ananstealth_Sg, TUNING.ANAN.SKILL_ANANSTEALTH_MANACOST)
