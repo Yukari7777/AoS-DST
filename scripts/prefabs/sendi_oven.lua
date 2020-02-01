@@ -251,30 +251,6 @@ local function cooked(inst)
 				--시드변환	(농사용씨앗을변환함)
 				--(주석시 대괄호를 지우세요)[[
 
-				elseif item.prefab == "rottenegg" then  --썩은계란
-					replacement = "aos_seed"	
-					local fx = SpawnPrefab("sugarwood_leaf_fx_chop")
-					local pos = Vector3(inst.Transform:GetWorldPosition())
-					fx.Transform:SetScale(1, 1, 1)
-					fx.Transform:SetPosition(pos:Get())
-					
-					local fx = SpawnPrefab("die_fx")
-					local pos = Vector3(inst.Transform:GetWorldPosition())
-					fx.Transform:SetScale(0.1, 0.1, 0.1)
-					fx.Transform:SetPosition(pos:Get())
-			
-			-- elseif item.prefab == "spoiled_food" then  --썩은음식
-					-- replacement = "aos_seed"
-					-- local fx = SpawnPrefab("sugarwood_leaf_fx_chop")
-					-- local pos = Vector3(inst.Transform:GetWorldPosition())
-					-- fx.Transform:SetScale(1, 1, 1)
-					-- fx.Transform:SetPosition(pos:Get())
-					
-					-- local fx = SpawnPrefab("die_fx")
-					-- local pos = Vector3(inst.Transform:GetWorldPosition())
-					-- fx.Transform:SetScale(0.1, 0.1, 0.1)
-					-- fx.Transform:SetPosition(pos:Get())
-					
 				--벼리밀
 				elseif item.prefab == "carrot_seeds" then  --당근
 					replacement = "sendi_food_ricewheat"
@@ -301,7 +277,7 @@ local function cooked(inst)
 					fx.Transform:SetScale(0.1, 0.1, 0.1)
 					fx.Transform:SetPosition(pos:Get())
 					
-				elseif item.prefab == "pumegranate_seeds" then  --토마토
+				elseif item.prefab == "toamto_seeds" then  --토마토
 					replacement = "sendi_food_ricewheat"
 					
 					local fx = SpawnPrefab("tree_petal_fx_chop")
@@ -392,7 +368,7 @@ local function cooked(inst)
 					fx.Transform:SetScale(0.1, 0.1, 0.1)
 					fx.Transform:SetPosition(pos:Get())
 					
-				elseif item.prefab == "potato_seeds" then  --고추
+				elseif item.prefab == "potato_seeds" then  --감자
 					replacement = "sendi_food_ricewheat"
 					
 					local fx = SpawnPrefab("tree_petal_fx_chop")
@@ -420,7 +396,7 @@ local function cooked(inst)
 					fx.Transform:SetScale(0.1, 0.1, 0.1)
 					fx.Transform:SetPosition(pos:Get())
 					
-				elseif item.prefab == "watermelon" then  --수박
+				elseif item.prefab == "watermelon_seeds" then  --수박
 					replacement = "sendi_food_cocoapowder"	
 					
 					local fx = SpawnPrefab("tree_petal_fx_chop")
@@ -445,10 +421,121 @@ local function cooked(inst)
 					local pos = Vector3(inst.Transform:GetWorldPosition())
 					fx.Transform:SetScale(0.1, 0.1, 0.1)
 					fx.Transform:SetPosition(pos:Get())
-				--]]		
-				
-				end  
+				--]]	
 
+                
+               --보스들
+                elseif item.prefab == "shroom_skin" then  --개구리가죽
+                    replacement = "aos_seed_middle"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]	
+                elseif item.prefab == "furtuft" then  --베어거 작은가죽
+                    replacement = "aos_seed"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]	
+                elseif item.prefab == "lavae_tooth" then  --용암이 이빨
+                    replacement = "aos_seed_middle"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]	
+                  
+                elseif item.prefab == "goose_feather" then  --솜털
+                    replacement = "aos_seed"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]
+                  
+                elseif item.prefab == "dragon_scales" then  --드래곤 껍질
+                    replacement = "aos_seed_boss_red"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]
+                
+                elseif item.prefab == "lavae_egg" then  --라바에그
+                    replacement = "aos_seed_boss_green"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]	
+                
+                elseif item.prefab == "deerclops_eyeball" then  --디어클롭스 눈
+                    replacement = "aos_seed_boss_sky"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]
+                elseif item.prefab == "bearger_fur" then  --베어거 가죽
+                    replacement = "aos_seed_boss_autumn"				
+                    
+                    local fx = SpawnPrefab("collapse_small")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(2, 2, 2)
+                    fx.Transform:SetPosition(pos:Get())
+                    
+                    local fx = SpawnPrefab("die_fx")
+                    local pos = Vector3(inst.Transform:GetWorldPosition())
+                    fx.Transform:SetScale(0.1, 0.1, 0.1)
+                    fx.Transform:SetPosition(pos:Get())
+                --]]	
+               
+                end
+                
 				if replacement then 
 					local stacksize = 1 
 					if item.components.stackable then 
@@ -461,10 +548,10 @@ local function cooked(inst)
 					container:RemoveItemBySlot(i)
 					item:Remove()
 					container:GiveItem(newprefab, i)
-				end 
-			end 
-		end 
-		return false 
+                    end 
+                end 
+            end 
+        return false 
 	end 
 end
 	

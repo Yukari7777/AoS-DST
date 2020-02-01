@@ -95,7 +95,7 @@ local function onattackother(inst, data)-- 33초에 거쳐 딜을입힘.
 end
 
 local skins = {
-    "DEFAULT",
+    "DEFAULT", "christmas",
 }
 
 local function OnChangeSkin(inst) -- YUKARI 스킨관련
