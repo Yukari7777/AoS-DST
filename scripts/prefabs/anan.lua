@@ -71,7 +71,6 @@ local function onbecamehuman(inst)
 end
 
 local function onbecameghost(inst)
-
    inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "anan_speed_mod", 2.0)
 end
 
@@ -97,9 +96,8 @@ end
 local function anan_OnHungerDelta(inst, data)-- 허기에따른 스피드와 공격력 변화
     if inst.components.combat ~= nil then
         local percent = data.newpercent
-            inst.components.locomotor:SetExternalSpeedMultiplier(inst, "anan_speed_mod", 1 + percent * 0.5)
-            inst.components.combat.damagemultiplier = inst.damagemult + percent * 1.25 --딜
-
+        inst.components.locomotor:SetExternalSpeedMultiplier(inst, "anan_speed_mod", 1 + percent * 0.5)
+        inst.components.combat.damagemultiplier = inst.damagemult + percent * 1.25 --딜
     end
 end
 
@@ -157,16 +155,9 @@ local skins = { -- "anan_skin_" [스킨] 뒤에 나오는 이름
     "DEFAULT", "christmas",
 }
 
-local function OnChangeSkin(inst) -- YUKARI 스킨관련
-    inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
-    SetSkinBuild(inst)
-    -- TODO : 감정표현 추가
-end
-
 ----------스킨 끝
 
 local function common_postinit (inst) --정신
-    
     inst:AddTag("anan")--자신의 태그 
     inst:AddTag("anancraft")--전용탭추가
     inst:AddTag("aosplayer")
@@ -185,26 +176,25 @@ end
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
-    
     inst.soundsname = "wortox"
-    inst.skinindex = 1
 
     inst:AddComponent("aoslevel")--레벨업
     inst:AddComponent("aosbuff")
 	inst:AddComponent("ananskill")
     inst:AddComponent("aosmana")
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
-	
+
+    inst:AddComponent("aosgeneral")
+    inst.components.aosgeneral:SetSkins(skins)
+    inst.components.aosgeneral:Patch()
+    
     inst:AddComponent("sanityaura")--센티넬아우라 
     inst.components.sanityaura.aurafn = CalcSanityAura
-	
-    ---[[추위에 강하며 열에약함 
 
+    ---추위에 강하며 열에약함
 	inst.components.temperature.mintemp = 0 --체온이 이 이상 내려가지않음.
 	inst.components.temperature:SetFreezingHurtRate(0.0000000000001)--체온이 71도이상일때 입는 대미지
 	inst.components.temperature:SetOverheatHurtRate(2)--너무더워 입는 데미지
-	--inst.components.`ㅊ:SetResistance(80) --더위저항
-	--]]
 	
     -- Stats   
     inst.components.health:SetMaxHealth(CONST.DEFAULT_HEALTH) -- 피
@@ -217,14 +207,7 @@ local master_postinit = function(inst)
     inst.components.combat.damagemultiplier = CONST.DEFAULT_DAMAGEMULTIPLIER   --데미지 배수 
     ---[[ 데미지변환[aos 레벨업에서 추가변화있음] 
     inst.damagemult = CONST.DEFAULT_DAMAGEMULTIPLIER --데미지를 지정 [M]
-    --]]
-    inst.components.hunger:SetRate(TUNING.WILSON_HUNGER_RATE)--허기수치
 
-    inst.OnLoad = onload
-    inst.OnNewSpawn = onload
-    inst.ChangeSkin = OnChangeSkin
-    inst.Skins = skins
-	
     --잠금해제
     inst:DoTaskInTime(0, function(inst)
         inst.components.builder:AddRecipe("birdtrap")
@@ -237,6 +220,8 @@ local master_postinit = function(inst)
     inst:ListenForEvent("sanitydelta", anan_OnSanitychange)--정신에따른 캐릭터 속성 및 능력 테그/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
     inst:ListenForEvent("hungerdelta", anan_Onhungrypuppy)--30배고픔이하이면 배고픔수치 감소/ hp에따라 변경하고싶을시 앞의 글자를 healthdelta로 변경
 
+    inst.OnLoad = onload
+    inst.OnNewSpawn = onload
 end
 
 return MakePlayerCharacter("anan", prefabs, assets, common_postinit, master_postinit, start_inv)

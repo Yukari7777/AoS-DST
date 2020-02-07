@@ -69,7 +69,7 @@ local function RegisterKeyEvent(classified)
                     if TheInput:IsKeyDown(KEY_SHIFT) then
                         SendModRPCToServer(MOD_RPC["anan"]["snowwind"]) -- 가명 : 눈보라
                     else
-                        --SendModRPCToServer(MOD_RPC["anan"]["ananstealth"]) -- 은신
+                        SendModRPCToServer(MOD_RPC["anan"]["ananstealth"]) -- 은신
                     end
                 end
             end)

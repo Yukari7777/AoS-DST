@@ -134,42 +134,6 @@ local skins = { -- "sendi_skin_" [스킨] 뒤에 나오는 이름
     "DEFAULT", "longtail", "christmas", "christmas_b", "ignia", "ignias"
 }
 
-local function OnChangeSkin(inst) -- YUKARI 스킨관련
-    inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
-    SetSkinBuild(inst)
-    -- TODO : 감정표현 추가
-end
-
-----------스킨 끝
-
-
-local function OnEquip(inst, data) 
-    if data.eslot == EQUIPSLOTS.BODY then
-        SetSkinBuild(inst)
-    end
-end
-
-local function eatunfinishedfoodfn(inst, data)
-    
-    
-    local mana_amount = data.food.aosmana or data.food.components.edible.sanityvalue ~= nil and data.food.components.edible.sanityvalue > 0 and data.food.components.edible.sanityvalue * TUNING.AOS_GENERAL.MANA_RESTORE_FROM_FOOD_MULTIPLIER or 0 -- 음식 먹을 때 오르는 정신력으로부터 마나가 회복
-    inst.components.aosmana:DoDelta(mana_amount)
-    
-    
-    if data.food:HasTag("sendistaple") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDISTAPLE"))
-    
-    elseif data.food:HasTag("sendifood") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDIFOOD"))
-    
-    elseif data.food:HasTag("unfinished") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "UNFINISHED"))
-    
-    elseif data.food:HasTag("sendimeat") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDIMEAT"))    
-    end
-end
-
 local function NoEatCookPotFood(inst)
     local _PrefersToEat = inst.components.eater.PrefersToEat
     function inst.components.eater.PrefersToEat(self, inst)
@@ -199,8 +163,6 @@ end
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
-
-    inst.skinindex = 1
     inst.soundsname = "willow"
     -- 이 캐릭터의 사운드 윌로우로 설정함.
     inst.starting_inventory = start_inv
@@ -211,17 +173,19 @@ local master_postinit = function(inst)
     inst:AddComponent("aosbuff")
     inst:AddComponent("aoslevel")--레벨업 컴포넌트
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
-    
-	inst:AddComponent("sanityaura")--센티넬아우라 
-    inst.components.sanityaura.aurafn = CalcSanityAura
-    
-    inst:ListenForEvent("oneat", eatunfinishedfoodfn) -- 먹었을 때
+
     NoEatCookPotFood(inst)
-    
+    inst:AddComponent("aosgeneral")
+    inst.components.aosgeneral:SetSkins(skins)
+    inst.components.aosgeneral:Patch()
+
 	inst.components.temperature.maxtemp = 71 --체온이 이 이상 올라가지않음.
 	inst.components.temperature:SetOverheatHurtRate(0.3)--체온이 71도이상일때 입는 대미지
 	inst.components.temperature:SetFreezingHurtRate(1.5)--내손얼일때 입는 데미지
-	
+    
+    inst:AddComponent("sanityaura")--센티넬아우라 
+    inst.components.sanityaura.aurafn = CalcSanityAura
+
     --------------------------- 허기 불꽃 시스템의 마침점 ------------------------------------
     inst:WatchWorldState("phase", sendi_light)
     inst:ListenForEvent("hungerdelta", sendi_light)
@@ -243,11 +207,6 @@ local master_postinit = function(inst)
 
     inst.OnLoad = onload
     inst.OnNewSpawn = onload
-    inst.ChangeSkin = OnChangeSkin
-    inst.Skins = skins
-
-    inst:ListenForEvent("equip", OnEquip )
-    inst:ListenForEvent("unequip", OnEquip )
 end
 
 return MakePlayerCharacter("sendi", prefabs, assets, common_postinit, master_postinit)

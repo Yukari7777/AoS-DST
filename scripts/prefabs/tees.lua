@@ -3,6 +3,7 @@ local CONST = TUNING.TEES
 
 local assets = {
     Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
+    Asset("ANIM", "anim/tees_skin_christmas.zip"), --ver.이그니아 금발
 }
 local prefabs = {
 }
@@ -98,12 +99,6 @@ local skins = {
     "DEFAULT", "christmas",
 }
 
-local function OnChangeSkin(inst) -- YUKARI 스킨관련
-    inst.skinindex = inst.skinindex >= #skins and 1 or inst.skinindex + 1
-    SetSkinBuild(inst)
-    -- TODO : 감정표현 추가
-end
-
 local function common_postinit (inst) --정신
     inst:AddTag("sneakysnake") -- 그림자 몹을 제외한 모든 몹에게서 선공당하지 않음
     inst:AddTag("aosplayer")
@@ -116,32 +111,10 @@ local function common_postinit (inst) --정신
     inst.DetachTeesClassified = DetachClassified
 end
 
-local function eatunfinishedfoodfn(inst, data)--마나회복
-    
-    
-    local mana_amount = data.food.aosmana or data.food.components.edible.sanityvalue ~= nil and data.food.components.edible.sanityvalue > 0 and data.food.components.edible.sanityvalue * TUNING.AOS_GENERAL.MANA_RESTORE_FROM_FOOD_MULTIPLIER or 0 -- 음식 먹을 때 오르는 정신력으로부터 마나가 회복
-    inst.components.aosmana:DoDelta(mana_amount)
-    
-    
-    if data.food:HasTag("sendistaple") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDISTAPLE"))
-    
-    elseif data.food:HasTag("sendifood") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDIFOOD"))
-    
-    elseif data.food:HasTag("unfinished") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "UNFINISHED"))
-    
-    elseif data.food:HasTag("sendimeat") then
-        data.feeder.components.talker:Say(GetString(data.feeder, "SENDIMEAT"))    
-    end
-end
-
 local master_postinit = function(inst)
     inst.aos_classified = SpawnPrefab("aos_classified")
     inst:AddChild(inst.aos_classified)
     
-    inst.skinindex = 1
     inst.soundsname = "warly"
     inst:AddTag("bookbuilder")-- 위커바컴의 책을 제조합니다.
     inst:AddTag("poisonous") --독 속성태그 추가
@@ -153,11 +126,14 @@ local master_postinit = function(inst)
     inst:AddComponent("aosmana")
 	inst:AddComponent("lootdropper")--레벨당 드롭 컴포넌트
 	inst:AddComponent("teesskill")
-	
+
+    inst:AddComponent("aosgeneral")
+    inst.components.aosgeneral:SetSkins(skins)
+    inst.components.aosgeneral:Patch()
+    
     inst:AddComponent("sanityaura") --센티넬 아우라
     inst.components.sanityaura.aurafn = CalcSanityAura
-	inst:ListenForEvent("oneat", eatunfinishedfoodfn) -- 마나회복 먹었을 때
-    
+
 	inst.components.temperature.maxtemp = 70 --체온이 이 이상 올라가지않음.
 	inst.components.temperature:SetOverheatHurtRate(0.0000000000001)--체온이 71도이상일때 입는 대미지
 	inst.components.temperature:SetFreezingHurtRate(2)--내손얼일때 입는 데미지
@@ -174,11 +150,6 @@ local master_postinit = function(inst)
     inst.components.combat.min_attack_period = 0.2--공격속도
     --inst.components.health:StartRegen(0.3, 0.8)   --체력 회복
     
-    inst.OnLoad = onload
-    inst.OnNewSpawn = onload
-    inst.ChangeSkin = OnChangeSkin
-    inst.Skins = skins
-    
     --잠금해제
     inst:DoTaskInTime(0, function(inst)
         inst.components.builder:AddRecipe("sleepbomb")--선잠주머니
@@ -193,6 +164,9 @@ local master_postinit = function(inst)
     -- inst:ListenForEvent("hungerdelta", OnHungerDelta)-- 허기에따른 변화 마침코드
     -- inst:ListenForEvent("Hungeranimal", OnHungeranimal)-- 허기에따른 변화 마침코드2
     -- inst:ListenForEvent("tees_force_proc", OnHungeranimal)-- 허기에따른 변화 마침코드2
+
+    inst.OnLoad = onload
+    inst.OnNewSpawn = onload
 end
 
 

@@ -35,7 +35,7 @@ GLOBAL.PutTarget = function(t, v)
    end
 end
 
-GLOBAL.GetCombatableInRadius = function(inst, radius)
+GLOBAL.GetCombatableInRadius = function(inst, radius) -- can target itself
    local x, y, z = inst.Transform:GetWorldPosition()
    local targets = TheSim:FindEntities(x, y, z, radius, {"_combat"}) -- See entityreplica.lua (for _combat tag usage)
 
@@ -49,7 +49,7 @@ GLOBAL.GetCombatableInRadius = function(inst, radius)
 end
 
 local PutTarget = GLOBAL.PutTarget
-GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
+GLOBAL.GetSkillTargetsInRadius = function(inst, radius) -- cannot target itself due to IsPreemitiveEnemy
 	local ents = GLOBAL.GetCombatableInRadius(inst, radius) or {}
    local targets = {}
  
@@ -69,5 +69,5 @@ GLOBAL.GetSkillTargetsInRadius = function(inst, radius)
       end
    end
    
-	return next(targets) ~= nil and targets or nil
+	return next(targets) ~= nil and targets or nil, ents
 end

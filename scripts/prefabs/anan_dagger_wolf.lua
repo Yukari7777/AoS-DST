@@ -63,7 +63,6 @@ local BURNADDTIME = 9 --지속시간
 local BURNPERIOD = 1.5 --도트데미지 간격
 
 local function Enlight(thing)
-	print(thing)
 	--thing.entity:AddLight()
 	thing.Light:SetRadius(.5)
 	thing.Light:SetFalloff(.2)

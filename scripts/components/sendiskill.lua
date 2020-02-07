@@ -42,7 +42,7 @@ local function DoRapierCharge(inst)
 		local playerpos = inst:GetPosition()
 		local ents = TheSim:FindEntities(playerpos.x + math.sin(angle), 0, playerpos.z + math.cos(angle), RADIUS, nil, { "INLIMBO" })
 		for k,v in pairs(ents) do 
-			if v.components.health ~= nil and _G.IsPreemptiveEnemy(inst, v) then -- defined in skills_aos.lua
+			if v.components.health ~= nil and _G.IsPreemptiveEnemy(inst, v) then
 				local targetpos = v:GetPosition()
 				v.Transform:SetPosition(targetpos.x + (math.sin(angle) * VELOCITY) , 0, targetpos.z + (math.cos(angle) * VELOCITY))
 				if not v:HasTag("damagetaken") then
@@ -58,7 +58,7 @@ local function DoRapierCharge(inst)
 end
 
 function SendiSkill:GetRapierTarget()
-	local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_RAPIER_TARGET_RADIUS) -- defined in skills_aos.lua
+	local targets = _G.GetSkillTargetsInRadius(self.inst, CONST.SKILL_RAPIER_TARGET_RADIUS)
 	if targets ~= nil then
 		return targets[1].Transform:GetWorldPosition()
 	end
@@ -124,7 +124,7 @@ function SendiSkill:OnStartIgniaRun(inst)
 		self.shouldcharge = true
 		inst.SkillTask = inst:DoPeriodicTask(0, DoIgniaRunCharge)
 		inst.components.talker:Say(GetString(inst.prefab, "SKILL_IGNIARUN"))
-		inst.components.health:SetInvincible(true)
+		MakePysicalInvincible(inst, true)
 
 		if inst.components.aosmana ~= nil then
 			inst.components.aosmana:DoDelta( -CONST.SKILL_IGNIARUN_MANACOST )

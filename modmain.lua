@@ -460,13 +460,14 @@ AddMinimapAtlas("images/map_icons/tees.xml")
 ---------------- 라이브러리, 함수 오버라이드
 local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
-local Language =  GetModConfigData("language")
+local Language = GetModConfigData("language")
 --
 local Ingredient = GLOBAL.Ingredient
 local RECIPETABS = GLOBAL.RECIPETABS
 local TECH = GLOBAL.TECH
 local resolvefilepath = GLOBAL.resolvefilepath
 local Recipe = GLOBAL.Recipe
+local KnownModIndex = GLOBAL.KnownModIndex
 require "util"
 
 local containers = require("containers")
@@ -477,7 +478,6 @@ modimport "scripts/tunings_sendi.lua" -- 튜닝 파일 로드
 
 GLOBAL.SENDI_LANGUAGE_SUFFIX = "_en" -- 언어 설정관련
 if Language == "AUTO" then
-    local KnownModIndex = GLOBAL.KnownModIndex
     for _, moddir in ipairs(KnownModIndex:GetModsToLoad()) do
         local modname = KnownModIndex:GetModInfo(moddir).name
         if modname == "한글 모드 서버 버전" or modname == "한글 모드 클라이언트 버전" then 
@@ -491,9 +491,10 @@ if Language == "AUTO" then
 else
     GLOBAL.SENDI_LANGUAGE_SUFFIX = Language
 end
+GLOBAL.TOS_MODNAME = KnownModIndex:GetModActualName("[DST]Tales of Seed - Test") or KnownModIndex:GetModActualName("[DST]Tales of Seed")
 STRINGS.CHARACTERS.SENDI = require("speech_sendi"..GLOBAL.SENDI_LANGUAGE_SUFFIX ) -- 대사 파일 로드
 -- modimport("scripts/strings_sendi"..GLOBAL.SENDI_LANGUAGE_SUFFIX..".lua") -- 언어 파일 로드
-modimport("scripts/strings_sendi.lua") -- string 파일 로드
+modimport("scripts/strings_aos.lua") -- string 파일 로드
 STRINGS.CHARACTERS.ANAN = require "speech_anan"
 STRINGS.CHARACTERS.TEES = require "speech_tees"
 
@@ -531,30 +532,6 @@ function Combat.GetAttacked(self, attacker, damage, ...)
 	return _GetAttacked(self, attacker, damage, ...)
 end
 
-GLOBAL.SetSkinBuild = function(inst) -- YUKARI 센디 스킨옵션 관련 
-    local index = inst.skinindex
-
-    if index == 1 then
-        inst.AnimState:SetBuild(inst.prefab)
-    else
-        local OverrideSkin = GetModConfigData("skinoverride")
-        inst.AnimState:SetBuild(inst.prefab.."_skin_"..inst.Skins[index])
-
-        if OverrideSkin == 2 then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        elseif OverrideSkin == 3 and not inst.components.inventory:EquipHasTag("sendis") then
-            inst.AnimState:ClearOverrideSymbol("swap_body")
-        end
-
-        if inst.components.inventory:EquipHasTag("sleevefix") then
-            inst.AnimState:OverrideSymbol("arm_upper", "sendi", "arm_upper")
-        else
-            inst.AnimState:ClearOverrideSymbol("arm_upper")
-        end
-    end
-end
-
--- 미트무시
 local function is_meat(item)
     return item.components.edible ~= nil  and item.components.edible.foodtype == GLOBAL.FOODTYPE.MEAT 
 end

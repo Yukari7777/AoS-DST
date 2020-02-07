@@ -10,6 +10,7 @@ local EQUIPSLOTS = GLOBAL.EQUIPSLOTS
 local FRAMES = GLOBAL.FRAMES
 local next = GLOBAL.next
 local PutTarget = GLOBAL.PutTarget
+local MakePysicalInvincible = GLOBAL.MakePysicalInvincible
 
 local function ForceStopHeavyLifting(inst) 
     if inst.components.inventory:IsHeavyLifting() then
@@ -133,7 +134,7 @@ local igniarun_Sg = State {
    timeline =
    {
       TimeEvent(9 * FRAMES, function(inst) --점프무적
-         inst.components.health:SetInvincible(false)
+         MakePysicalInvincible(inst, false)
       end),
       TimeEvent(13 * FRAMES, function(inst)
          inst.SoundEmitter:PlaySound("dontstarve/movement/bodyfall_dirt")
@@ -384,6 +385,44 @@ RegisterSkill("snowwind", "anan", snowwind_Sg, TUNING.ANAN.SKILL_SNOWWIND_TOTAL_
 local ananstealth_Sg = State {
    name = "ananstealth",
    tags = { "busy", "doing", "skill", "pausepredict", "nointerrupt", "nomorph", },
+
+   onenter = function(inst)
+      OnStartSkillGeneral(inst)
+      inst.AnimState:PlayAnimation("whip_pre")
+      inst.AnimState:PushAnimation("whip", false)
+
+      inst.sg:SetTimeout(14 * FRAMES)
+   end,
+
+   timeline =
+   {
+      TimeEvent(12 * FRAMES, function(inst)
+         inst.components.ananskill:Stealth(inst)
+      end),
+   },
+
+   events = {
+      EventHandler("animover", function(inst)
+         if inst.AnimState:AnimDone() then
+            inst.AnimState:Resume()
+            inst.sg:GoToState("idle", true)
+         end
+      end),
+   },
+ 
+   ontimeout = function(inst)
+      inst.AnimState:Resume()
+      inst.sg:GoToState("idle", true)
+      OnFinishSkillGeneral(inst)
+   end,
+   
+   onexit = function(inst)   
+      inst.AnimState:Resume()
+      if inst.bufferedaction == inst.sg.statemem.action then
+         inst:ClearBufferedAction()
+      end
+      OnFinishSkillGeneral(inst)
+   end,
 }
 
---RegisterSkill("ananstealth", "anan", ananstealth_Sg, TUNING.ANAN.SKILL_ANANSTEALTH_MANACOST)
+RegisterSkill("ananstealth", "anan", ananstealth_Sg, TUNING.ANAN.SKILL_ANANSTEALTH_MANACOST)
