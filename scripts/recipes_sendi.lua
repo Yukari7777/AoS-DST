@@ -164,7 +164,7 @@ end
 
 
 AddRecipe("sendi_food_cocoa_cup", --조리 되기전의 컵
-{sendi_food_cocoapowder4, sendi_food_milk_strong}, 
+{sendi_food_cocoapowder, sendi_food_milk_strong, Ingredient("honey", 2)}, 
 OVENTAB, TECH.NONE, nil, nil, true, 1, "character", "images/inventoryimages/sendi_food_cocoa_cup.xml", "sendi_food_cocoa_cup.tex")
 
 local sendi_food_cocoa_cup = Ingredient("sendi_food_cocoa_cup", 1) -- YUKARI : 어떤 모드아이템이 재료로 들어가야 할경우 이렇게 추가해야함.
@@ -225,7 +225,7 @@ OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/send
 --6차음식
 
 AddRecipe("sendi_food_tanghuru_berry", --베리탕후루 
-{Ingredient("stinger", 1), Ingredient("honey", 1), Ingredient("berries_cooked", 2)}, 
+{Ingredient("stinger", 1), Ingredient("honey", 2), Ingredient("berries_cooked", 2)}, 
 OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_tanghuru_berry.xml", "sendi_food_tanghuru_berry.tex")
 
 AddRecipe("sendi_food_stew_beep", --비프스튜
