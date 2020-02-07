@@ -484,7 +484,7 @@ local food = {
         hunger = 30,
         sanity = 5, mana = 5,
         perishtime = 5320,
-        tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
       exp = 1,
@@ -501,6 +501,56 @@ local food = {
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
       exp = 2,
   }, -- 비프 스튜 
+  
+       maratang_frog = {
+        foodtype = FOODTYPE.MEAT,
+        health = -5,
+        hunger = 30,
+        sanity = -15, mana = 5,
+        perishtime = 5320,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 1,
+  }, -- 개구리 접시
+   
+       maratang_frog_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 20,
+        hunger = 65,
+        sanity = -5, mana = 5,
+        perishtime = 5320,
+         tags = {"caffeine", "preparedfood", "meat", "sendimeat", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 5,
+  }, -- 개굴개굴 마라탕
+  
+       maratang_bat = {
+        foodtype = FOODTYPE.MEAT,
+        health = -5,
+        hunger = 30,
+        sanity = -15, mana = 5,
+        perishtime = 5320,
+        tags = {"caffeine", "cattoy", "unfinished", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 1,
+  }, -- 박쥐 접시
+   
+       maratang_bat_cooked = {
+        foodtype = FOODTYPE.MEAT,
+        health = 20,
+        hunger = 65,
+        sanity = -5, mana = 5,
+        perishtime = 5320,
+        tags = {"caffeine", "preparedfood", "meat", "sendimeat", "preparedfood", "fuel"},
+        floater = {"small", nil, nil},
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP,
+      exp = 5,
+  }, -- 엽기적인 마라탕
+
+  
 }
 
 for k, v in pairs(food) do 

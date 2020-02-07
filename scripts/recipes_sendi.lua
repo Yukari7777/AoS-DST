@@ -254,6 +254,16 @@ AddRecipe("sendi_food_rice_eel", --장어와 밥
 OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_rice_eel.xml", "sendi_food_rice_eel.tex")
 
 
+-- 엽기적인 음식
+AddRecipe("sendi_food_maratang_frog", --개구리 접시 
+{sendi_food_milk_strong2, Ingredient("froglegs_cooked", 6), sendi_food_cocoapowder2}, 
+OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_maratang_frog.xml", "sendi_food_maratang_frog.tex")
+
+AddRecipe("sendi_food_maratang_bat", --박쥐 접시 
+{sendi_food_milk_strong2 , Ingredient("batwing_cooked", 6), sendi_food_cocoapowder2}, 
+OVENTAB, TECH.NONE, nil, nil, true, 1, "sendichef", "images/inventoryimages/sendi_food_maratang_bat.xml", "sendi_food_maratang_bat.tex")
+
+
 
 -----------------음식---------------
 AddRecipe("sendicampfire",--모닥불

@@ -67,7 +67,7 @@ local function cooked(inst)
 				item.prefab == "sendi_food_rice_eel" or
 				--2차음식
 				item.prefab == "sendi_food_bread_muffin" or
-				item.prefab == "sendi_food_rice_tuna_cooked" or
+				item.prefab == "sendi_food_rice_tuna" or
 				item.prefab == "sendi_food_bread_but" or
 				--3차음식 
 				item.prefab == "sendi_food_chicken" or
@@ -76,6 +76,9 @@ local function cooked(inst)
 				--5차 
 				item.prefab == "sendi_food_stew_beep" or
 				--6차
+                item.prefab == "sendi_food_maratang_frog" or
+                item.prefab == "sendi_food_maratang_bat" or
+                --블랙푸
 				item.prefab == "log" then  --붕괴 애니메이션
 					inst.SoundEmitter:PlaySound("dontstarve/common/fireAddFuel") 
 					local fx = SpawnPrefab("collapse_small")
@@ -130,6 +133,13 @@ local function cooked(inst)
 				elseif item.prefab == "sendi_food_stew_beep" then --스튜
 					replacement = "sendi_food_stew_beep_cooked" --
 				
+                --블랙푸드
+                elseif item.prefab == "sendi_food_maratang_frog" then --개구리 마라탕
+					replacement = "sendi_food_maratang_frog_cooked" --
+                    
+                elseif item.prefab == "sendi_food_maratang_bat" then --박쥐 마라탕
+					replacement = "sendi_food_maratang_bat_cooked" --
+                
 				elseif item.prefab == "berries_cooked" then --코코아파우더
 					replacement = "sendi_food_cocoapowder" --						
 
@@ -187,6 +197,14 @@ local function cooked(inst)
 					replacement = "ash"	
 				--6차
 				elseif item.components.burnable and not item.prefab == "sendi_food_stew_beep" then 
+					replacement = "ash"	
+                    
+                --블랙푸드
+                
+                elseif item.components.burnable and not item.prefab == "sendi_food_maratang_frog" then 
+					replacement = "ash"	
+                    
+                elseif item.components.burnable and not item.prefab == "sendi_food_maratang_bat" then 
 					replacement = "ash"	
 					
 				end  

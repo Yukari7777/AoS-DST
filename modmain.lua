@@ -302,6 +302,18 @@ Assets = {
     Asset( "IMAGE", "images/inventoryimages/sendi_food_stew_beep_cooked.tex"), 
     Asset( "ATLAS", "images/inventoryimages/sendi_food_stew_beep_cooked.xml"),    --비프스튜
 	
+    --블랙푸드
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_maratang_frog.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_maratang_frog.xml"),    --개구리 마라탕
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_maratang_frog_cooked.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_maratang_frog_cooked.xml"),    --개구리 마라탕   
+    
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_maratang_bat.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_maratang_bat.xml"),    --박쥐 마라탕
+    Asset( "IMAGE", "images/inventoryimages/sendi_food_maratang_bat_cooked.tex"), 
+    Asset( "ATLAS", "images/inventoryimages/sendi_food_maratang_bat_cooked.xml"),    --박쥐 마라탕
+    
+    --sendi_food_maratang_frog /  sendi_food_maratang_bat
     --------------------- 전용 음식    
     
     
