@@ -7,7 +7,7 @@ local food = {
         sanity = 100, -- 정신력
         mana = CONST.MANA_RESTORE_FULL, -- 마나(기본 마나 회복 규칙을 무시)
         perishtime = 5000, -- 유통 기간
-
+        buffs = { "speedup", 10, "test", 5 },
         -- 기타옵션
         rotten = "seeds", -- 썩으면 변할 물건 (썩은 것으로 변하게 할거면 안적어도 됨)
         tags = { "testest", "cattoy", "nobait" }, --붙일 태그들 | nobait 태그 : 넣었을경우 미끼가 아니게 됨.
@@ -637,17 +637,12 @@ function MakeFood(data)
             
             if data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 센디의 경험치가..
                 eater.components.aoslevel:AddExp(data.exp) -- 올린다 
-                
-            elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 아난의 경험치가..
-                eater.components.aoslevel:AddExp(data.exp) --올린다 
-
-            elseif data.exp ~= nil and eater.components.aoslevel ~= nil then --만약 티스의 경험치가.. 
-                eater.components.aoslevel:AddExp(data.exp) --올린다
-                
             end
 
-            
-            
+            local buffs = data.buffs or {}
+            for i = 1, #buffs, 2 do
+                _G.AoSAddBuff(eater, buffs[i], buffs[i+1])
+            end
             
             if data.oneatenfn ~= nil then
                 data.oneatenfn(inst, eater)
