@@ -60,7 +60,7 @@ end
 local DEFAULTBURNTIME = 9
 local BURNDAMAGE = 3 -- 데미지
 local BURNADDTIME = 9 --지속시간
-local BURNPERIOD = 0.3 --도트데미지 간격
+local BURNPERIOD = 2 --도트데미지 간격
 
 local function Enlight(thing)
 	--thing.entity:AddLight()
@@ -81,8 +81,8 @@ local function onattack(inst, attacker, target)--파이어 관련 코딩
 	--Enlight(inst)
 	
    if target.components.freezable ~= nil then
-   target.components.freezable:AddColdness(0.5)
-   target.components.freezable:SpawnShatterFX()
+   target.components.freezable:AddColdness(0.3)
+   --target.components.freezable:SpawnShatterFX()
     end
 	
 	if inst.EnlightTask ~= nil then 
@@ -141,14 +141,14 @@ local function onattack(inst, attacker, target)--파이어 관련 코딩
 end
 
 --유카리
-
+--[[
 local function onblink(staff, pos, caster)
 
     if caster.components.sanity ~= nil then
-        caster.components.sanity:DoDelta(-15)
+        caster.components.sanity:DoDelta(20)
     end
 end
---
+--]]
 
 --점멸
 
@@ -190,7 +190,7 @@ local function onattack_red(inst, attacker, target, skipsanity)
     end
 
     if target.components.freezable ~= nil then
-        target.components.freezable:AddColdness(-1) --Does this break ice staff?
+        target.components.freezable:AddColdness(-0.5) --Does this break ice staff?
         if target.components.freezable:IsFrozen() then
             target.components.freezable:Unfreeze()
         end
@@ -246,10 +246,10 @@ local function fn()
     inst:AddTag("sharp") -- 태그 설정, 이 두 태그는 없어도 됨(실행 확인)
     inst:AddTag("pointy") 
 	
-	inst:AddComponent("blinkstaff") --점멸
+	--[[inst:AddComponent("blinkstaff") --점멸
 	inst.components.blinkstaff:SetFX("glass_fx", "glass_fx")
     inst.components.blinkstaff.onblinkfn = onblink
-	
+	--]]
 	
     if not TheWorld.ismastersim then
         return inst

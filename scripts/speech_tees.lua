@@ -1998,8 +1998,19 @@ return {
     PIE_BERRY_COOKED = "새콤달콤~ 맛있는거~♪",
     DUMPLING = "이런건 먹는게 아니라니까!!",
     DUMPLING_COOKED = "고기와 꼬기와 꼬깅! 완벽해!",
+    ---6차음식
+    TANGHURU_BERRY = "딱딱한..? 과일!",
+    STEW_BEEP = "끓여먹는당!",
+    BEEP_COOKED = "맛있는 고기 스튜~",
+    --끔찍한 음식
+    MARATANG_BAT = "으으, 냄새나! 안먹을래!",
+    MARATANG_BAT_COOKED = "이상해... 뭔가 이상한데..",
+    MARATANG_FROG = "징그러워! 못생겼어!!",
+    MARATANG_FROG_COOKED = "매워어...! 그래두 맛있어!",
+    
     },
-
+    
+    
     DESCRIBE_NOMANA = { -- 마나 없을때 대사
 		"목말라!",
 		"마력이 부족해!",

@@ -100,7 +100,17 @@ local function onattack(inst, attacker, target)--파이어 관련 코딩
 
     AoSAddBuff(target, "flame", 2)
 end
+--유카리
 
+local function onblink(staff, pos, caster)
+
+    if caster.components.sanity ~= nil then
+        caster.components.sanity:DoDelta(-15)
+    end
+end
+--
+
+--점멸
 local function ontakefuel(inst)
    local afterrepair = inst.components.finiteuses:GetUses() + 20
    if afterrepair >= 200 then
@@ -159,6 +169,10 @@ local function fn()
     --inst.components.finiteuses:SetPercent(TUNING.FIRESTAFF_USES) -- 해당 아이템의 현재 내구도를 (최대 내구도 * n)으로 설정
     inst.components.finiteuses:SetOnFinished(inst.Remove)--내구도가 다하면 fn을 실행함.
 
+    inst:AddComponent("blinkstaff") --점멸
+	inst.components.blinkstaff:SetFX("firesplash_fx", "firesplash_fx")
+    inst.components.blinkstaff.onblinkfn = onblink
+    
     -- ---연료
     inst:AddComponent("fueled") --연료가 있는.
     inst.components.fueled.fueltype = "BURNABLE"

@@ -46,7 +46,17 @@ local function onunequip(inst, owner)
    --     owner:PushEvent("unequipskinneditem", inst:GetSkinName())
    -- end
 end
+--유카리
 
+local function onblink(staff, pos, caster)
+
+    if caster.components.sanity ~= nil then
+        caster.components.sanity:DoDelta(-15)
+    end
+end
+--
+
+--점멸
 
 local function ontakefuel(inst)
    local afterrepair = inst.components.finiteuses:GetUses() + 20
@@ -107,6 +117,10 @@ local function fn()
 	inst.components.finiteuses:SetConsumption(ACTIONS.MINE, 1.25)--도끼내구도	감소율
 	inst.components.finiteuses:SetOnFinished(inst.Remove)--내구도가 다하면 fn을 실행함.
 
+    inst:AddComponent("blinkstaff") --점멸
+	inst.components.blinkstaff:SetFX("collapse_small", "collapse_small")
+    inst.components.blinkstaff.onblinkfn = onblink
+    
     inst:AddComponent("fueled") --연료가 있는.
     inst.components.fueled.fueltype = "BURNABLE"
     inst.components.fueled:InitializeFuelLevel(1)
