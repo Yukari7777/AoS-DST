@@ -7,7 +7,7 @@ local food = {
         sanity = 100, -- 정신력
         mana = CONST.MANA_RESTORE_FULL, -- 마나(기본 마나 회복 규칙을 무시)
         perishtime = 5000, -- 유통 기간
-        buffs = { "speedup", 10, "test", 5 },
+        buffs = { "speedup", 10, "test", 5 }, --버프 + 시간 / 버프 + 시간
         -- 기타옵션
         rotten = "seeds", -- 썩으면 변할 물건 (썩은 것으로 변하게 할거면 안적어도 됨)
         tags = { "testest", "cattoy", "nobait" }, --붙일 태그들 | nobait 태그 : 넣었을경우 미끼가 아니게 됨.
@@ -81,6 +81,7 @@ local food = {
         hunger = 35,
         sanity = 5, mana = 15,
         perishtime = 2700,
+        buffs = { "speedup", 180 },
         tags = {"caffeine", "cattoy", "preparedfood", "sendistaple", "fuel"}, -- preparedfood 태그 : 오븐(쿡팟)에 조리된 음식
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
@@ -94,6 +95,7 @@ local food = {
         hunger = 35,
         sanity = 20, mana = 30,
         perishtime = 2700,
+        buffs = { "speedup", 180 },
         cooktime = .5,
         tags = {"caffeine", "cattoy", "ovencold", "preparedfood", "sendifood" ,"fuel"}, -- ovencold 태그 : 오븐에 의해 차가워진 음식
         floater = {"small", nil, nil},
@@ -520,6 +522,7 @@ local food = {
         hunger = 65,
         sanity = -5, mana = 5,
         perishtime = 5320,
+        buffs = { "speedup", 240 },
          tags = {"caffeine", "preparedfood", "meat", "sendimeat", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
@@ -544,6 +547,7 @@ local food = {
         hunger = 65,
         sanity = -5, mana = 5,
         perishtime = 5320,
+        buffs = { "speedup", 240 },
         tags = {"caffeine", "preparedfood", "meat", "sendimeat", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
