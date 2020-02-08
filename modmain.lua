@@ -494,9 +494,9 @@ end
 GLOBAL.TOS_MODNAME = KnownModIndex:GetModActualName("[DST]Tales of Seed - Test") or KnownModIndex:GetModActualName("[DST]Tales of Seed")
 STRINGS.CHARACTERS.SENDI = require("speech_sendi"..GLOBAL.SENDI_LANGUAGE_SUFFIX ) -- 대사 파일 로드
 -- modimport("scripts/strings_sendi"..GLOBAL.SENDI_LANGUAGE_SUFFIX..".lua") -- 언어 파일 로드
-modimport("scripts/strings_aos.lua") -- string 파일 로드
 STRINGS.CHARACTERS.ANAN = require "speech_anan"
 STRINGS.CHARACTERS.TEES = require "speech_tees"
+modimport("scripts/strings_aos.lua") -- string 파일 로드
 
 local Cookable = require "components/cookable"  -- sendi_oven 관련
 function Cookable:GetProduct()
