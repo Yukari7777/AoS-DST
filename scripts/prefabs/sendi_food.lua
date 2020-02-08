@@ -425,7 +425,7 @@ local food = {
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
-      oneatenfn = function(inst, eater)
+        oneatenfn = function(inst, eater)
             if eater.wormlight then
                 eater.wormlight.components.spell.lifetime = 0
                 eater.wormlight.components.spell:ResumeSpell()
