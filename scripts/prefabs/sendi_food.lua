@@ -33,7 +33,7 @@ local food = {
         perishtime = TUNING.PERISH_SLOW,
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"}, -- caffeine 태그 : 플레이어가 아닌 엔티티가 먹으면 디버프가 걸리는 이스터 에그
         floater = {"small", nil, nil},
-        exp = 1,
+        exp = 0.2,
     }, --마법의가루   
 
     ricewheat = {
@@ -44,8 +44,7 @@ local food = {
         perishtime = TUNING.PERISH_SLOW,
         tags = {"cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
-        exp = 1,
-        
+        exp = 0.2,
     }, --벼리밀
 
     milk_strong = {
@@ -80,7 +79,7 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = 20,
         hunger = 35,
-        sanity = 15, mana = 15,
+        sanity = 5, mana = 15,
         perishtime = 2700,
         tags = {"caffeine", "cattoy", "preparedfood", "sendistaple", "fuel"}, -- preparedfood 태그 : 오븐(쿡팟)에 조리된 음식
         floater = {"small", nil, nil},
@@ -93,7 +92,7 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = 7,
         hunger = 35,
-        sanity = 30, mana = 30,
+        sanity = 20, mana = 30,
         perishtime = 2700,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "ovencold", "preparedfood", "sendifood" ,"fuel"}, -- ovencold 태그 : 오븐에 의해 차가워진 음식
@@ -113,7 +112,7 @@ local food = {
         tags = {"preparedfood", "monstermeat", "unfinished", "fuel"},
         rotten = "sendi_food_wolfsteak_cooked",
         floater = {"small", nil, nil},
-        exp = 2,
+        exp = 1,
     },
 
     wolfsteak_cooked = { --조리된 울프스테이크
@@ -134,7 +133,7 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
         hunger = 30,
-        sanity = 5, mana = 5,
+        sanity = 0,
         perishtime = 3360,
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
@@ -157,9 +156,9 @@ local food = {
 
     pudding_light_berrybanana_cooked = {
         foodtype = FOODTYPE.VEGGIE,
-        health = 15,
+        health = 0,
         hunger = 35,
-        sanity = 30,
+        sanity = 15,
         perishtime = 3360,
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "ovencold", "fuel"},
         floater = {"small", nil, nil},
@@ -210,8 +209,8 @@ local food = {
 
     bread_muffin = { 
         foodtype = FOODTYPE.VEGGIE,
-        health = 5,
-        hunger = 40,
+        health = -5,
+        hunger = 25,
         sanity = -5,
         perishtime = 1440,
         cooktime = .5,
@@ -251,7 +250,7 @@ local food = {
         foodtype = FOODTYPE.MEAT,
         health = 5,
         hunger = 62,
-        sanity = 5, mana = 5,
+        sanity = 0
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
         perishtime = 6720,
         tags = {"caffeine", "monstermeat", "sendistaple", "preparedfood", "fuel"},
@@ -287,8 +286,8 @@ local food = {
     chicken = { 
         foodtype = FOODTYPE.VEGGIE,
         health = -10,
-        hunger = 60,
-        sanity = -0,
+        hunger = 30,
+        sanity = -10,
         perishtime = 3360,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
@@ -299,9 +298,9 @@ local food = {
 
     chicken_cooked = { 
         foodtype = FOODTYPE.VEGGIE,
-        health = 20,
+        health = 10,
         hunger = 70,
-        sanity = 0,
+        sanity = 5,
         perishtime = 6720,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
@@ -313,7 +312,7 @@ local food = {
     pie_berry = { 
         foodtype = FOODTYPE.VEGGIE,
         health = -5,
-        hunger = 50,
+        hunger = 30,
         sanity = -5,
         perishtime = 2660,
         cooktime = .5,
@@ -327,7 +326,7 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = 5,
         hunger = 60,
-        sanity = 20, mana = 20,
+        sanity = 10, mana = 10,
         perishtime = 5320,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "preparedfood", "sendifood", "fuel"},
@@ -340,13 +339,13 @@ local food = {
         foodtype = FOODTYPE.VEGGIE,
         health = -10,
         hunger = 54,
-        sanity = -5,
+        sanity = -10,
         perishtime = 2400,
         cooktime = .5,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
-        exp = 2,
+        exp = 1,
     },-- 만두 
 
     dumpling_cooked = { 
@@ -367,20 +366,20 @@ local food = {
 
     salad_banana = {
         foodtype = FOODTYPE.VEGGIE,
-        health = 15,
-        hunger = 30,
+        health = 30,
+        hunger = 40,
         sanity = 0,
         perishtime = 1900,
         temperature = TUNING.COLD_FOOD_BONUS_TEMP, -- 시원한 음식에는 TUNING.COLD_FOOD_BONUS_TEMP
         tags = {"caffeine", "cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
-        exp = 2,
+        exp = 5,
     }, --이끼 바나나 샐러드,
 
     juice_light_berry = {
         foodtype = FOODTYPE.VEGGIE,
         health = 0,
-        hunger = 15,
+        hunger = 30,
         sanity = 15, mana = 15,
         perishtime = 1900,
         temperature = TUNING.COLD_FOOD_BONUS_TEMP,
@@ -407,12 +406,12 @@ local food = {
     pie_light_berry = {
         foodtype = FOODTYPE.VEGGIE,
         health = -5,
-        hunger = 55,
+        hunger = 32,
         sanity = -10,
         perishtime = 2660,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
-        exp = 2,
+        exp = 5,
     }, -- 조리전의 빛나는 베리 파이
 
     pie_light_berry_cooked = {
@@ -448,7 +447,7 @@ local food = {
         perishtime = 2660,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
-        exp = 2,
+        exp = 3,
     }, -- 바나나 반죽
         
     cake_banana_cooked = {
@@ -460,10 +459,8 @@ local food = {
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
         temperature = TUNING.HOT_FOOD_BONUS_TEMP,
-        exp = 4,
+        exp = 7,
     }, -- 바나나 롤 케익
-
-    ---6차 음식
 
         tanghuru_berry = {
         foodtype = FOODTYPE.VEGGIE,
@@ -481,7 +478,7 @@ local food = {
         foodtype = FOODTYPE.MEAT,
         health = -5,
         hunger = 30,
-        sanity = 5, mana = 5,
+        sanity = -10, mana = 0,
         perishtime = 5320,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},
@@ -530,7 +527,7 @@ local food = {
         foodtype = FOODTYPE.MEAT,
         health = -5,
         hunger = 30,
-        sanity = -15, mana = 5,
+        sanity = -15, mana = 0,
         perishtime = 5320,
         tags = {"caffeine", "cattoy", "unfinished", "fuel"},
         floater = {"small", nil, nil},

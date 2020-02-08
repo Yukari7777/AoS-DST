@@ -133,14 +133,14 @@ local function onattack(inst, attacker, target)--파이어 관련 코딩
 		end)
 	end -- Yukari : 커스텀 도트데미지 함수 작성함.
 end
-
+--[[
 local function onblink(staff, pos, caster)
 
     if caster.components.sanity ~= nil then
-        caster.components.sanity:DoDelta(-22.5)
+        caster.components.sanity:DoDelta(-30)
     end
 end
---
+--점멸]]
 
 local function ontakefuel(inst)
    local afterrepair = inst.components.finiteuses:GetUses() + 20
@@ -178,10 +178,10 @@ local function fn()
     inst:AddTag("sharp") -- 태그 설정, 이 두 태그는 없어도 됨(실행 확인)
     inst:AddTag("pointy") 
 	
-	inst:AddComponent("blinkstaff") --점멸
+	--[[inst:AddComponent("blinkstaff") --점멸
 	inst.components.blinkstaff:SetFX("glass_fx", "glass_fx")
     inst.components.blinkstaff.onblinkfn = onblink
-	
+	--]]
 	
     if not TheWorld.ismastersim then
         return inst
