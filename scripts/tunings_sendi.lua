@@ -111,10 +111,10 @@ TUNING.TEES = {--티스
     SKILL_EVERGUARD_BACKFIRE_MULT = 0.8, -- 데미지 반사 계수
 
     SKILL_VIPERVITE_MANACOST = 10, --마나코스트
-    SKILL_VIPERVITE_DAMAGE = 50, --데미지
+    SKILL_VIPERVITE_DAMAGE = 90, --데미지
     SKILL_VIPERVITE_POISON_RADIUS = 6, -- 타겟 주변에 독이 퍼지는 범위
     SKILL_VIPERBITE_TARGET_RADIUS = 12, --스킬 인식범위
-    SKILL_VIPERBITE_AGGRO_RADIUS = 3, -- 가까이에서 맞은 적이 티스를 어그로로 설정하는 범위
+    SKILL_VIPERBITE_AGGRO_RADIUS = 1, -- 가까이에서 맞은 적이 티스를 어그로로 설정하는 범위
 
     SKILL_VENOMSPREAD_TARGET_RADIUS = 16, -- 인식범위
     SKILL_VENOMSPREAD_DAMAGE = 100, --폭발 데미지

@@ -2101,9 +2101,9 @@ return {
     BEEP_COOKED = "당근은 달콤하고, 고기는 부드럽고\n스프는 일품이에요!",
     --끔찍한 음식
     MARATANG_BAT = "익은거랑 안익은게 구분이 안가!",
-    MARATANG_BAT_COOKED = "엡퉷퉤..! 또 먹었다간 병이 걸리겠어요!",
+    MARATANG_BAT_COOKED = "엡퉷퉤..! 너무너무 매워어!! 또 먹었다간 병이 걸리겠어요!",
     MARATANG_FROG = "에으에으아으아앍!!!",
-    MARATANG_FROG_COOKED = "마치.. 최고급 닭인 칠면조를 먹는것 같은 맛..!/n..비주얼은 좀 그렇지만 맛있어..!",
+    MARATANG_FROG_COOKED = "마치.. 최고급 닭인 칠면조를 먹는것 같은 맛..!\n..맵고 비주얼은 좀 그렇지만 맛있어..!",
     
 	},
 }

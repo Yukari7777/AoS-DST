@@ -25,6 +25,7 @@ local seeds = {
         hunger = 2,
         sanity = 0,
 		mana = 6,
+        tags = { "seeds", "cattoy" },
         exp = 1,
     },
     
@@ -33,6 +34,7 @@ local seeds = {
         hunger = 12,
         sanity = 10,
 		mana = 20,
+        tags = { "seeds", "cattoy" },
         exp = 20,
     },
 
@@ -42,6 +44,7 @@ local seeds = {
         sanity = -10,
         perishtime = 480,
         rotten = "aos_seed",
+        tags = { "seeds", "cattoy" },
 		exp = -5,
     },
 
@@ -49,6 +52,7 @@ local seeds = {
         health = 0,
         hunger = 0,
         sanity = -10,
+        tags = { "seeds", "cattoy" },
 		exp = -30,
 
         perishtime = 1440,
@@ -73,6 +77,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 150 -- bigseed 먹으면 바로 레벨업 하는 태그
     },
 
@@ -81,6 +86,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 400,
+        tags = { "seeds", "cattoy" },
         exp = 400 
         --tags = {"bigseed"},
     },
@@ -90,6 +96,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 150,
     },
 
@@ -98,7 +105,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
-        tags = {"bigseed"},
+        tags = {"bigseed", "seeds", "cattoy"},
     },
 
     boss_orange = {
@@ -106,6 +113,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 300,
     },
 
@@ -114,6 +122,7 @@ local seeds = {
         hunger = 250,
         sanity = 250,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 150,
     },
 
@@ -122,6 +131,7 @@ local seeds = {
         hunger = 0,
         sanity = 500,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 62.5,
     },
 
@@ -130,6 +140,7 @@ local seeds = {
         hunger = 500,
         sanity = 500,
 		mana = 600,
+        tags = { "seeds", "cattoy" },
         exp = 300,
     },
 
@@ -183,7 +194,11 @@ local function MakeSeed(data)
         if not TheWorld.ismastersim then
             return inst
         end
-    
+        
+        ---[[
+		inst:AddTag("oceanfishing_lure")--미끼로 쓰기
+        --]]
+        
         inst:AddComponent("inspectable")
         inst:AddComponent("tradable")
         

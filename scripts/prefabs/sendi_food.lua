@@ -56,7 +56,7 @@ local food = {
         perishtime = TUNING.PERISH_SLOW,
         tags = {"cattoy", "sendistaple", "fuel"},
         floater = {"small", nil, nil},
-      exp = 1,
+      exp = 0,
     }, --튼튼밀크 
    
    ---재료
@@ -119,7 +119,7 @@ local food = {
 
     wolfsteak_cooked = { --조리된 울프스테이크
         foodtype = FOODTYPE.MEAT,
-        health = 10,
+        health = 5,
         hunger = 65,
         sanity = 10, mana = 10,
         perishtime = 3360,
@@ -161,6 +161,7 @@ local food = {
         health = 0,
         hunger = 35,
         sanity = 15,
+        buffs = { "speedup", 180 },
         perishtime = 3360,
         tags = {"caffeine", "cattoy", "sendifood", "preparedfood", "ovencold", "fuel"},
         floater = {"small", nil, nil},
@@ -186,7 +187,8 @@ local food = {
         health = 30,
         hunger = 55,
         sanity = 10, mana = 10,
-      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        buffs = { "speedup", 240 },
         perishtime = 5320,
         tags = {"caffeine", "monstermeat", "sendifood", "sendimeat", "fuel"}, 
         floater = {"small", nil, nil},
@@ -279,7 +281,8 @@ local food = {
         health = 20,
         hunger = 55,
         sanity = 5, mana = 5,
-      temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        temperature = TUNING.HOT_FOOD_BONUS_TEMP * 2,
+        buffs = { "speedup", 240 },
         perishtime = 6720,
         tags = {"caffeine", "sendimeat", "preparedfood", "fuel"},
         floater = {"small", nil, nil},
@@ -306,6 +309,7 @@ local food = {
         hunger = 70,
         sanity = 5,
         perishtime = 6720,
+        buffs = { "speedup", 180 },
         cooktime = .5,
         tags = {"caffeine", "cattoy", "preparedfood", "sendimeat", "fuel"},
         floater = {"small", nil, nil},
