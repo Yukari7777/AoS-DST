@@ -648,38 +648,35 @@ AddPrefabPostInitAndExclude("deerclops",  --[[대상 몬스터 스폰명]] funct
    AddChanceLoot(inst, {"aos_seed_boss_white", 0.3, "aos_seed_boss_sky", 1}) -- (아이템 스폰명), (확률) 순으로 적으면 됨
 end)
 AddPrefabPostInitAndExclude("dragonfly", function(inst)--드래곤파리
-   AddChanceLoot(inst, {"aos_seed_boss_red", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_red", 1, "aos_seed_boss_white", 0.2})
 end)
 AddPrefabPostInitAndExclude("bearger", function(inst)--베어거
-   AddChanceLoot(inst, {"aos_seed_boss_autumn", 1, "aos_seed_boss_white", 0.2})
+   AddChanceLoot(inst, {"aos_seed_boss_autumn", 1, "aos_seed_boss_white", 0.1})
 end)
 AddPrefabPostInitAndExclude("moose", function(inst)--무스구스
-   AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.2})
+   AddChanceLoot(inst, {"aos_seed_boss_green", 1, "aos_seed_boss_white", 0.1})
 end)
 AddPrefabPostInitAndExclude("antlion", function(inst)--개미사자
-   AddChanceLoot(inst, {"aos_seed_boss_orange", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_orange", 1, "aos_seed_boss_white", 0.2})
 end)
 AddPrefabPostInitAndExclude("beequeen", function(inst)--비-퀸
-   AddChanceLoot(inst, {"aos_seed_boss_yellow", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_yellow", 1, "aos_seed_boss_white", 0.3})
 end)
 AddPrefabPostInitAndExclude("stalker_atrium", function(inst)--퓨얼위버
-   AddChanceLoot(inst, {"aos_seed_boss_black", 2, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_black", 2, "aos_seed_boss_white", 0.3})
 end)
 AddPrefabPostInitAndExclude("toadstool", function(inst)--토드스툴 
-   AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.1})
 end)
 AddPrefabPostInitAndExclude("toadstool_dark", function(inst)--비참한 토드스툴  
-   AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.5})
-end)
-AddPrefabPostInitAndExclude("klaus", function(inst)--비참한 토드스툴  
-   AddChanceLoot(inst, {"aos_seed_boss_white", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_black", 1, "aos_seed_boss_white", 0.1})
 end)
 AddPrefabPostInitAndExclude("klaus", function(inst)--클라우스
-   AddChanceLoot(inst, {"aos_seed_boss_white", 1, "aos_seed_boss_white", 0.5})
+   AddChanceLoot(inst, {"aos_seed_boss_white", 1, "aos_seed_boss_white", 0.1})
 end)
 --중보스 시드 드랍 
 AddPrefabPostInitAndExclude("minotaur", function(inst)--미노타우르스
-   AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.4})
+   AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 1, "aos_seed_middle", 1, "aos_seed_middle", 0.4})
 end)
 AddPrefabPostInitAndExclude("spiderqueen", function(inst)--거미여왕
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})

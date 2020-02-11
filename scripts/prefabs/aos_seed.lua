@@ -78,7 +78,7 @@ local seeds = {
         sanity = 500,
 		mana = 600,
         tags = { "seeds", "cattoy" },
-        exp = 150 -- bigseed 먹으면 바로 레벨업 하는 태그
+        exp = 85, -- bigseed 먹으면 바로 레벨업 하는 태그
     },
 
     boss_black = {
@@ -87,7 +87,7 @@ local seeds = {
         sanity = 500,
 		mana = 400,
         tags = { "seeds", "cattoy" },
-        exp = 400 
+        exp = 100,
         --tags = {"bigseed"},
     },
 
@@ -97,7 +97,7 @@ local seeds = {
         sanity = 500,
 		mana = 600,
         tags = { "seeds", "cattoy" },
-        exp = 150,
+        exp = 95,
     },
 
     boss_white = {
@@ -114,7 +114,7 @@ local seeds = {
         sanity = 500,
 		mana = 600,
         tags = { "seeds", "cattoy" },
-        exp = 300,
+        exp = 85,
     },
 
     boss_autumn = {
@@ -123,7 +123,7 @@ local seeds = {
         sanity = 250,
 		mana = 600,
         tags = { "seeds", "cattoy" },
-        exp = 150,
+        exp = 85,
     },
 
     boss_green = {
@@ -141,7 +141,7 @@ local seeds = {
         sanity = 500,
 		mana = 600,
         tags = { "seeds", "cattoy" },
-        exp = 300,
+        exp = 100,
     },
 
 	

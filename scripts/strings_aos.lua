@@ -591,7 +591,7 @@ STRINGS.RECIPE_DESC.AOS_SEED = "마력을 실채화 해봅시다!" --크리에�
 STRINGS.RECIPE_DESC.AOS_SEED_PURPLE = "오염된 마력을 추출해봅시다!" --크리에이시드 aos_seed  SEED_CREESEED
 STRINGS.RECIPE_DESC.AOS_SEED_BLACK = "끔찍한 마력을 추출해봅시다!" --크리에이시드 aos_seed  SEED_CREESEED
 STRINGS.RECIPE_DESC.AOS_SEED_MIDDLE = "작은 조각들을 모아볼까요?"
-STRINGS.RECIPE_DESC.AOS_SEED_BOSS_YELLOW = "드디어 때가 되었어요!" 
+STRINGS.RECIPE_DESC.AOS_SEED_BOSS_YELLOW = "이걸 굳이 만들필요가 있을까요?" 
 
 --1차음식
 STRINGS.RECIPE_DESC.SENDI_FOOD_MILK_STRONG = "요리에 필요한 우유를 합성해봐요!" --밀크
