@@ -691,10 +691,10 @@ AddPrefabPostInitAndExclude("deer_blue", function(inst)--사슴보석2
    AddChanceLoot(inst, {"aos_seed_middle", 1, "aos_seed_middle", 0.5})
 end)
 AddPrefabPostInitAndExclude("mossling", function(inst)--모슬링
-   AddChanceLoot(inst, {"aos_seed_middle", 1})
+   AddChanceLoot(inst, {"aos_seed_middle", 0.65})
 end)
 AddPrefabPostInitAndExclude("lavae", function(inst)--용암이
-   AddChanceLoot(inst, {"aos_seed_middle", 0.2})
+   AddChanceLoot(inst, {"aos_seed_middle", 0.15})
 end)
 --오염된 시드 드랍
 AddPrefabPostInitAndExclude("batcave", function(inst)--박쥐집

@@ -24,7 +24,7 @@ local BUFF_TYPE = {
         end,
     },
 
-    flame = {
+    flame = { --불
         isdebuff = true,
         interval = CONST.DEBUFF_FLAME_INTERVAL,
         maxtime = CONST.DEBUFF_FLAME_MAX_TIME,
@@ -45,7 +45,7 @@ local BUFF_TYPE = {
         end,
     },
 
-    poison = {
+    poison = { --독
         isdebuff = true,
         interval = CONST.DEBUFF_POISON_INTERVAL,
         maxtime = CONST.DEBUFF_POISON_MAX_TIME,
@@ -71,7 +71,7 @@ local BUFF_TYPE = {
         end,
     },
 
-    venom = {
+    venom = { --베놈 
         isdebuff = true,
         interval = CONST.DEBUFF_VENOM_INTERVAL,
         maxtime = CONST.DEBUFF_VENOM_MAX_TIME,
@@ -97,7 +97,7 @@ local BUFF_TYPE = {
         end,
     },
 
-    frostbite = {
+    frostbite = { --눈보라 
         isdebuff = true,
         interval = CONST.DEBUFF_FROSTBITE_INTERVAL,
         maxtime = CONST.DEBUFF_FROSTBITE_MAX_TIME,
@@ -131,7 +131,7 @@ local BUFF_TYPE = {
         end,
     },
 
-    stealth = {
+    stealth = { --은신
         maxtime = CONST.BUFF_STEALTH_DURATION,
         activetags = { "debugnoattack" },
 
